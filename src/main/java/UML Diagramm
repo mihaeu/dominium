@@ -1,0 +1,56 @@
+@startuml
+
+GameMaster          *-- Card
+GameMaster          *-- Player
+GameSetup           --> GameMaster : creates
+GameMaster          *-- PermanentGameState
+CardCollection "1"  *-- "n" Card
+Target              *-- Player
+
+class GameMaster {
+  +discardCard()
+  +drawCard()
+  +revealCard()
+  +discardCard()
+  +playerHasCard(Player player, Card card)
+}
+
+class PermanentGameState {
+  +int numberOfEmptyCardStacks
+  +int actionsLeft
+  +int buysLeft
+  +int coinsLeft
+  +Collection KingdomCardSets
+  +CardCollection trash
+  +CardCollection copperCards
+  +CardCollection silverCards
+  +CardCollection goldCards
+  +CardCollection estateCards
+  +CardCollection duchyCards
+  +CardCollection provinceCards
+  +CardCollection curseCards
+  +eventHistory
+}
+
+class GameSetup {
+  -CardCollection KingdomCardSets
+  -playerCount
+  +createGame()
+}
+
+class Player {
+  +pickCard(CardCollection from, Type type, Count count)
+  +decideIfDefende(Card attackCardForInfo)
+}
+
+class Target {
+  -players
+}
+
+class Card {
+  -GameMaster master
+  -CardType type
+  +resolve()
+}
+
+@enduml
