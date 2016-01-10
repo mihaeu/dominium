@@ -1,3 +1,6 @@
+package src.main;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -8,28 +11,33 @@ public class GameSetup {
     public static final int MAX_PLAYER_NUMBER = 4;
     public static final int MIN_KINGDOMCARDSETNUMBER = 1;
     public static final int MAX_KINGDOMCARDSETNUMBER = 1;
-    PermanentGameState permanentGameState = 
+    PermanentGameState permanentGameState;
+    Collection<Player> playerCollection;
 
-    // private Collection<Card> KingdomCardSets;      first only preselected Sets
+    // private Collection<src.main.Card> KingdomCardSets;      first only preselected Sets
 
-    public void setUpGame(int playerNumber, int kingdomCardSetNumber ){
+    public boolean setUpGame(int playerNumber, int kingdomCardSetNumber ){
 
         boolean initiationPossible = verifyStartConditions(playerNumber,kingdomCardSetNumber );
-        //todo react to false input
+        if(initiationPossible) {
+            permanentGameState = new PermanentGameState();
+            playerCollection = new ArrayList<Player>();
 
-        GameMaster gameMaster = new GameMaster();
-        PermanentGameState permanentGameState = new PermanentGameState();
-        TurnbasedGameState turnbasedGameState = new TurnbasedGameState();
+            GameMaster gameMaster = new GameMaster();
+            permanentGameState = new PermanentGameState();
+            TurnbasedGameState turnbasedGameState = new TurnbasedGameState();
 
+            initiatePlayers(playerNumber);
 
-        initiatePlayers(playerNumber);
+            //todo impl rest of init
 
+        }
 
-        //todo impl rest of init
+        return initiationPossible;
+
     }
 
     private void initiatePlayers(int playerNumber) {
-        PermanentGameState permanentGameState = ;
         while(playerNumber > 0){
             permanentGameState.addPlayer(new Player());
             --playerNumber;

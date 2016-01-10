@@ -1,21 +1,21 @@
 @startuml
 
-GameMaster          *-- Card
-GameMaster          *-- Player
-GameSetup           --> GameMaster : creates
-GameMaster          *-- PermanentGameState
-CardCollection "1"  *-- "n" Card
-Target              *-- Player
+src.main.GameMaster          *-- src.main.Card
+src.main.GameMaster          *-- src.main.Player
+src.main.GameSetup           --> src.main.GameMaster : creates
+src.main.GameMaster          *-- src.main.PermanentGameState
+CardCollection "1"  *-- "n" src.main.Card
+Target              *-- src.main.Player
 
-class GameMaster {
+class src.main.GameMaster {
   +discardCard()
   +drawCard()
   +revealCard()
   +discardCard()
-  +playerHasCard(Player player, Card card)
+  +playerHasCard(src.main.Player player, src.main.Card card)
 }
 
-class PermanentGameState {
+class src.main.PermanentGameState {
   +int numberOfEmptyCardStacks
   +int actionsLeft
   +int buysLeft
@@ -32,23 +32,23 @@ class PermanentGameState {
   +eventHistory
 }
 
-class GameSetup {
+class src.main.GameSetup {
   -CardCollection KingdomCardSets
   -playerCount
   +createGame()
 }
 
-class Player {
+class src.main.Player {
   +pickCard(CardCollection from, Type type, Count count)
-  +decideIfDefende(Card attackCardForInfo)
+  +decideIfDefende(src.main.Card attackCardForInfo)
 }
 
 class Target {
   -players
 }
 
-class Card {
-  -GameMaster master
+class src.main.Card {
+  -src.main.GameMaster master
   -CardType type
   +resolve()
 }
