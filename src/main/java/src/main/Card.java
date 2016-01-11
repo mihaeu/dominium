@@ -4,9 +4,10 @@ package src.main;
  * Created by SWINE on 10.01.2016.
  */
 public class Card {
-    int cost;
-    Type type;
-    int value;
+    private int cost;
+    private Type type;
+    private int value;
+    private String name;
 
     public Card(Type type, int cost){
         this.type = type;
@@ -20,6 +21,21 @@ public class Card {
         this.value = value;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 
     public enum Type {

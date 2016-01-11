@@ -20,7 +20,9 @@ public class GameMaster {
     ;
 
     public void discardCard(int numberOfCardsToDiscard) {
-
+        Player currentPlayer = turnbasedGameState.getCurrentPlayer();
+        Collection<Card> handCards = currentPlayer.getHandCards();
+        currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard,handCards);
     }
 
     ;

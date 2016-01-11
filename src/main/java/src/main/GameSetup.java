@@ -9,8 +9,8 @@ import java.util.Collection;
 public class GameSetup {
     public static final int MIN_PLAYER_NUMBER = 2;
     public static final int MAX_PLAYER_NUMBER = 4;
-    public static final int MIN_KINGDOMCARDSETNUMBER = 1;
-    public static final int MAX_KINGDOMCARDSETNUMBER = 1;
+    public static final int MIN_KINGDOMCARD_SET_NUMBER = 1;
+    public static final int MAX_KINGDOMCARD_SET_NUMBER = 1;
     PermanentGameState permanentGameState;
     Collection<Player> playerCollection;
 
@@ -49,7 +49,7 @@ public class GameSetup {
     private boolean verifyStartConditions(int playerNumber, int kingdomCardSetNumber) {
         boolean initiationPossible = true;
         boolean playerNumberOkay = (playerNumber <= MAX_PLAYER_NUMBER && playerNumber >= MIN_PLAYER_NUMBER);
-        boolean kingdomCardSetOkay = (kingdomCardSetNumber >= MIN_KINGDOMCARDSETNUMBER && kingdomCardSetNumber <= MAX_KINGDOMCARDSETNUMBER);
+        boolean kingdomCardSetOkay = (kingdomCardSetNumber >= MIN_KINGDOMCARD_SET_NUMBER && kingdomCardSetNumber <= MAX_KINGDOMCARD_SET_NUMBER);
         initiationPossible = playerNumberOkay && kingdomCardSetOkay;
 
         return initiationPossible;
