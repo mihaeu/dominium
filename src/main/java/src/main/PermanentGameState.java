@@ -7,16 +7,19 @@ import java.util.Collection;
  * Created by SWINE on 10.01.2016.
  */
 public class PermanentGameState {
-    Collection<Player> playerCollection;
-    Collection<Card> cardCollection;
+    private Collection<Player> playerCollection;
+    private Collection<Card> cardCollection;
 
-
-    public PermanentGameState() {
-        playerCollection = new ArrayList<Player>();
-
+    public PermanentGameState(Collection<Player> playerCollection, Collection<Card> cardCollection) {
+        this.playerCollection = playerCollection;
+        this.cardCollection = cardCollection;
     }
 
-    public void addPlayer(Player player) {
-        playerCollection.add(player);
+    public Collection<Player> getPlayerCollection() {
+        return playerCollection;
+    }
+
+    public Collection<Card> getCardCollection() {
+        return cardCollection;
     }
 }

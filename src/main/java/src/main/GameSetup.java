@@ -14,20 +14,19 @@ public class GameSetup {
     PermanentGameState permanentGameState;
     Collection<Player> playerCollection;
 
-    // private Collection<src.main.Card> KingdomCardSets;      first only preselected Sets
+
 
     public boolean setUpGame(int playerNumber, int kingdomCardSetNumber) {
 
         boolean initiationPossible = verifyStartConditions(playerNumber, kingdomCardSetNumber);
         if (initiationPossible) {
-            permanentGameState = new PermanentGameState();
-            playerCollection = new ArrayList<Player>();
-
-
-            permanentGameState = new PermanentGameState();
-            TurnbasedGameState turnbasedGameState = new TurnbasedGameState();
 
             initiatePlayers(playerNumber);
+            initiateKingdomCardSets(kingdomCardSetNumber);
+
+            permanentGameState = new PermanentGameState(playerCollection);
+            TurnbasedGameState turnbasedGameState = new TurnbasedGameState();
+
 
             //todo impl rest of init
 
@@ -39,9 +38,14 @@ public class GameSetup {
 
     }
 
+    private void initiateKingdomCardSets(int kingdomCardSetNumber) {
+
+    }
+
     private void initiatePlayers(int playerNumber) {
+        playerCollection = new ArrayList<Player>();
         while (playerNumber > 0) {
-            permanentGameState.addPlayer(new Player());
+            playerCollection.add(new Player());
             --playerNumber;
         }
     }
