@@ -1,11 +1,8 @@
-package src.main;
+package dominium;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by SWINE on 10.01.2016.
- */
 public class GameSetup {
     public static final int MIN_PLAYER_NUMBER = 2;
     public static final int MAX_PLAYER_NUMBER = 4;

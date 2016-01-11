@@ -1,12 +1,7 @@
-package src.main;
+package dominium;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
-/**
- * Created by SWINE on 10.01.2016.
- */
 public class GameMaster {
     TurnbasedGameState turnbasedGameState;
     PermanentGameState permanentGameState;
@@ -17,15 +12,11 @@ public class GameMaster {
 
     }
 
-    ;
-
     public void discardCard(int numberOfCardsToDiscard) {
         Player currentPlayer = turnbasedGameState.getCurrentPlayer();
         Collection<Card> handCards = currentPlayer.getHandCards();
-        currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard,handCards);
+        currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard, handCards);
     }
-
-    ;
 
     public void drawCard(int numberOfCardsToDraw) {
         Player currentPlayer = turnbasedGameState.getCurrentPlayer();
@@ -33,17 +24,17 @@ public class GameMaster {
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
 
-        while (numberOfCardsToDraw > 0){
+        while (numberOfCardsToDraw > 0) {
             --numberOfCardsToDraw;
 
             int possibleCardsToDraw = deckCards.size();
-            if (possibleCardsToDraw == 0 ){
+            if (possibleCardsToDraw == 0) {
                 shuffleDiscardedCardsIntoDeck();
             }
 
             possibleCardsToDraw = deckCards.size();
 
-            if (possibleCardsToDraw != 0 ) {
+            if (possibleCardsToDraw != 0) {
                 Iterator<Card> iterator = deckCards.iterator();
                 Card cardToDraw = iterator.next();
                 handCards.add(cardToDraw);
@@ -52,21 +43,13 @@ public class GameMaster {
         }
     }
 
-
-
-    ;
-
     public void revealCard(int numberOfCardsToDraw) {
 
     }
 
-    ;
-
-    public boolean playerHasCard(src.main.Player player, src.main.Card card) {
-
+    public boolean playerHasCard(Player player, Card card) {
         Collection<Card> handCards = player.getHandCards();
-        boolean hasCard = handCards.contains(card);
-        return hasCard;
+        return handCards.contains(card);
     }
 
     private void shuffleDiscardedCardsIntoDeck() {
@@ -74,14 +57,21 @@ public class GameMaster {
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
 
-        if(deckCards.size() == 0) {
+        if (deckCards.size() == 0) {
             deckCards = discardedCards;
             discardedCards = new ArrayList<Card>();
             shuffleCards(deckCards);
         }
     }
 
+    /**
+     * This implementation should work, but actually it would be better for the
+     * Collection to know how to shuffle itself.
+     *
+     * @param deckCards
+     */
     private void shuffleCards(Collection<Card> deckCards) {
-        //todo shuffle Cards
+        List list = new ArrayList<Card>(deckCards);
+        Collections.shuffle(list);
     }
 }

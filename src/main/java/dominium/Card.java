@@ -1,8 +1,5 @@
-package src.main;
+package dominium;
 
-/**
- * Created by SWINE on 10.01.2016.
- */
 public class Card {
     private int cost;
     private Type type;

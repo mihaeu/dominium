@@ -1,4 +1,4 @@
-package src.main;
+package dominium;
 
 public class Game {
     public static void main(String[] args) {

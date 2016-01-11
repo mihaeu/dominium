@@ -1,23 +1,13 @@
-package src.test;
-
-import src.main.GameSetup;
+package dominium;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by SWINE on 10.01.2016.
- */
 public class GameSetupTest {
-
-
-
     @org.junit.Test
     public void testSetUpGame() throws Exception {
         GameSetup gameSetup = new GameSetup();
-        assertTrue(gameSetup.setUpGame(2,1));
+        assertTrue(gameSetup.setUpGame(2, 1));
     }
-
-
 
     @org.junit.Test
     public void testSetUpTooFewPlayers() throws Exception {

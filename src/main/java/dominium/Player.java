@@ -1,10 +1,7 @@
-package src.main;
+package dominium;
 
 import java.util.Collection;
 
-/**
- * Created by SWINE on 10.01.2016.
- */
 public class Player {
     private Collection<Card> handCards;
     private Collection<Card> deckCards;
