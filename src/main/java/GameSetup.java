@@ -24,7 +24,7 @@ public class GameSetup {
             initiatePlayers(playerNumber);
             initiateKingdomCardSets(kingdomCardSetNumber);
 
-            permanentGameState = new PermanentGameState(playerCollection);
+            // permanentGameState = new PermanentGameState(playerCollection);
             TurnbasedGameState turnbasedGameState = new TurnbasedGameState();
 
 
