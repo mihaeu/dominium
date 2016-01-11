@@ -16,20 +16,22 @@ public class GameSetup {
 
     // private Collection<src.main.Card> KingdomCardSets;      first only preselected Sets
 
-    public boolean setUpGame(int playerNumber, int kingdomCardSetNumber ){
+    public boolean setUpGame(int playerNumber, int kingdomCardSetNumber) {
 
-        boolean initiationPossible = verifyStartConditions(playerNumber,kingdomCardSetNumber );
-        if(initiationPossible) {
+        boolean initiationPossible = verifyStartConditions(playerNumber, kingdomCardSetNumber);
+        if (initiationPossible) {
             permanentGameState = new PermanentGameState();
             playerCollection = new ArrayList<Player>();
 
-            GameMaster gameMaster = new GameMaster();
+
             permanentGameState = new PermanentGameState();
             TurnbasedGameState turnbasedGameState = new TurnbasedGameState();
 
             initiatePlayers(playerNumber);
 
             //todo impl rest of init
+
+            GameMaster gameMaster = new GameMaster(permanentGameState,turnbasedGameState);
 
         }
 
@@ -38,7 +40,7 @@ public class GameSetup {
     }
 
     private void initiatePlayers(int playerNumber) {
-        while(playerNumber > 0){
+        while (playerNumber > 0) {
             permanentGameState.addPlayer(new Player());
             --playerNumber;
         }
@@ -46,7 +48,7 @@ public class GameSetup {
 
     private boolean verifyStartConditions(int playerNumber, int kingdomCardSetNumber) {
         boolean initiationPossible = true;
-        boolean playerNumberOkay = (playerNumber <= MAX_PLAYER_NUMBER && playerNumber >= MIN_PLAYER_NUMBER) ;
+        boolean playerNumberOkay = (playerNumber <= MAX_PLAYER_NUMBER && playerNumber >= MIN_PLAYER_NUMBER);
         boolean kingdomCardSetOkay = (kingdomCardSetNumber >= MIN_KINGDOMCARDSETNUMBER && kingdomCardSetNumber <= MAX_KINGDOMCARDSETNUMBER);
         initiationPossible = playerNumberOkay && kingdomCardSetOkay;
 
