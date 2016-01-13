@@ -21,10 +21,6 @@ public class TurnbasedGameState {
         currentPhase = BUY_PHASE;
     }
 
-    public void setStartPlayer(Player startPlayer) {
-        currentPlayer = startPlayer;
-    }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }

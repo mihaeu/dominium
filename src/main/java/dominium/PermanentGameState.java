@@ -1,15 +1,16 @@
 package dominium;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class PermanentGameState {
     private Collection<Player> playerCollection;
     private Collection<Card> cardCollection;
+    private Player startPlayer;
 
-    public PermanentGameState(Collection<Player> playerCollection, Collection<Card> cardCollection) {
+    public PermanentGameState(Collection<Player> playerCollection, Collection<Card> cardCollection, Player startPlayer) {
         this.playerCollection = playerCollection;
         this.cardCollection = cardCollection;
+        this.startPlayer = startPlayer;
     }
 
     public Collection<Player> getPlayerCollection() {
@@ -18,5 +19,9 @@ public class PermanentGameState {
 
     public Collection<Card> getCardCollection() {
         return cardCollection;
+    }
+
+    public Player getStartPlayer() {
+        return startPlayer;
     }
 }

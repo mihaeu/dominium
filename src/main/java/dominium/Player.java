@@ -1,5 +1,8 @@
 package dominium;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collection;
 
 public class Player {
@@ -40,6 +43,15 @@ public class Player {
             System.out.println(cardNumber + ". " + card.getName());
         }
         System.out.println("Please enter a number to choose a card to discard");
+
+        BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
+        
+            try {
+                String line = buffer.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         //todo read user input or impl observable
 
