@@ -3,23 +3,23 @@ package dominium;
 import java.util.*;
 
 public class GameMaster {
-    TurnbasedGameState turnbasedGameState;
+    TurnBasedGameState turnBasedGameState;
     PermanentGameState permanentGameState;
 
-    public GameMaster(PermanentGameState permanentGameState, TurnbasedGameState turnbasedGameState) {
+    public GameMaster(PermanentGameState permanentGameState, TurnBasedGameState turnBasedGameState) {
         this.permanentGameState = permanentGameState;
-        this.turnbasedGameState = turnbasedGameState;
+        this.turnBasedGameState = turnBasedGameState;
 
     }
 
     public void discardCard(int numberOfCardsToDiscard) {
-        Player currentPlayer = turnbasedGameState.getCurrentPlayer();
+        Player currentPlayer = turnBasedGameState.getCurrentPlayer();
         Collection<Card> handCards = currentPlayer.getHandCards();
         currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard, handCards);
     }
 
     public void drawCard(int numberOfCardsToDraw) {
-        Player currentPlayer = turnbasedGameState.getCurrentPlayer();
+        Player currentPlayer = turnBasedGameState.getCurrentPlayer();
         Collection<Card> handCards = currentPlayer.getHandCards();
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
@@ -53,7 +53,7 @@ public class GameMaster {
     }
 
     private void shuffleDiscardedCardsIntoDeck() {
-        Player currentPlayer = turnbasedGameState.getCurrentPlayer();
+        Player currentPlayer = turnBasedGameState.getCurrentPlayer();
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
 
