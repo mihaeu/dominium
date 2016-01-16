@@ -10,7 +10,7 @@ public class TurnBasedGameState {
     public int coinsLeft;
     private Player currentPlayer;
     public int currentPhase;
-    Collection<Collection<Card>> kingdomCards;
+    private Collection<Collection<Card>> kingdomCards;
 
 
     private Collection<Card> trashedCards;
