@@ -32,8 +32,6 @@ public class TurnBasedGameState {
     }
 
 
-
-
     public Collection<Card> getTrashedCards() {
         return trashedCards;
     }

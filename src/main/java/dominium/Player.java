@@ -38,22 +38,28 @@ public class Player {
     public void selectCardsToDiscard(int numberOfCardsToDiscard, Collection<Card> handCards) {
         System.out.println("Please choose " + numberOfCardsToDiscard + " cards to discard from your Hand");
         System.out.println("You have the following cards in your hand:");
-        int cardNumber =1;
-        for(Card card:handCards) {
+        int cardNumber = 1;
+        for (Card card : handCards) {
             System.out.println(cardNumber + ". " + card.getName());
         }
         System.out.println("Please enter a number to choose a card to discard");
 
-        BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
-        
-            try {
-                String line = buffer.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            String line = buffer.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         //todo read user input or impl observable
 
+    }
+
+    public Card selectCardsToBuy(Collection<Card> cardCollection) {
+        Card card = cardCollection.iterator().next();
+        System.out.println(card.getName());
+        return card;
     }
 }

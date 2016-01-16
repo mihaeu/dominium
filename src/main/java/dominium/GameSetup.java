@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class GameSetup {
-    public static final int MIN_PLAYER_NUMBER = 2;
+    public static final int MIN_PLAYER_NUMBER = 1;
     public static final int MAX_PLAYER_NUMBER = 4;
     public static final int MIN_KINGDOMCARD_SET_NUMBER = 1;
     public static final int MAX_KINGDOMCARD_SET_NUMBER = 1;
@@ -16,12 +16,11 @@ public class GameSetup {
     private Collection<Collection<Card>> kingdomCards;
 
 
-    public boolean setUpGame(int playerNumber, int kingdomCardSetNumber) {
+    public GameMaster setUpGame(int playerNumber, int kingdomCardSetNumber) {
 
         boolean initiationPossible = verifyStartConditions(playerNumber, kingdomCardSetNumber);
+        GameMaster master = null;
         if (initiationPossible) {
-
-
             //Dont change order of initiation!!!!!
             initiatePlayers(playerNumber);
             initiateKingdomCardSets(kingdomCardSetNumber, playerNumber);
@@ -30,9 +29,9 @@ public class GameSetup {
 
             //todo impl rest of init
 
-            GameMaster gameMaster = new GameMaster(permanentGameState, turnBasedGameState);
+            master = new GameMaster(permanentGameState, turnBasedGameState);
         }
-        return initiationPossible;
+        return master;
     }
 
     private void initiateTurnbasedGameState(Collection<Card> cardCollection, int playerNumber) {

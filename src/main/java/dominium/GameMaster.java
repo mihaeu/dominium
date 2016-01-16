@@ -18,6 +18,21 @@ public class GameMaster {
         currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard, handCards);
     }
 
+    public void startGame() {
+
+        Collection cardCollection = new ArrayList();
+        cardCollection.add(new Card("Estate", Card.Type.Point, 2));
+        int x = 10;
+        while (x > 0) {
+            --x;
+            for (Player player : permanentGameState.getPlayerCollection()) {
+
+                player.selectCardsToBuy(cardCollection);
+            }
+        }
+    }
+
+
     public void drawCard(int numberOfCardsToDraw) {
         Player currentPlayer = turnBasedGameState.getCurrentPlayer();
         Collection<Card> handCards = currentPlayer.getHandCards();
