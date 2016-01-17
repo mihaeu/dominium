@@ -8,7 +8,7 @@ public abstract class Card {
     }
 
     public String getName() {
-        return getClass().toString();
+        return getClass().getSimpleName();
     }
 }
 
