@@ -3,17 +3,16 @@ package dominium;
 import java.util.*;
 
 public class GameMaster {
-    TurnBasedGameState turnBasedGameState;
-    PermanentGameState permanentGameState;
+    GameState gameState;
+    Collection<Player> players;
 
-    public GameMaster(PermanentGameState permanentGameState, TurnBasedGameState turnBasedGameState) {
-        this.permanentGameState = permanentGameState;
-        this.turnBasedGameState = turnBasedGameState;
-
+    public GameMaster(Collection<Player> players, GameState gameState) {
+        this.players = players;
+        this.gameState = gameState;
     }
 
     public void discardCard(int numberOfCardsToDiscard) {
-        Player currentPlayer = turnBasedGameState.getCurrentPlayer();
+        Player currentPlayer = gameState.getCurrentPlayer();
         Collection<Card> handCards = currentPlayer.getHandCards();
         currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard, handCards);
     }
@@ -22,7 +21,7 @@ public class GameMaster {
         Stack<Card> cardCollection = new Stack<Card>();
         cardCollection.add(new Card("Estate", Card.Type.Point, 2));
         while (!cardCollection.empty()) {
-            for (Player player : permanentGameState.getPlayerCollection()) {
+            for (Player player : players) {
                 player.selectCardsToBuy(cardCollection);
             }
         }
@@ -30,7 +29,7 @@ public class GameMaster {
 
 
     public void drawCard(int numberOfCardsToDraw) {
-        Player currentPlayer = turnBasedGameState.getCurrentPlayer();
+        Player currentPlayer = gameState.getCurrentPlayer();
         Collection<Card> handCards = currentPlayer.getHandCards();
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
@@ -64,7 +63,7 @@ public class GameMaster {
     }
 
     private void shuffleDiscardedCardsIntoDeck() {
-        Player currentPlayer = turnBasedGameState.getCurrentPlayer();
+        Player currentPlayer = gameState.getCurrentPlayer();
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
 

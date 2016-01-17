@@ -2,7 +2,7 @@ package dominium;
 
 import java.util.Collection;
 
-public class TurnBasedGameState {
+public class GameState {
     public static final int BUY_PHASE = 0;
     public static final int CLEAN_UP_PHASE = 1;
     public int actionsLeft;
@@ -15,7 +15,7 @@ public class TurnBasedGameState {
 
     private Collection<Card> trashedCards;
 
-    public TurnBasedGameState(Collection<Collection<Card>> kingdomCards) {
+    public GameState(Collection<Collection<Card>> kingdomCards) {
         actionsLeft = 1;
         buysLeft = 1;
         coinsLeft = 0;

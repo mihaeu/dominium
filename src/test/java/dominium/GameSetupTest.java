@@ -1,43 +1,36 @@
 package dominium;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class GameSetupTest {
 
-    @org.junit.Test
+    private GameSetup setup;
+
+    @Before
+    public void setUp() {
+        setup = new GameSetup();
+    }
+
+    @Test
     public void testSetUpGameOnePlayer() throws Exception {
-        GameSetup gameSetup = new GameSetup();
-        assertNotNull(gameSetup.setUpGame(1, 1));
+        assertEquals(1, setup.initiatePlayers(1).size());
     }
 
-
-    @org.junit.Test
+    @Test
     public void testSetUpGame() throws Exception {
-        GameSetup gameSetup = new GameSetup();
-        assertNotNull(gameSetup.setUpGame(2, 1));
+        assertNotNull(setup.initiateGameState(1));
     }
 
-    @org.junit.Test
+    @Test(expected=IllegalArgumentException.class)
     public void testSetUpTooFewPlayers() throws Exception {
-        GameSetup gameSetup = new GameSetup();
-        assertNull(gameSetup.setUpGame(0, 1));
+        setup.initiatePlayers(0);
     }
 
-    @org.junit.Test
+    @Test(expected=IllegalArgumentException.class)
     public void testSetUpTooManyPlayers() throws Exception {
-        GameSetup gameSetup = new GameSetup();
-        assertNull(gameSetup.setUpGame(5, 1));
-    }
-
-    @org.junit.Test
-    public void testSetUpGameTooLowKingdomCardSetNumber() throws Exception {
-        GameSetup gameSetup = new GameSetup();
-        assertNull(gameSetup.setUpGame(1, 0));
-    }
-
-    @org.junit.Test
-    public void testSetUpGameTooHighKingdomCardSetNumber() throws Exception {
-        GameSetup gameSetup = new GameSetup();
-        assertNull(gameSetup.setUpGame(1, 1000000));
+        setup.initiatePlayers(5);
     }
 }
