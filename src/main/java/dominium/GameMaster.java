@@ -19,14 +19,10 @@ public class GameMaster {
     }
 
     public void startGame() {
-
-        Collection cardCollection = new ArrayList();
+        Stack<Card> cardCollection = new Stack<Card>();
         cardCollection.add(new Card("Estate", Card.Type.Point, 2));
-        int x = 10;
-        while (x > 0) {
-            --x;
+        while (!cardCollection.empty()) {
             for (Player player : permanentGameState.getPlayerCollection()) {
-
                 player.selectCardsToBuy(cardCollection);
             }
         }

@@ -6,13 +6,14 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Stack;
 
 public class PlayerTest {
     @Test
     public void playerBuysACard() {
 
-        Player player = new Player();
-        Collection<Card> cardsToChooseFrom = new ArrayList<Card>();
+        Player player = new Player("test");
+        Stack<Card> cardsToChooseFrom = new Stack<Card>();
         Card cardExpected = new Card("Copper", Card.Type.Money, 0, 1);
         cardsToChooseFrom.add(cardExpected);
 

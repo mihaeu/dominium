@@ -93,7 +93,7 @@ public class GameSetup {
     private void initiatePlayers(int playerNumber) {
         playerCollection = new ArrayList<Player>();
         while (playerNumber > 0) {
-            playerCollection.add(new Player());
+            playerCollection.add(new Player(Integer.toString(playerNumber)));
             --playerNumber;
         }
 

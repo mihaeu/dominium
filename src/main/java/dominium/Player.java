@@ -4,11 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
+import java.util.Stack;
 
 public class Player {
+
+    private String name;
     private Collection<Card> handCards;
     private Collection<Card> deckCards;
     private Collection<Card> discardedCards;
+
+    public Player(String name) {
+        this.name = name;
+    }
 
     public Collection<Card> getHandCards() {
         return handCards;
@@ -57,9 +64,9 @@ public class Player {
 
     }
 
-    public Card selectCardsToBuy(Collection<Card> cardCollection) {
-        Card card = cardCollection.iterator().next();
-        System.out.println(card.getName());
+    public Card selectCardsToBuy(Stack<Card> cardCollection) {
+        Card card = cardCollection.pop();
+        System.out.println(name + " chose card " + card.getName());
         return card;
     }
 }
