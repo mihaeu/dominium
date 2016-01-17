@@ -1,7 +1,9 @@
 package dominium.Cards;
 
 public class Province extends Card implements VictoryCard {
-    private int cost = 8;
+    public Province() {
+        this.cost = 8;
+    }
 
     @Override
     public int getVictoryPoints() {

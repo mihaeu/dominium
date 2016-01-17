@@ -10,10 +10,8 @@ public class GameState {
     public int actionsLeft;
     public int buysLeft;
     public int coinsLeft;
-    private Player currentPlayer;
     public int currentPhase;
     private Collection<Collection<Card>> kingdomCards;
-
 
     private Collection<Card> trashedCards;
 
@@ -24,15 +22,6 @@ public class GameState {
         currentPhase = BUY_PHASE;
         this.kingdomCards = kingdomCards;
     }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
 
     public Collection<Card> getTrashedCards() {
         return trashedCards;

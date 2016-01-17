@@ -1,7 +1,9 @@
 package dominium.Cards;
 
 public class Silver extends Card implements TreasureCard {
-    private int cost = 3;
+    public Silver() {
+        this.cost = 3;
+    }
 
     @Override
     public int getValue() {

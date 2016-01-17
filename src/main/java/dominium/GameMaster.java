@@ -7,15 +7,15 @@ import java.util.*;
 
 public class GameMaster {
     GameState gameState;
-    Collection<Player> players;
+    List<Player> players;
 
-    public GameMaster(Collection<Player> players, GameState gameState) {
+    public GameMaster(List<Player> players, GameState gameState) {
         this.players = players;
         this.gameState = gameState;
     }
 
     public void discardCard(int numberOfCardsToDiscard) {
-        Player currentPlayer = gameState.getCurrentPlayer();
+        Player currentPlayer = players.get(0);
         Collection<Card> handCards = currentPlayer.getHandCards();
         currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard, handCards);
     }
@@ -32,7 +32,7 @@ public class GameMaster {
 
 
     public void drawCard(int numberOfCardsToDraw) {
-        Player currentPlayer = gameState.getCurrentPlayer();
+        Player currentPlayer = players.get(0);
         Collection<Card> handCards = currentPlayer.getHandCards();
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
@@ -66,7 +66,7 @@ public class GameMaster {
     }
 
     private void shuffleDiscardedCardsIntoDeck() {
-        Player currentPlayer = gameState.getCurrentPlayer();
+        Player currentPlayer = players.get(0);
         Collection<Card> deckCards = currentPlayer.getDeckCards();
         Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
 
