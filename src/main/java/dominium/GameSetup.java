@@ -10,21 +10,16 @@ public class GameSetup {
     public static final int MAX_KINGDOMCARD_SET_NUMBER = 1;
     private PermanentGameState permanentGameState;
     private TurnBasedGameState turnBasedGameState;
-    private Collection<Player> playerCollection;
     private Collection<Card> cardCollection;
-    private Player startPlayer;
     private Collection<Collection<Card>> kingdomCards;
-
 
     public GameMaster setUpGame(int playerNumber, int kingdomCardSetNumber) {
 
-        boolean initiationPossible = verifyStartConditions(playerNumber, kingdomCardSetNumber);
         GameMaster master = null;
-        if (initiationPossible) {
-            //Dont change order of initiation!!!!!
-            initiatePlayers(playerNumber);
+        if (verifyStartConditions(playerNumber, kingdomCardSetNumber)) {
+            ArrayList<Player> playerCollection = initiatePlayers(playerNumber);
             initiateKingdomCardSets(kingdomCardSetNumber, playerNumber);
-            initiatePermanentGameState(playerCollection, cardCollection, startPlayer);
+            initiatePermanentGameState(playerCollection, cardCollection, playerCollection.get(0));
             initiateTurnbasedGameState(cardCollection, playerNumber);
 
             //todo impl rest of init
@@ -89,25 +84,21 @@ public class GameSetup {
         cardCollection.add(new Card("Curse", Card.Type.Point, 0));
     }
 
-
-    private void initiatePlayers(int playerNumber) {
-        playerCollection = new ArrayList<Player>();
+    private ArrayList<Player> initiatePlayers(int playerNumber) {
+        ArrayList<Player> playerCollection = new ArrayList<Player>();
         while (playerNumber > 0) {
             playerCollection.add(new Player(Integer.toString(playerNumber)));
             --playerNumber;
         }
-
-        //todo impl real selection system
-
-        startPlayer = playerCollection.iterator().next();
+        return playerCollection;
     }
 
     private boolean verifyStartConditions(int playerNumber, int kingdomCardSetNumber) {
-        boolean initiationPossible = true;
-        boolean playerNumberOkay = (playerNumber <= MAX_PLAYER_NUMBER && playerNumber >= MIN_PLAYER_NUMBER);
-        boolean kingdomCardSetOkay = (kingdomCardSetNumber >= MIN_KINGDOMCARD_SET_NUMBER && kingdomCardSetNumber <= MAX_KINGDOMCARD_SET_NUMBER);
-        initiationPossible = playerNumberOkay && kingdomCardSetOkay;
+        boolean playerNumberOkay = playerNumber <= MAX_PLAYER_NUMBER
+                && playerNumber >= MIN_PLAYER_NUMBER;
+        boolean kingdomCardSetOkay = kingdomCardSetNumber >= MIN_KINGDOMCARD_SET_NUMBER
+                && kingdomCardSetNumber <= MAX_KINGDOMCARD_SET_NUMBER;
 
-        return initiationPossible;
+        return playerNumberOkay && kingdomCardSetOkay;
     }
 }
