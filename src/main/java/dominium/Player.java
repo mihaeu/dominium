@@ -42,6 +42,10 @@ public class Player {
         //todo read user input or impl observable
     }
 
+    public Stack<Card> getDeckCards() {
+        return deckCards;
+    }
+
     public Card selectCardsToBuy(Map<Class, Stack<Card>> kingdomCards) {
         int cardToPick = (int) (Math.random() * kingdomCards.size());
         int index = 0;
@@ -55,5 +59,9 @@ public class Player {
             index++;
         }
         return null;
+    }
+
+    public String getName() {
+        return name;
     }
 }

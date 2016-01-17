@@ -1,8 +1,6 @@
 package dominium;
 
-import dominium.Cards.Card;
-import dominium.Cards.Estate;
-import dominium.Cards.Province;
+import dominium.Cards.*;
 
 import java.util.*;
 
@@ -15,12 +13,33 @@ public class GameMaster {
         this.gameState = gameState;
     }
 
-    public void startGame() {
+    public Player startGame() {
         while (gameIsRunning()) {
             for (Player player : players) {
                 player.selectCardsToBuy(gameState.getKingdomCards());
             }
         }
+        return winner();
+    }
+
+    private Player winner() {
+        int points = 0;
+        int maxPoints = 0;
+        Player winningPlayer = null;
+        for (Player player : players) {
+            points = 0;
+            for (Card card : player.getDeckCards()) {
+                if (card instanceof VictoryCard) {
+                    points += ((VictoryCard) card).getVictoryPoints();
+                }
+            }
+            System.out.println(points);
+            if (points > maxPoints) {
+                maxPoints = points;
+                winningPlayer = player;
+            }
+        }
+        return winningPlayer;
     }
 
     private boolean gameIsRunning() {
