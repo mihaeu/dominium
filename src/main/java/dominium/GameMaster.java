@@ -1,5 +1,8 @@
 package dominium;
 
+import dominium.Cards.Card;
+import dominium.Cards.Estate;
+
 import java.util.*;
 
 public class GameMaster {
@@ -19,7 +22,7 @@ public class GameMaster {
 
     public void startGame() {
         Stack<Card> cardCollection = new Stack<Card>();
-        cardCollection.add(new Card("Estate", Card.Type.Point, 2));
+        cardCollection.add(new Estate());
         while (!cardCollection.empty()) {
             for (Player player : players) {
                 player.selectCardsToBuy(cardCollection);

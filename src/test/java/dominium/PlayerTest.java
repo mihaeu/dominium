@@ -1,11 +1,10 @@
 package dominium;
 
+import dominium.Cards.Card;
+import dominium.Cards.Copper;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Stack;
 
 public class PlayerTest {
@@ -14,7 +13,7 @@ public class PlayerTest {
 
         Player player = new Player("test");
         Stack<Card> cardsToChooseFrom = new Stack<Card>();
-        Card cardExpected = new Card("Copper", Card.Type.Money, 0, 1);
+        Card cardExpected = new Copper();
         cardsToChooseFrom.add(cardExpected);
 
         Card cardReal = player.selectCardsToBuy(cardsToChooseFrom);

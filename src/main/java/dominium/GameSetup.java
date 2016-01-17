@@ -1,5 +1,7 @@
 package dominium;
 
+import dominium.Cards.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
@@ -17,15 +19,12 @@ public class GameSetup {
         int numberOfCoppers = 60 - playerNumber * 7;
 
         int numberOfEstates = 12 - playerNumber * 3;
-        fillKingdomCards(new Card("Copper", Card.Type.Money, 0, 1), numberOfCoppers);
-        fillKingdomCards(new Card("Silver", Card.Type.Money, 3, 2), 40);
-        fillKingdomCards(new Card("Gold", Card.Type.Money, 6, 3), 30);
-        fillKingdomCards(new Card("Estate", Card.Type.Point, 2), numberOfEstates);
-        fillKingdomCards(new Card("Duchy", Card.Type.Point, 5), 12);
-        fillKingdomCards(new Card("Province", Card.Type.Point, 8), 12);
-
-
-        fillKingdomCards(new Card("Curse", Card.Type.Point, 0), 0);
+        fillKingdomCards(new Copper(), numberOfCoppers);
+        fillKingdomCards(new Silver(), 40);
+        fillKingdomCards(new Gold(), 30);
+        fillKingdomCards(new Estate(), numberOfEstates);
+        fillKingdomCards(new Duchy(), 12);
+        fillKingdomCards(new Province(), 12);
 
         return new GameState(kingdomCards);
     }

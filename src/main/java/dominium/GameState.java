@@ -1,5 +1,7 @@
 package dominium;
 
+import dominium.Cards.Card;
+
 import java.util.Collection;
 
 public class GameState {

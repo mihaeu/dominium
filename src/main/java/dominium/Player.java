@@ -1,5 +1,7 @@
 package dominium;
 
+import dominium.Cards.Card;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
