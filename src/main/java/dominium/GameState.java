@@ -3,6 +3,8 @@ package dominium;
 import dominium.Cards.Card;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.Stack;
 
 public class GameState {
     public static final int BUY_PHASE = 0;
@@ -11,11 +13,11 @@ public class GameState {
     public int buysLeft;
     public int coinsLeft;
     public int currentPhase;
-    private Collection<Collection<Card>> kingdomCards;
+    private Map<Class, Stack<Card>> kingdomCards;
 
     private Collection<Card> trashedCards;
 
-    public GameState(Collection<Collection<Card>> kingdomCards) {
+    public GameState(Map<Class, Stack<Card>> kingdomCards) {
         actionsLeft = 1;
         buysLeft = 1;
         coinsLeft = 0;
@@ -23,11 +25,7 @@ public class GameState {
         this.kingdomCards = kingdomCards;
     }
 
-    public Collection<Card> getTrashedCards() {
-        return trashedCards;
-    }
-
-    public void setTrashedCards(Collection<Card> trashedCards) {
-        this.trashedCards = trashedCards;
+    public Map<Class, Stack<Card>> getKingdomCards() {
+        return kingdomCards;
     }
 }

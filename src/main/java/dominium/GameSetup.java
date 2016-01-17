@@ -2,64 +2,43 @@ package dominium;
 
 import dominium.Cards.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Stack;
+import java.util.*;
 
 public class GameSetup {
     public static final int MIN_PLAYER_NUMBER = 1;
     public static final int MAX_PLAYER_NUMBER = 4;
 
-    private Collection<Collection<Card>> kingdomCards;
-
     public GameState initiateGameState(int playerNumber) {
-        kingdomCards = new ArrayList<Collection<Card>>();
-
-        //fill with basic Cards, always the same
         int numberOfCoppers = 60 - playerNumber * 7;
-
         int numberOfEstates = 12 - playerNumber * 3;
-        fillKingdomCards(new Copper(), numberOfCoppers);
-        fillKingdomCards(new Silver(), 40);
-        fillKingdomCards(new Gold(), 30);
-        fillKingdomCards(new Estate(), numberOfEstates);
-        fillKingdomCards(new Duchy(), 12);
-        fillKingdomCards(new Province(), 12);
+        int numberOfProvinces = 12 - ((4 - playerNumber) * 2);
+
+        Map<Class, Stack<Card>> kingdomCards = new HashMap<Class, Stack<Card>>();
+        kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
+        kingdomCards.put(Silver.class, createCardStack(new Silver(), 40));
+        kingdomCards.put(Gold.class, createCardStack(new Gold(), 30));
+        kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
+        kingdomCards.put(Duchy.class, createCardStack(new Duchy(), 12));
+        kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
 
         return new GameState(kingdomCards);
     }
 
-    private void fillKingdomCards(Card card, int numberOfCards) {
-        if (numberOfCards < 1) {
-            return;
-        }
-
+    private Stack<Card> createCardStack(Card card, int numberOfCards) {
         Stack<Card> cards = new Stack<Card>();
         for (int i = 0; i < numberOfCards; i++) {
             cards.add(card);
         }
-        kingdomCards.add(cards);
+        return cards;
     }
 
-//    private void initiateKingdomCardSets() {
-//        cardCollection = new ArrayList<Card>();
-//        cardCollection.add(new Card("Copper", Card.Type.Money, 0, 1));
-//        cardCollection.add(new Card("Silver", Card.Type.Money, 3, 2));
-//        cardCollection.add(new Card("Gold", Card.Type.Money, 6, 3));
-//        cardCollection.add(new Card("Estate", Card.Type.Point, 2));
-//        cardCollection.add(new Card("Duchy", Card.Type.Point, 5));
-//        cardCollection.add(new Card("Province", Card.Type.Point, 8));
-//        cardCollection.add(new Card("Curse", Card.Type.Point, 0));
-//    }
-
-    public ArrayList<Player> initiatePlayers(int playerNumber) {
+    public List<Player> initiatePlayers(int playerNumber) {
         ensureNotTooFewPlayers(playerNumber);
         ensureNotTooManyPlayers(playerNumber);
 
-        ArrayList<Player> playerCollection = new ArrayList<Player>();
-        while (playerNumber > 0) {
-            playerCollection.add(new Player(Integer.toString(playerNumber)));
-            --playerNumber;
+        List<Player> playerCollection = new ArrayList<Player>();
+        for (int i = 0; i < playerNumber; i++) {
+            playerCollection.add(new Player(Integer.toString(i + 1)));
         }
         return playerCollection;
     }

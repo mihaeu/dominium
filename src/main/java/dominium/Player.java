@@ -6,43 +6,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class Player {
 
     private String name;
-    private Collection<Card> handCards;
-    private Collection<Card> deckCards;
-    private Collection<Card> discardedCards;
+    private List<Card> handCards;
+    private Stack<Card> deckCards;
+    private Stack<Card> discardedCards;
 
     public Player(String name) {
         this.name = name;
+        deckCards = new Stack<Card>();
     }
-
-    public Collection<Card> getHandCards() {
-        return handCards;
-    }
-
-    public void setHandCards(Collection<Card> handCards) {
-        this.handCards = handCards;
-    }
-
-    public Collection<Card> getDeckCards() {
-        return deckCards;
-    }
-
-    public void setDeckCards(Collection<Card> deckCards) {
-        this.deckCards = deckCards;
-    }
-
-    public Collection<Card> getDiscardedCards() {
-        return discardedCards;
-    }
-
-    public void setDiscardedCards(Collection<Card> discardedCards) {
-        this.discardedCards = discardedCards;
-    }
-
 
     public void selectCardsToDiscard(int numberOfCardsToDiscard, Collection<Card> handCards) {
         System.out.println("Please choose " + numberOfCardsToDiscard + " cards to discard from your Hand");
@@ -61,14 +39,21 @@ public class Player {
             e.printStackTrace();
         }
 
-
         //todo read user input or impl observable
-
     }
 
-    public Card selectCardsToBuy(Stack<Card> cardCollection) {
-        Card card = cardCollection.pop();
-        System.out.println(name + " chose card " + card.getName());
-        return card;
+    public Card selectCardsToBuy(Map<Class, Stack<Card>> kingdomCards) {
+        int cardToPick = (int) (Math.random() * kingdomCards.size());
+        int index = 0;
+        for (Stack<Card> stack : kingdomCards.values()) {
+            if (index == cardToPick && !stack.empty()) {
+                Card card = stack.pop();
+                deckCards.push(card);
+                System.out.println(name + " chose card " + card.getName());
+                return card;
+            }
+            index++;
+        }
+        return null;
     }
 }
