@@ -2,6 +2,7 @@ package dominium;
 
 import dominium.Cards.Card;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -12,5 +13,5 @@ public abstract class Player {
         return name;
     }
 
-    public abstract Card selectCard(Map<Class, Stack<Card>> cards);
+    public abstract Card selectCard(List<Card> cards);
 }

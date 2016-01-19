@@ -17,15 +17,8 @@ public class RandomPlayer extends Player {
     }
 
     @Override
-    public Card selectCard(Map<Class, Stack<Card>> cards) {
+    public Card selectCard(List<Card> cards) {
         int cardToPick = (int) (Math.random() * cards.size());
-        int index = 0;
-        for (Stack<Card> stack : cards.values()) {
-            if (index == cardToPick && !stack.empty()) {
-                return stack.pop();
-            }
-            index++;
-        }
-        return null;
+        return cards.get(cardToPick);
     }
 }
