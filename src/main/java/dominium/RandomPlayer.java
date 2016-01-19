@@ -22,9 +22,7 @@ public class RandomPlayer extends Player {
         int index = 0;
         for (Stack<Card> stack : cards.values()) {
             if (index == cardToPick && !stack.empty()) {
-                Card card = stack.pop();
-                System.out.println(name + " chose card " + card.getName());
-                return card;
+                return stack.pop();
             }
             index++;
         }

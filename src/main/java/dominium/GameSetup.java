@@ -35,6 +35,8 @@ public class GameSetup {
             startCards.push(new Estate());
             startCards.push(new Estate());
             gameState.getDeckCards().put(player, startCards);
+            gameState.getHandCards().put(player, new Stack<Card>());
+            gameState.getDiscardCards().put(player, new Stack<Card>());
         }
 
         return gameState;

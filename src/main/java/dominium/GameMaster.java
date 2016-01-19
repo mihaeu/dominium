@@ -16,8 +16,9 @@ public class GameMaster {
     public Player startGame() {
         while (gameIsRunning()) {
             for (Player player : players) {
-                Card selectedCard = player.selectCard(gameState.getKingdomCards());
-                gameState.getDeckCards().get(player).push(selectedCard);
+                drawCards(player);
+                buyCard(player);
+                discardCards(player);
             }
         }
         return winner();
@@ -65,12 +66,42 @@ public class GameMaster {
      * This implementation should work, but actually it would be better for the
      * Collection to know how to shuffle itself.
      */
-    private Stack<Card> shuffleCards(Stack<Card> cards) {
-        List list = new ArrayList<Card>(cards);
+    private void shuffleDiscardedCards(Player player) {
+        System.out.println("Player" + player.getName() + ": Shuffling");
+        List list = new ArrayList<Card>(gameState.getDiscardCards().get(player));
         Collections.shuffle(list);
 
         Stack<Card> shuffledStack = new Stack<Card>();
         shuffledStack.addAll(list);
-        return shuffledStack;
+        gameState.getDiscardCards().put(player, shuffledStack);
+    }
+
+    private void drawCards(Player player) {
+        System.out.println("Player" + player.getName() + ": Drawing cards");
+        // not enough cards left in the deck
+        if (gameState.getDeckCards().get(player).size() < 5) {
+            shuffleDiscardedCards(player);
+            gameState.getDeckCards().get(player).addAll(gameState.getDiscardCards().get(player));
+            gameState.getDiscardCards().get(player).removeAllElements();
+        }
+
+        for (int i = 0; i < 5; i++) {
+            Card card = gameState.getDeckCards().get(player).pop();
+            gameState.getHandCards().get(player).push(card);
+        }
+    }
+
+    private void buyCard(Player player) {
+        System.out.println("Player" + player.getName() + ": Buying card");
+        Card selectedCard = player.selectCard(gameState.getKingdomCards());
+        gameState.getHandCards().get(player).push(selectedCard);
+    }
+
+    private void discardCards(Player player) {
+        System.out.println("Player" + player.getName() + ": Discarding cards");
+        gameState.getDiscardCards().get(player).addAll(
+                gameState.getHandCards().get(player)
+        );
+        gameState.getHandCards().get(player).removeAllElements();
     }
 }
