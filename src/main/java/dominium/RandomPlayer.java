@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-public class RandomPlayer implements Player {
+public class RandomPlayer extends Player {
 
-    private String name;
     private List<Card> handCards;
     private Stack<Card> deckCards;
     private Stack<Card> discardedCards;
@@ -60,9 +59,5 @@ public class RandomPlayer implements Player {
             index++;
         }
         return null;
-    }
-
-    public String getName() {
-        return name;
     }
 }
