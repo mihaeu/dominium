@@ -1,5 +1,7 @@
 package dominium;
 
+import dominium.Players.Player;
+import dominium.Players.RandomPlayer;
 import org.junit.Before;
 import org.junit.Test;
 

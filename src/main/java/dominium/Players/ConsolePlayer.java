@@ -1,4 +1,4 @@
-package dominium;
+package dominium.Players;
 
 import dominium.Cards.Card;
 

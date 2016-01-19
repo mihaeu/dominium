@@ -1,6 +1,8 @@
 package dominium;
 
 import dominium.Cards.*;
+import dominium.Players.Player;
+import dominium.Players.RandomPlayer;
 
 import java.util.*;
 

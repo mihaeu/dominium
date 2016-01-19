@@ -2,6 +2,8 @@ package dominium;
 
 import dominium.Cards.Card;
 import dominium.Cards.Copper;
+import dominium.Players.Player;
+import dominium.Players.RandomPlayer;
 import org.junit.Test;
 
 import java.util.ArrayList;

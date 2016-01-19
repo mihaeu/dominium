@@ -1,6 +1,7 @@
 package dominium;
 
 import dominium.Cards.*;
+import dominium.Players.Player;
 
 import java.util.*;
 
@@ -19,6 +20,7 @@ public class GameMaster {
                 drawCards(player);
                 buyCard(player);
                 discardCards(player);
+                System.out.println("_____________________________");
             }
         }
         return winner();

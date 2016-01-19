@@ -1,5 +1,9 @@
 package dominium;
 
+import dominium.Players.Player;
+import dominium.Players.RandomPlayer;
+import dominium.Players.TreasureOrProvincePlayer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +13,8 @@ public class Main {
 //        List<Player> players = gameSetup.initiatePlayers(2);
         List<Player> players = new ArrayList<Player>();
         players.add(new RandomPlayer("1"));
-        players.add(new ConsolePlayer("Me"));
+        players.add(new TreasureOrProvincePlayer("2"));
+//        players.add(new ConsolePlayer("Me"));
         GameState state = gameSetup.initiateGameState(players);
         GameMaster gameMaster = new GameMaster(players, state);
         Player winner = gameMaster.startGame();
