@@ -16,7 +16,7 @@ public class GameMaster {
     public Player startGame() {
         while (gameIsRunning()) {
             for (Player player : players) {
-                player.selectCardsToBuy(gameState.getKingdomCards());
+                player.selectCard(gameState.getKingdomCards());
             }
         }
         return winner();

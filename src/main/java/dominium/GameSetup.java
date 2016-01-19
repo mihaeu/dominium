@@ -38,7 +38,7 @@ public class GameSetup {
 
         List<Player> playerCollection = new ArrayList<Player>();
         for (int i = 0; i < playerNumber; i++) {
-            playerCollection.add(new Player(Integer.toString(i + 1)));
+            playerCollection.add(new RandomPlayer(Integer.toString(i + 1)));
         }
         return playerCollection;
     }
