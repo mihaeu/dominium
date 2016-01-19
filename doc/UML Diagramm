@@ -39,7 +39,7 @@ class src.main.GameSetup {
 
 class src.main.Player {
   +pickCard(CardCollection from, Type type, Count count)
-  +decideIfDefende(src.main.Card attackCardForInfo)
+  +decideIfDefender(src.main.Card attackCardForInfo)
 }
 
 class Target {
