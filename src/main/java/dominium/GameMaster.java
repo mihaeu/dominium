@@ -16,7 +16,8 @@ public class GameMaster {
     public Player startGame() {
         while (gameIsRunning()) {
             for (Player player : players) {
-                player.selectCard(gameState.getKingdomCards());
+                Card selectedCard = player.selectCard(gameState.getKingdomCards());
+                gameState.getDeckCards().get(player).push(selectedCard);
             }
         }
         return winner();
@@ -60,68 +61,16 @@ public class GameMaster {
         return gameState.getKingdomCards().get(Province.class).size() == 0;
     }
 
-
-    public void discardCard(int numberOfCardsToDiscard) {
-        Player currentPlayer = players.get(0);
-//        Collection<Card> handCards = currentPlayer.getHandCards();
-//        currentPlayer.selectCardsToDiscard(numberOfCardsToDiscard, handCards);
-    }
-
-
-    public void drawCard(int numberOfCardsToDraw) {
-//        Player currentPlayer = players.get(0);
-//        Collection<Card> handCards = currentPlayer.getHandCards();
-//        Collection<Card> deckCards = currentPlayer.getDeckCards();
-//        Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
-//
-//        while (numberOfCardsToDraw > 0) {
-//            --numberOfCardsToDraw;
-//
-//            int possibleCardsToDraw = deckCards.size();
-//            if (possibleCardsToDraw == 0) {
-//                shuffleDiscardedCardsIntoDeck();
-//            }
-//
-//            possibleCardsToDraw = deckCards.size();
-//
-//            if (possibleCardsToDraw != 0) {
-//                Iterator<Card> iterator = deckCards.iterator();
-//                Card cardToDraw = iterator.next();
-//                handCards.add(cardToDraw);
-//                deckCards.remove(cardToDraw);
-//            }
-//        }
-    }
-
-    public void revealCard(int numberOfCardsToDraw) {
-
-    }
-
-//    public boolean playerHasCard(Player player, Card card) {
-//        Collection<Card> handCards = player.getHandCards();
-//        return handCards.contains(card);
-//    }
-//
-//    private void shuffleDiscardedCardsIntoDeck() {
-//        Player currentPlayer = players.get(0);
-//        Collection<Card> deckCards = currentPlayer.getDeckCards();
-//        Collection<Card> discardedCards = currentPlayer.getDiscardedCards();
-//
-//        if (deckCards.size() == 0) {
-//            deckCards = discardedCards;
-//            discardedCards = new ArrayList<Card>();
-//            shuffleCards(deckCards);
-//        }
-//    }
-
     /**
      * This implementation should work, but actually it would be better for the
      * Collection to know how to shuffle itself.
-     *
-     * @param deckCards
      */
-    private void shuffleCards(Collection<Card> deckCards) {
-        List list = new ArrayList<Card>(deckCards);
+    private Stack<Card> shuffleCards(Stack<Card> cards) {
+        List list = new ArrayList<Card>(cards);
         Collections.shuffle(list);
+
+        Stack<Card> shuffledStack = new Stack<Card>();
+        shuffledStack.addAll(list);
+        return shuffledStack;
     }
 }

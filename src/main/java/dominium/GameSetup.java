@@ -8,10 +8,10 @@ public class GameSetup {
     public static final int MIN_PLAYER_NUMBER = 1;
     public static final int MAX_PLAYER_NUMBER = 4;
 
-    public GameState initiateGameState(int playerNumber) {
-        int numberOfCoppers = 60 - playerNumber * 7;
-        int numberOfEstates = 12 - playerNumber * 3;
-        int numberOfProvinces = 12 - ((4 - playerNumber) * 2);
+    public GameState initiateGameState(List<Player> players) {
+        int numberOfCoppers = 60 - players.size() * 7;
+        int numberOfEstates = 12 - players.size() * 3;
+        int numberOfProvinces = 12 - ((4 - players.size()) * 2);
 
         Map<Class, Stack<Card>> kingdomCards = new HashMap<Class, Stack<Card>>();
         kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
@@ -21,7 +21,24 @@ public class GameSetup {
         kingdomCards.put(Duchy.class, createCardStack(new Duchy(), 12));
         kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
 
-        return new GameState(kingdomCards);
+        Stack<Card> startCards = new Stack<Card>();
+        startCards.push(new Copper());
+        startCards.push(new Copper());
+        startCards.push(new Copper());
+        startCards.push(new Copper());
+        startCards.push(new Copper());
+        startCards.push(new Copper());
+        startCards.push(new Copper());
+        startCards.push(new Estate());
+        startCards.push(new Estate());
+        startCards.push(new Estate());
+
+        GameState gameState = new GameState(kingdomCards);
+        for (Player player : players) {
+            gameState.getDeckCards().put(player, startCards);
+        }
+
+        return gameState;
     }
 
     private Stack<Card> createCardStack(Card card, int numberOfCards) {

@@ -3,15 +3,21 @@ package dominium;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class GameSetupTest {
 
     private GameSetup setup;
+    private List<Player> players;
 
     @Before
     public void setUp() {
         setup = new GameSetup();
+        players = new ArrayList<Player>();
+        players.add(new RandomPlayer("Test"));
     }
 
     @Test
@@ -21,7 +27,7 @@ public class GameSetupTest {
 
     @Test
     public void testSetUpGame() throws Exception {
-        assertNotNull(setup.initiateGameState(1));
+        assertNotNull(setup.initiateGameState(players));
     }
 
     @Test(expected=IllegalArgumentException.class)
