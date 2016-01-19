@@ -21,20 +21,19 @@ public class GameSetup {
         kingdomCards.put(Duchy.class, createCardStack(new Duchy(), 12));
         kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
 
-        Stack<Card> startCards = new Stack<Card>();
-        startCards.push(new Copper());
-        startCards.push(new Copper());
-        startCards.push(new Copper());
-        startCards.push(new Copper());
-        startCards.push(new Copper());
-        startCards.push(new Copper());
-        startCards.push(new Copper());
-        startCards.push(new Estate());
-        startCards.push(new Estate());
-        startCards.push(new Estate());
-
         GameState gameState = new GameState(kingdomCards);
         for (Player player : players) {
+            Stack<Card> startCards = new Stack<Card>();
+            startCards.push(new Copper());
+            startCards.push(new Copper());
+            startCards.push(new Copper());
+            startCards.push(new Copper());
+            startCards.push(new Copper());
+            startCards.push(new Copper());
+            startCards.push(new Copper());
+            startCards.push(new Estate());
+            startCards.push(new Estate());
+            startCards.push(new Estate());
             gameState.getDeckCards().put(player, startCards);
         }
 

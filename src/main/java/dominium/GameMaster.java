@@ -29,12 +29,12 @@ public class GameMaster {
         Player winningPlayer = null;
         for (Player player : players) {
             points = 0;
-            for (Card card : player.getDeckCards()) {
+            for (Card card : gameState.getDeckCards().get(player)) {
                 if (card instanceof VictoryCard) {
                     points += ((VictoryCard) card).getVictoryPoints();
                 }
             }
-            System.out.println(points);
+            System.out.println("Player " + player.getName() + " points: " + points);
             if (points > maxPoints) {
                 maxPoints = points;
                 winningPlayer = player;
