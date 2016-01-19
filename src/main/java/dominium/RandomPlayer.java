@@ -13,7 +13,7 @@ import java.util.Stack;
 public class RandomPlayer extends Player {
 
     public RandomPlayer(String name) {
-        this.name = name;
+        this.name = "Random" + name;
     }
 
     @Override
