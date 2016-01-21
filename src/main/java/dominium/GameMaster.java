@@ -15,6 +15,7 @@ public class GameMaster {
     }
 
     public Player startGame() {
+        int numberOfRounds = 0;
         while (gameIsRunning()) {
             for (Player player : players) {
                 drawCards(player);
@@ -22,14 +23,17 @@ public class GameMaster {
                 discardCards(player);
                 System.out.println("_____________________________");
             }
+            ++numberOfRounds;
         }
-        return winner();
+
+        return winner(numberOfRounds);
     }
 
-    private Player winner() {
+    private Player winner(int numberOfRounds) {
         int points = 0;
         int maxPoints = 0;
         Player winningPlayer = null;
+        System.out.println("Game ends after " + numberOfRounds + " rounds");
         for (Player player : players) {
             points = 0;
             for (Card card : gameState.getDeckCards().get(player)) {
