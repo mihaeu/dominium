@@ -21,7 +21,6 @@ public class ConsolePlayer extends Player {
                 System.out.println("Invalid option, please try again: ");
             }
         }
-
         return card;
     }
 

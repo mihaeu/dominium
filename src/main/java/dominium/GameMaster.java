@@ -79,46 +79,52 @@ public class GameMaster {
     }
 
     private void drawCards(Player player) {
-        System.out.println("Player" + player.getName() + ": Drawing cards");
+        System.out.println("Player " + player.getName() + ": Drawing cards");
+        Stack<Card> deckCards = gameState.getDeckCards().get(player);
+        Stack<Card> handCards = gameState.getHandCards().get(player);
+
         // not enough cards left in the deck
-        if (gameState.getDeckCards().get(player).size() < 5) {
+        if (deckCards.size() < 5) {
             shuffleDiscardedCards(player);
-            gameState.getDeckCards().get(player).addAll(gameState.getDiscardCards().get(player));
+            deckCards.addAll(gameState.getDiscardCards().get(player));
             gameState.getDiscardCards().get(player).removeAllElements();
         }
 
         for (int i = 0; i < 5; i++) {
-            Card card = gameState.getDeckCards().get(player).pop();
-            gameState.getHandCards().get(player).push(card);
+            Card card = deckCards.pop();
+            handCards.push(card);
         }
     }
 
     private void buyCard(Player player) {
         List<Card> cardBuyingOptions = getCardBuyingOptions(player);
         Card selectedCard = player.selectCard(cardBuyingOptions);
+        Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
+        Stack<Card> handCards = gameState.getHandCards().get(player);
 
         // remove the selected card from the kingdom card set
-        gameState.getKingdomCards().get(selectedCard.getClass()).pop();
-        gameState.getHandCards().get(player).push(selectedCard);
+        selectedKingdomCardStack.pop();
+        handCards.push(selectedCard);
         System.out.println("Player" + player.getName()
-                + ": Buying card " + selectedCard.getName()
-                + " Cost: " + selectedCard.getCost()
-                + " Money: " + getAvailableMoney(player)
+                        + ": Buying card " + selectedCard.getName()
+                        + " Cost: " + selectedCard.getCost()
+                        + " Money: " + getAvailableMoney(player)
         );
     }
 
     private void discardCards(Player player) {
         System.out.println("Player" + player.getName() + ": Discarding cards");
-        gameState.getDiscardCards().get(player).addAll(
-                gameState.getHandCards().get(player)
-        );
-        gameState.getHandCards().get(player).removeAllElements();
+        Stack<Card> discardedCards = gameState.getDiscardCards().get(player);
+        Stack<Card> handCards = gameState.getHandCards().get(player);
+
+        discardedCards.addAll(handCards);
+        handCards.removeAllElements();
     }
 
     private List<Card> getCardBuyingOptions(Player player) {
         int moneyAvailable = getAvailableMoney(player);
         List<Card> cardOptions = new ArrayList<Card>();
-        for (Stack<Card> cardStack: gameState.getKingdomCards().values()) {
+        for (Stack<Card> cardStack : gameState.getKingdomCards().values()) {
             if (!cardStack.empty() && cardStack.peek().getCost() <= moneyAvailable) {
                 cardOptions.add(cardStack.peek());
             }
@@ -127,8 +133,9 @@ public class GameMaster {
     }
 
     private int getAvailableMoney(Player player) {
+        Stack<Card> handCards = gameState.getHandCards().get(player);
         int moneyAvailable = 0;
-        for (Card card : gameState.getHandCards().get(player)) {
+        for (Card card : handCards) {
             if (card instanceof TreasureCard) {
                 moneyAvailable += ((TreasureCard) card).getValue();
             }
