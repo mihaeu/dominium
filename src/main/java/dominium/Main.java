@@ -18,6 +18,10 @@ public class Main {
         GameState state = gameSetup.initiateGameState(players);
         GameMaster gameMaster = new GameMaster(players, state);
         Player winner = gameMaster.startGame();
-        System.out.println("Player " + winner.getName() + " won.");
+        if(winner != null) {
+            System.out.println("Player " + winner.getName() + " won.");
+        }else{
+            System.out.println("The Game ends in a tie.");
+        }
     }
 }

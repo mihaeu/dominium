@@ -16,38 +16,95 @@ public class GameMaster {
 
     public Player startGame() {
         int numberOfRounds = 0;
-        while (gameIsRunning()) {
+        while (true) {
+            ++numberOfRounds;
             for (Player player : players) {
                 drawCards(player);
                 buyCard(player);
                 discardCards(player);
                 System.out.println("_____________________________");
+                if (!gameIsRunning()) {
+                    return winner(numberOfRounds, player);
+                }
             }
-            ++numberOfRounds;
         }
-
-        return winner(numberOfRounds);
     }
 
-    private Player winner(int numberOfRounds) {
+    private Player winner(int numberOfRounds, Player playerThatEndedTheGame) {
         int points = 0;
         int maxPoints = 0;
-        Player winningPlayer = null;
+        Player lastPlayerWithMaxPoints = null;
+        Map<Player, Integer> playerVictoryPointMap = new HashMap<Player, Integer>();
         System.out.println("Game ends after " + numberOfRounds + " rounds");
+
         for (Player player : players) {
             points = 0;
-            for (Card card : gameState.getDeckCards().get(player)) {
+            Stack<Card> allCardsOfPlayer = getAllCards(player);
+            for (Card card : allCardsOfPlayer) {
                 if (card instanceof VictoryCard) {
                     points += ((VictoryCard) card).getVictoryPoints();
                 }
             }
             System.out.println("Player " + player.getName() + " points: " + points);
-            if (points > maxPoints) {
+            playerVictoryPointMap.put(player, points);
+            if (points >= maxPoints) {
                 maxPoints = points;
-                winningPlayer = player;
+                lastPlayerWithMaxPoints = player;
             }
         }
-        return winningPlayer;
+
+        Player firstPlayerwithMaxPoints = getFirstPlayerWithMaxPoints(maxPoints,playerVictoryPointMap);
+        int indexOfFirstPlayer = players.indexOf(firstPlayerwithMaxPoints);
+        int indexOfLastPlayer = players.indexOf(lastPlayerWithMaxPoints);
+
+        //currently working on that
+
+        //One Player wins
+        if (numberOfPlayersWithMaxPoints(maxPoints, playerVictoryPointMap) == 1 || differenceInTurnNumbersBetweenTyingPlayers(lastPlayerWithMaxPoints, playerThatEndedTheGame)) {
+            return lastPlayerWithMaxPoints;
+        }
+
+        //Tie
+        return null;
+
+    }
+
+    private Player getFirstPlayerWithMaxPoints(int maxPoints, Map<Player, Integer> playerVictoryPointMap) {
+        for(Player player: players) {
+            if (playerVictoryPointMap.get(player) == maxPoints) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    private boolean differenceInTurnNumbersBetweenTyingPlayers(Player lastPlayerWithMaxPoints, Player playerThatEndedTheGame) {
+
+        int indexOfWinningPlayer = players.indexOf(lastPlayerWithMaxPoints);
+        int indexOfEndingPlayer = players.indexOf(playerThatEndedTheGame);
+
+        return indexOfWinningPlayer <= indexOfEndingPlayer;
+    }
+
+    private int numberOfPlayersWithMaxPoints(int maxPoints, Map<Player, Integer> playerVictoryPointMap) {
+        int numberOfTieingPlayers = 0;
+        for (Map.Entry<Player, Integer> entry : playerVictoryPointMap.entrySet()) {
+            if (entry.getValue() == maxPoints) {
+                ++numberOfTieingPlayers;
+            }
+        }
+        return numberOfTieingPlayers;
+    }
+
+    private Stack<Card> getAllCards(Player player) {
+        Stack<Card> allCardsStack = new Stack<Card>();
+        Stack<Card> handCards = gameState.getHandCards().get(player);
+        Stack<Card> deckCards = gameState.getDeckCards().get(player);
+        Stack<Card> discardedCards = gameState.getHandCards().get(player);
+        allCardsStack.addAll(handCards);
+        allCardsStack.addAll(deckCards);
+        allCardsStack.addAll(discardedCards);
+        return allCardsStack;
     }
 
     private boolean gameIsRunning() {
