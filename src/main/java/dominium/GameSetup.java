@@ -2,13 +2,10 @@ package dominium;
 
 import dominium.Cards.*;
 import dominium.Players.Player;
-import dominium.Players.RandomPlayer;
 
 import java.util.*;
 
 public class GameSetup {
-    public static final int MIN_PLAYER_NUMBER = 1;
-    public static final int MAX_PLAYER_NUMBER = 4;
     public static final int NUMBER_OF_VICTORY_CARDS = 12;
     public static final int NUMBER_COPPER_START_HAND = 7;
     public static final int NUMBER_ESTATES_START_HAND = 3;
@@ -19,7 +16,6 @@ public class GameSetup {
     public GameState initiateGameState(List<Player> players) {
         int numberOfCoppers = TOTAL_NUMBER_OF_COPPER - players.size() * NUMBER_COPPER_START_HAND;
         int numberOfEstates = NUMBER_OF_VICTORY_CARDS - players.size() * NUMBER_ESTATES_START_HAND;
-        //Change here if more than 4 players allowed
         int numberOfProvinces = NUMBER_OF_VICTORY_CARDS - ((4 - players.size()) * 2);
 
         Map<Class, Stack<Card>> kingdomCards = new HashMap<Class, Stack<Card>>();
@@ -66,28 +62,5 @@ public class GameSetup {
             cards.add(card);
         }
         return cards;
-    }
-
-    public List<Player> initiatePlayers(int playerNumber) {
-        ensureNotTooFewPlayers(playerNumber);
-        ensureNotTooManyPlayers(playerNumber);
-
-        List<Player> playerCollection = new ArrayList<Player>();
-        for (int i = 0; i < playerNumber; i++) {
-            playerCollection.add(new RandomPlayer(Integer.toString(i + 1)));
-        }
-        return playerCollection;
-    }
-
-    private void ensureNotTooManyPlayers(int playerNumber) {
-        if (playerNumber > MAX_PLAYER_NUMBER) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private void ensureNotTooFewPlayers(int playerNumber) {
-        if (playerNumber < MIN_PLAYER_NUMBER) {
-            throw new IllegalArgumentException();
-        }
     }
 }

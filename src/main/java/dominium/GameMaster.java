@@ -54,7 +54,8 @@ public class GameMaster {
                     points += ((VictoryCard) card).getVictoryPoints();
                 }
             }
-            System.out.println("Player " + player.getName() + " points: " + points);
+            int numberOfRoundsPlayedByThisPlayer = gameState.getTurnsPlayedPerPlayer().get(player);
+            System.out.println("Player " + player.getName() + " points: " + points + " cards: " + allCardsOfPlayer.size() + " turns: " + numberOfRoundsPlayedByThisPlayer);
             playerVictoryPointMap.put(player, points);
             if (points >= maxPoints) {
                 maxPoints = points;

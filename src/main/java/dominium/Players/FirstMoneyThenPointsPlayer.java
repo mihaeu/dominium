@@ -36,10 +36,12 @@ public class FirstMoneyThenPointsPlayer extends AIPlayer {
         } else if (hasCard(cards, Silver.class) && numberOfRounds <= 10) {
             cardToPick = findCard(cards, Silver.class);
             ++goldOrSilverCards;
-        }else if (hasCard(cards, Estate.class)) {
+        } else if (hasCard(cards, Estate.class) && numberOfRounds >= 15) {
             cardToPick = findCard(cards, Estate.class);
-            ++goldOrSilverCards;
+            ++victoryCards;
         }
+
+
         return cardToPick;
     }
 

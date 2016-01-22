@@ -11,8 +11,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<Player> players = new ArrayList<Player>();
-        players.add(new FirstMoneyThenPointsPlayer("1"));
-        players.add(new TreasureOrProvincePlayer("2"));
+        players.add(new FirstMoneyThenPointsPlayer("1 Stef "));
+        players.add(new TreasureOrProvincePlayer("2 Michi"));
         //        players.add(new ConsolePlayer("Me"));
         launchAndResolveWholeGame(players);
     }
