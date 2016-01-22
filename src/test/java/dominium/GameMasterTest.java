@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominium.Players.FirstMoneyThenPointsPlayer;
+import dominium.Players.NoBuysPlayer;
 import dominium.Players.Player;
 import dominium.Players.ThreePointsFirstRoundNoActionPlayer;
 import dominium.Players.ThreePointsPlayer;
@@ -23,7 +24,19 @@ public class GameMasterTest {
     public void setUp() {
         setup = new GameSetup();
         players = new ArrayList<Player>();
+    }
 
+
+    @Test
+    public void winningByPointsTest() {
+        Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
+        players.add(playerThatWillWin);
+        players.add(new NoBuysPlayer("2"));
+        state = setup.initiateGameState(players);
+        gameMaster = new GameMaster(players,state);
+        winningPlayers = gameMaster.startGame();
+        assertTrue(winningPlayers.size() == 1);
+        assertTrue(winningPlayers.get(0) == playerThatWillWin);
     }
 
     @Test
@@ -39,7 +52,7 @@ public class GameMasterTest {
     @Test
     public void pointTieButWinningByTurnTest() {
         players.add(new ThreePointsFirstRoundNoActionPlayer("1"));
-        Player playerThatWillWin = new ThreePointsPlayer("2");
+        Player playerThatWillWin = new NoBuysPlayer("2");
         players.add(playerThatWillWin);
         state = setup.initiateGameState(players);
         gameMaster = new GameMaster(players,state);
@@ -48,18 +61,19 @@ public class GameMasterTest {
         assertTrue(winningPlayers.get(0) == playerThatWillWin);
     }
 
-    @Test
-    public void winningByPointsTest() {
+
+/*    @Test
+    public void winningByPointsTestFourPlayers() {
         Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
         players.add(playerThatWillWin);
         players.add(new ThreePointsPlayer("2"));
+        players.add(new ThreePointsPlayer("3"));
+        players.add(new ThreePointsPlayer("4"));
         state = setup.initiateGameState(players);
         gameMaster = new GameMaster(players,state);
         winningPlayers = gameMaster.startGame();
         assertTrue(winningPlayers.size() == 1);
         assertTrue(winningPlayers.get(0) == playerThatWillWin);
-    }
-
-    
+    }*/
 
 }
