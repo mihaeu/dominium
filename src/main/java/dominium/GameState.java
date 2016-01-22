@@ -8,7 +8,7 @@ import java.util.*;
 public class GameState {
     private Map<Class, Stack<Card>> kingdomCards;
     private Map<Player, Stack<Card>> deckCards;
-    private Map<Player, Stack<Card>> handCards;
+    private Map<Player, List<Card>> handCards;
     private Map<Player, Stack<Card>> discardCards;
     private Map<Player, Integer> turnsPlayedPerPlayer;
 
@@ -16,7 +16,7 @@ public class GameState {
         this.kingdomCards = kingdomCards;
 
         deckCards = new HashMap<Player, Stack<Card>>();
-        handCards = new HashMap<Player, Stack<Card>>();
+        handCards = new HashMap<Player, List<Card>>();
         discardCards = new HashMap<Player, Stack<Card>>();
         turnsPlayedPerPlayer = new HashMap<Player, Integer>();
     }
@@ -33,7 +33,7 @@ public class GameState {
         return deckCards;
     }
 
-    public Map<Player, Stack<Card>> getHandCards() {
+    public Map<Player, List<Card>> getHandCards() {
         return handCards;
     }
 

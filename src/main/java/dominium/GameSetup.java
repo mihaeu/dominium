@@ -52,9 +52,9 @@ public class GameSetup {
             }
 
             gameState.getDeckCards().put(player, startCards);
-            gameState.getHandCards().put(player, new Stack<Card>());
+            gameState.getHandCards().put(player, handCards);
             gameState.getDiscardCards().put(player, new Stack<Card>());
-            gameState.getTurnsPlayedPerPlayer().put(player,0);
+            gameState.getTurnsPlayedPerPlayer().put(player, 0);
         }
 
         return gameState;

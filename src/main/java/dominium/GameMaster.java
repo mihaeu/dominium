@@ -32,10 +32,10 @@ public class GameMaster {
     }
 
     private void increaseTurnsPlayedByThisPlayer(Player player) {
-        Map<Player,Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
+        Map<Player, Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
         int turnsPlayed = turnsPlayedPerPlayer.get(player);
         ++turnsPlayed;
-        turnsPlayedPerPlayer.put(player,turnsPlayed);
+        turnsPlayedPerPlayer.put(player, turnsPlayed);
     }
 
     private List<Player> winner(int numberOfRounds, Player playerThatEndedTheGame) {
@@ -77,18 +77,18 @@ public class GameMaster {
 
     private List<Player> getPlayersWithMaxPointsAndMinTurns(List<Player> allPlayersWithMaxPoints) {
         List<Player> playersWithMaxPointsAndMinTurns = new ArrayList<Player>();
-        Map<Player,Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
+        Map<Player, Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
         int minNumberOfTurns = 100000;
-        for (Player player: allPlayersWithMaxPoints){
-           int turnsPlayedByThisPlayer = turnsPlayedPerPlayer.get(player);
-            if(turnsPlayedByThisPlayer <= minNumberOfTurns){
+        for (Player player : allPlayersWithMaxPoints) {
+            int turnsPlayedByThisPlayer = turnsPlayedPerPlayer.get(player);
+            if (turnsPlayedByThisPlayer <= minNumberOfTurns) {
                 minNumberOfTurns = turnsPlayedByThisPlayer;
             }
         }
 
-        for (Player player: allPlayersWithMaxPoints){
+        for (Player player : allPlayersWithMaxPoints) {
             int turnsPlayedByThisPlayer = turnsPlayedPerPlayer.get(player);
-            if(turnsPlayedByThisPlayer <= minNumberOfTurns){
+            if (turnsPlayedByThisPlayer <= minNumberOfTurns) {
                 playersWithMaxPointsAndMinTurns.add(player);
             }
         }
@@ -107,9 +107,9 @@ public class GameMaster {
 
     private List<Card> getAllCards(Player player) {
         List<Card> allCardsStack = new ArrayList<Card>();
-        Stack<Card> handCards = gameState.getHandCards().get(player);
+        List<Card> handCards = gameState.getHandCards().get(player);
         Stack<Card> deckCards = gameState.getDeckCards().get(player);
-        Stack<Card> discardedCards = gameState.getHandCards().get(player);
+        Stack<Card> discardedCards = gameState.getDiscardCards().get(player);
         allCardsStack.addAll(handCards);
         allCardsStack.addAll(deckCards);
         allCardsStack.addAll(discardedCards);
@@ -151,7 +151,7 @@ public class GameMaster {
     private void drawCards(Player player) {
         System.out.println("Player " + player.getName() + ": Drawing cards");
         Stack<Card> deckCards = gameState.getDeckCards().get(player);
-        Stack<Card> handCards = gameState.getHandCards().get(player);
+        List<Card> handCards = gameState.getHandCards().get(player);
 
         // not enough cards left in the deck
         if (deckCards.size() < 5) {
@@ -162,7 +162,7 @@ public class GameMaster {
 
         for (int i = 0; i < 5; i++) {
             Card card = deckCards.pop();
-            handCards.push(card);
+            handCards.add(card);
         }
     }
 
@@ -170,11 +170,11 @@ public class GameMaster {
         List<Card> cardBuyingOptions = getCardBuyingOptions(player);
         Card selectedCard = player.selectCard(cardBuyingOptions);
         Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
-        Stack<Card> handCards = gameState.getHandCards().get(player);
+        List<Card> handCards = gameState.getHandCards().get(player);
 
         // remove the selected card from the kingdom card set
         selectedKingdomCardStack.pop();
-        handCards.push(selectedCard);
+        handCards.add(selectedCard);
         System.out.println("Player" + player.getName()
                         + ": Buying card " + selectedCard.getName()
                         + " Cost: " + selectedCard.getCost()
@@ -185,10 +185,10 @@ public class GameMaster {
     private void discardCards(Player player) {
         System.out.println("Player" + player.getName() + ": Discarding cards");
         Stack<Card> discardedCards = gameState.getDiscardCards().get(player);
-        Stack<Card> handCards = gameState.getHandCards().get(player);
+        List<Card> handCards = gameState.getHandCards().get(player);
 
         discardedCards.addAll(handCards);
-        handCards.removeAllElements();
+        handCards.clear();
     }
 
     private List<Card> getCardBuyingOptions(Player player) {
@@ -203,7 +203,7 @@ public class GameMaster {
     }
 
     private int getAvailableMoney(Player player) {
-        Stack<Card> handCards = gameState.getHandCards().get(player);
+        List<Card> handCards = gameState.getHandCards().get(player);
         int moneyAvailable = 0;
         for (Card card : handCards) {
             if (card instanceof TreasureCard) {
