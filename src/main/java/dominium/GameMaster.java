@@ -169,6 +169,7 @@ public class GameMaster {
     private void buyCard(Player player) {
         List<Card> cardBuyingOptions = getCardBuyingOptions(player);
         Card selectedCard = player.selectCard(cardBuyingOptions);
+        if(selectedCard != null){
         Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
         List<Card> handCards = gameState.getHandCards().get(player);
 
@@ -178,8 +179,12 @@ public class GameMaster {
         System.out.println("Player" + player.getName()
                         + ": Buying card " + selectedCard.getName()
                         + " Cost: " + selectedCard.getCost()
-                        + " Money: " + getAvailableMoney(player)
-        );
+                        + " Money: " + getAvailableMoney(player));
+        }else{
+            System.out.println("Player" + player.getName()
+                    + " Chose not to buy a card "
+                    + " Money: " + getAvailableMoney(player));
+        }
     }
 
     private void discardCards(Player player) {

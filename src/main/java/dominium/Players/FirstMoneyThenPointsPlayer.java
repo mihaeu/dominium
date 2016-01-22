@@ -21,19 +21,24 @@ public class FirstMoneyThenPointsPlayer extends AIPlayer {
 
     @Override
     public Card selectCard(List<Card> cards) {
+        ++numberOfRounds;
+
         Card cardToPick = null;
         if (hasCard(cards, Province.class)) {
             cardToPick = findCard(cards, Province.class);
-        } else if (hasCard(cards, Gold.class)) {
+            ++victoryCards;
+        } else if (hasCard(cards, Gold.class) && goldOrSilverCards <= 5) {
             cardToPick = findCard(cards, Gold.class);
-        } else if (hasCard(cards, Silver.class)) {
-            cardToPick = findCard(cards, Silver.class);
-        } else if (hasCard(cards, Copper.class)) {
-            cardToPick = findCard(cards, Copper.class);
+            ++goldOrSilverCards;
         } else if (hasCard(cards, Duchy.class)) {
             cardToPick = findCard(cards, Duchy.class);
-        } else if (hasCard(cards, Estate.class)) {
+            ++victoryCards;
+        } else if (hasCard(cards, Silver.class) && numberOfRounds <= 10) {
+            cardToPick = findCard(cards, Silver.class);
+            ++goldOrSilverCards;
+        }else if (hasCard(cards, Estate.class)) {
             cardToPick = findCard(cards, Estate.class);
+            ++goldOrSilverCards;
         }
         return cardToPick;
     }

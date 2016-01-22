@@ -1,5 +1,6 @@
 package dominium;
 
+import dominium.Players.FirstMoneyThenPointsPlayer;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import dominium.Players.TreasureOrProvincePlayer;
@@ -10,16 +11,15 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<Player> players = new ArrayList<Player>();
-        players.add(new RandomPlayer("1"));
+        players.add(new FirstMoneyThenPointsPlayer("1"));
         players.add(new TreasureOrProvincePlayer("2"));
+        //        players.add(new ConsolePlayer("Me"));
         launchAndResolveWholeGame(players);
     }
 
     //Lets Test And Mock the shit out of this!
     public static void launchAndResolveWholeGame(List<Player> players) {
         GameSetup gameSetup = new GameSetup();
-//        List<Player> players = gameSetup.initiatePlayers(2);
-//        players.add(new ConsolePlayer("Me"));
         GameState state = gameSetup.initiateGameState(players);
         GameMaster gameMaster = new GameMaster(players, state);
         List<Player> winners = gameMaster.startGame();
