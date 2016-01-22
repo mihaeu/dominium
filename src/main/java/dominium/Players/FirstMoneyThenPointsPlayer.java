@@ -10,7 +10,7 @@ import dominium.Cards.Gold;
 import dominium.Cards.Province;
 import dominium.Cards.Silver;
 
-public class FirstMoneyThenPointsPlayer extends Player {
+public class FirstMoneyThenPointsPlayer extends AIPlayer {
     private int goldOrSilverCards = 0;
     private int victoryCards = 0;
     private int numberOfRounds = 0;
@@ -38,21 +38,4 @@ public class FirstMoneyThenPointsPlayer extends Player {
         return cardToPick;
     }
 
-    private boolean hasCard(List<Card> cards, Class search) {
-        for (Card card : cards) {
-            if (card.getClass() == search) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Card findCard(List<Card> cards, Class search) {
-        for (Card card : cards) {
-            if (card.getClass() == search) {
-                return card;
-            }
-        }
-        return null;
-    }
 }

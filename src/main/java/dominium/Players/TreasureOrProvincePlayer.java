@@ -4,7 +4,7 @@ import dominium.Cards.*;
 
 import java.util.List;
 
-public class TreasureOrProvincePlayer extends Player {
+public class TreasureOrProvincePlayer extends AIPlayer {
     public TreasureOrProvincePlayer(String name) {
         this.name = name;
     }
@@ -26,23 +26,5 @@ public class TreasureOrProvincePlayer extends Player {
             cardToPick = findCard(cards, Estate.class);
         }
         return cardToPick;
-    }
-
-    private boolean hasCard(List<Card> cards, Class search) {
-        for (Card card : cards) {
-            if (card.getClass() == search) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Card findCard(List<Card> cards, Class search) {
-        for (Card card : cards) {
-            if (card.getClass() == search) {
-                return card;
-            }
-        }
-        return null;
     }
 }
