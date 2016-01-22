@@ -12,18 +12,47 @@ import static org.junit.Assert.*;
 
 public class GameSetupTest {
 
-    private GameSetup setup;
+    private GameState state;
     private List<Player> players;
 
     @Before
     public void setUp() {
-        setup = new GameSetup();
+        GameSetup setup = new GameSetup();
         players = new ArrayList<Player>();
         players.add(new RandomPlayer("Test"));
+        state = setup.initiateGameState(players);
     }
 
     @Test
-    public void testSetUpGame() throws Exception {
-        assertNotNull(setup.initiateGameState(players));
+    public void setUpGame() throws Exception {
+        assertNotNull(state);
     }
+
+    @Test
+    public void rightNumberOfStacksForPlayers() throws Exception {
+        assertTrue(state.getHandCards().size()== players.size());
+        assertTrue(state.getDeckCards().size()== players.size());
+        assertTrue(state.getDiscardCards().size()== players.size());
+        assertTrue(state.getTurnsPlayedPerPlayer().size()== players.size());
+    }
+
+    @Test
+     public void rightNumberOfKingdomCardStacks() throws Exception {
+        assertTrue(state.getKingdomCards().size()== 6);
+    }
+
+    @Test
+    public void rightNumberOfCardsOnTheStacksPerPlayer() throws Exception {
+        for(Player player:players) {
+            assertTrue(state.getHandCards().get(player).size() == 5);
+            assertTrue(state.getDeckCards().get(player).size()==5);
+            assertTrue(state.getDiscardCards().get(player).size()== 0);
+            assertTrue(state.getTurnsPlayedPerPlayer().get(player)== 0);
+        }
+
+    }
+
+
+
+
 }

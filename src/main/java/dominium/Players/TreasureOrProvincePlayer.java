@@ -5,6 +5,7 @@ import dominium.Cards.*;
 import java.util.List;
 
 public class TreasureOrProvincePlayer extends AIPlayer {
+
     public TreasureOrProvincePlayer(String name) {
         this.name = name;
     }
