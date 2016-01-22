@@ -18,10 +18,10 @@ public class TreasureOrProvincePlayer extends Player {
             cardToPick = findCard(cards, Gold.class);
         } else if (hasCard(cards, Silver.class)) {
             cardToPick = findCard(cards, Silver.class);
-        } else if (hasCard(cards, Copper.class)) {
-            cardToPick = findCard(cards, Copper.class);
         } else if (hasCard(cards, Duchy.class)) {
             cardToPick = findCard(cards, Duchy.class);
+        } else if (hasCard(cards, Copper.class)) {
+            cardToPick = findCard(cards, Copper.class);
         } else if (hasCard(cards, Estate.class)) {
             cardToPick = findCard(cards, Estate.class);
         }

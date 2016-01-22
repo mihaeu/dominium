@@ -43,9 +43,18 @@ public class GameSetup {
             startCards.push(new Estate());
             startCards.push(new Estate());
             startCards.push(new Estate());
+            Collections.shuffle(startCards);
+
+            List<Card> handCards = new ArrayList<Card>();
+            for (int i = 0; i < 5; i++) {
+                Card card = startCards.pop();
+                handCards.add(card);
+            }
+
             gameState.getDeckCards().put(player, startCards);
             gameState.getHandCards().put(player, new Stack<Card>());
             gameState.getDiscardCards().put(player, new Stack<Card>());
+            gameState.getTurnsPlayedPerPlayer().put(player,0);
         }
 
         return gameState;

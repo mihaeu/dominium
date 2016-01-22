@@ -14,14 +14,15 @@ public class GameMaster {
         this.gameState = gameState;
     }
 
-    public Player startGame() {
+    public List<Player> startGame() {
         int numberOfRounds = 0;
         while (true) {
             ++numberOfRounds;
             for (Player player : players) {
-                drawCards(player);
                 buyCard(player);
                 discardCards(player);
+                drawCards(player);
+                increaseTurnsPlayedByThisPlayer(player);
                 System.out.println("_____________________________");
                 if (!gameIsRunning()) {
                     return winner(numberOfRounds, player);
@@ -30,16 +31,24 @@ public class GameMaster {
         }
     }
 
-    private Player winner(int numberOfRounds, Player playerThatEndedTheGame) {
+    private void increaseTurnsPlayedByThisPlayer(Player player) {
+        Map<Player,Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
+        int turnsPlayed = turnsPlayedPerPlayer.get(player);
+        ++turnsPlayed;
+        turnsPlayedPerPlayer.put(player,turnsPlayed);
+    }
+
+    private List<Player> winner(int numberOfRounds, Player playerThatEndedTheGame) {
         int points = 0;
         int maxPoints = 0;
-        Player lastPlayerWithMaxPoints = null;
+        List<Player> listOfWinners = new ArrayList<Player>();
+
         Map<Player, Integer> playerVictoryPointMap = new HashMap<Player, Integer>();
         System.out.println("Game ends after " + numberOfRounds + " rounds");
 
         for (Player player : players) {
             points = 0;
-            Stack<Card> allCardsOfPlayer = getAllCards(player);
+            List<Card> allCardsOfPlayer = getAllCards(player);
             for (Card card : allCardsOfPlayer) {
                 if (card instanceof VictoryCard) {
                     points += ((VictoryCard) card).getVictoryPoints();
@@ -49,55 +58,55 @@ public class GameMaster {
             playerVictoryPointMap.put(player, points);
             if (points >= maxPoints) {
                 maxPoints = points;
-                lastPlayerWithMaxPoints = player;
             }
         }
 
-        Player firstPlayerwithMaxPoints = getFirstPlayerWithMaxPoints(maxPoints,playerVictoryPointMap);
-        int indexOfFirstPlayer = players.indexOf(firstPlayerwithMaxPoints);
-        int indexOfLastPlayer = players.indexOf(lastPlayerWithMaxPoints);
-
-        //currently working on that
-
-        //One Player wins
-        if (numberOfPlayersWithMaxPoints(maxPoints, playerVictoryPointMap) == 1 || differenceInTurnNumbersBetweenTyingPlayers(lastPlayerWithMaxPoints, playerThatEndedTheGame)) {
-            return lastPlayerWithMaxPoints;
+        List<Player> allPlayersWithMaxPoints = getAllPlayersWithMaxPoints(maxPoints, playerVictoryPointMap);
+        //One Player wins by points
+        if (allPlayersWithMaxPoints.size() == 1) {
+            listOfWinners.add(allPlayersWithMaxPoints.get(0));
+            return listOfWinners;
         }
+
+        listOfWinners = getPlayersWithMaxPointsAndMinTurns(allPlayersWithMaxPoints);
 
         //Tie
-        return null;
+        return listOfWinners;
 
     }
 
-    private Player getFirstPlayerWithMaxPoints(int maxPoints, Map<Player, Integer> playerVictoryPointMap) {
-        for(Player player: players) {
+    private List<Player> getPlayersWithMaxPointsAndMinTurns(List<Player> allPlayersWithMaxPoints) {
+        List<Player> playersWithMaxPointsAndMinTurns = new ArrayList<Player>();
+        Map<Player,Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
+        int minNumberOfTurns = 100000;
+        for (Player player: allPlayersWithMaxPoints){
+           int turnsPlayedByThisPlayer = turnsPlayedPerPlayer.get(player);
+            if(turnsPlayedByThisPlayer <= minNumberOfTurns){
+                minNumberOfTurns = turnsPlayedByThisPlayer;
+            }
+        }
+
+        for (Player player: allPlayersWithMaxPoints){
+            int turnsPlayedByThisPlayer = turnsPlayedPerPlayer.get(player);
+            if(turnsPlayedByThisPlayer <= minNumberOfTurns){
+                playersWithMaxPointsAndMinTurns.add(player);
+            }
+        }
+        return playersWithMaxPointsAndMinTurns;
+    }
+
+    private List<Player> getAllPlayersWithMaxPoints(int maxPoints, Map<Player, Integer> playerVictoryPointMap) {
+        List<Player> listOfPlayers = new ArrayList<Player>();
+        for (Player player : players) {
             if (playerVictoryPointMap.get(player) == maxPoints) {
-                return player;
+                listOfPlayers.add(player);
             }
         }
-        return null;
+        return listOfPlayers;
     }
 
-    private boolean differenceInTurnNumbersBetweenTyingPlayers(Player lastPlayerWithMaxPoints, Player playerThatEndedTheGame) {
-
-        int indexOfWinningPlayer = players.indexOf(lastPlayerWithMaxPoints);
-        int indexOfEndingPlayer = players.indexOf(playerThatEndedTheGame);
-
-        return indexOfWinningPlayer <= indexOfEndingPlayer;
-    }
-
-    private int numberOfPlayersWithMaxPoints(int maxPoints, Map<Player, Integer> playerVictoryPointMap) {
-        int numberOfTieingPlayers = 0;
-        for (Map.Entry<Player, Integer> entry : playerVictoryPointMap.entrySet()) {
-            if (entry.getValue() == maxPoints) {
-                ++numberOfTieingPlayers;
-            }
-        }
-        return numberOfTieingPlayers;
-    }
-
-    private Stack<Card> getAllCards(Player player) {
-        Stack<Card> allCardsStack = new Stack<Card>();
+    private List<Card> getAllCards(Player player) {
+        List<Card> allCardsStack = new ArrayList<Card>();
         Stack<Card> handCards = gameState.getHandCards().get(player);
         Stack<Card> deckCards = gameState.getDeckCards().get(player);
         Stack<Card> discardedCards = gameState.getHandCards().get(player);

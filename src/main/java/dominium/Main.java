@@ -17,11 +17,15 @@ public class Main {
 //        players.add(new ConsolePlayer("Me"));
         GameState state = gameSetup.initiateGameState(players);
         GameMaster gameMaster = new GameMaster(players, state);
-        Player winner = gameMaster.startGame();
-        if(winner != null) {
-            System.out.println("Player " + winner.getName() + " won.");
+        List<Player> winners = gameMaster.startGame();
+
+        if(winners.size() == 1){
+            System.out.println("Player " + winners.get(0).getName() + " won.");
         }else{
-            System.out.println("The Game ends in a tie.");
+            System.out.println("The Game ends in a tie between the following players:");
+            for(Player player:winners){
+                System.out.println("Player " + player.getName() );
+            }
         }
     }
 }

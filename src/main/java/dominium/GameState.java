@@ -10,6 +10,7 @@ public class GameState {
     private Map<Player, Stack<Card>> deckCards;
     private Map<Player, Stack<Card>> handCards;
     private Map<Player, Stack<Card>> discardCards;
+    private Map<Player, Integer> turnsPlayedPerPlayer;
 
     public GameState(Map<Class, Stack<Card>> kingdomCards) {
         this.kingdomCards = kingdomCards;
@@ -17,6 +18,11 @@ public class GameState {
         deckCards = new HashMap<Player, Stack<Card>>();
         handCards = new HashMap<Player, Stack<Card>>();
         discardCards = new HashMap<Player, Stack<Card>>();
+        turnsPlayedPerPlayer = new HashMap<Player, Integer>();
+    }
+
+    public Map<Player, Integer> getTurnsPlayedPerPlayer() {
+        return turnsPlayedPerPlayer;
     }
 
     public Map<Class, Stack<Card>> getKingdomCards() {
