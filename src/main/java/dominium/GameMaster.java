@@ -139,7 +139,7 @@ public class GameMaster {
      * Collection to know how to shuffle itself.
      */
     private void shuffleDiscardedCards(Player player) {
-        System.out.println("Player" + player.getName() + ": Shuffling");
+        System.out.println("Player " + player.getName() + ": Shuffling");
         List list = new ArrayList<Card>(gameState.getDiscardCards().get(player));
         Collections.shuffle(list);
 
@@ -169,6 +169,7 @@ public class GameMaster {
     private void buyCard(Player player) {
         List<Card> cardBuyingOptions = getCardBuyingOptions(player);
         Card selectedCard = player.selectCard(cardBuyingOptions);
+
         if(selectedCard != null){
         Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
         List<Card> handCards = gameState.getHandCards().get(player);
@@ -176,19 +177,19 @@ public class GameMaster {
         // remove the selected card from the kingdom card set
         selectedKingdomCardStack.pop();
         handCards.add(selectedCard);
-        System.out.println("Player" + player.getName()
+        System.out.println("Player " + player.getName()
                         + ": Buying card " + selectedCard.getName()
                         + " Cost: " + selectedCard.getCost()
                         + " Money: " + getAvailableMoney(player));
         }else{
-            System.out.println("Player" + player.getName()
+            System.out.println("Player " + player.getName()
                     + " Chose not to buy a card "
                     + " Money: " + getAvailableMoney(player));
         }
     }
 
     private void discardCards(Player player) {
-        System.out.println("Player" + player.getName() + ": Discarding cards");
+        System.out.println("Player " + player.getName() + ": Discarding cards");
         Stack<Card> discardedCards = gameState.getDiscardCards().get(player);
         List<Card> handCards = gameState.getHandCards().get(player);
 
