@@ -105,7 +105,7 @@ public class GameMasterTest {
     }
 
     @Test
-    public void pointTieButWinningByTurnTest() {
+    public void pointTieButWinningByTurnTestTwoPlayersOneWinner() {
         players.add(new ThreePointsFirstRoundNoActionPlayer("1"));
         Player playerThatWillWin = new TestNoBuysPlayer("2");
         players.add(playerThatWillWin);
@@ -117,7 +117,30 @@ public class GameMasterTest {
     }
 
     @Test
-    public void pointTieButWinningByTurnTestThreePlayers() {
+    public void pointTieButWinningByTurnTestTwoPlayersTwoWinners() {
+        players.add(new TestNoBuysPlayer("1"));
+        players.add(new ThreePointsFirstRoundNoActionPlayer("2"));
+        state = setup.initiateGameState(players, Main.NORMAL_KINGDOM_CARDS);
+        gameMaster = new GameMaster(players, state);
+        winningPlayers = gameMaster.startGame();
+        assertTrue(winningPlayers.size() == 2);
+    }
+
+    @Test
+    public void pointTieButWinningByTurnTestThreePlayersOneWinner() {
+        players.add(new TestNoBuysPlayer("2"));
+        players.add(new ThreePointsFirstRoundNoActionPlayer("2"));
+        Player playerThatWillWin = new TestNoBuysPlayer("3");
+        players.add(playerThatWillWin);
+        state = setup.initiateGameState(players, Main.NORMAL_KINGDOM_CARDS);
+        gameMaster = new GameMaster(players, state);
+        winningPlayers = gameMaster.startGame();
+        assertTrue(winningPlayers.size() == 1);
+        assertTrue(winningPlayers.get(0) == playerThatWillWin);
+    }
+
+    @Test
+    public void pointTieButWinningByTurnTestThreePlayersTwoWinners() {
         players.add(new ThreePointsFirstRoundNoActionPlayer("1"));
         Player playerThatWillWin = new TestNoBuysPlayer("2");
         players.add(playerThatWillWin);
@@ -126,7 +149,18 @@ public class GameMasterTest {
         gameMaster = new GameMaster(players, state);
         winningPlayers = gameMaster.startGame();
         assertTrue(winningPlayers.size() == 2);
-        assertTrue(winningPlayers.get(0) == playerThatWillWin);
+    }
+
+    @Test
+    public void pointTieButWinningByTurnTestThreePlayersThreeWinners() {
+        players.add(new TestNoBuysPlayer("1"));
+        players.add(new TestNoBuysPlayer("2"));
+        Player playerThatWillWin = new ThreePointsFirstRoundNoActionPlayer("3");
+        players.add(playerThatWillWin);
+        state = setup.initiateGameState(players, Main.NORMAL_KINGDOM_CARDS);
+        gameMaster = new GameMaster(players, state);
+        winningPlayers = gameMaster.startGame();
+        assertTrue(winningPlayers.size() == 3);
     }
 
     @Test
