@@ -20,7 +20,7 @@ public class GameSetupTest {
         GameSetup setup = new GameSetup();
         players = new ArrayList<Player>();
         players.add(new RandomPlayer("Test"));
-        state = setup.initiateGameState(players);
+        state = setup.initiateGameState(players,Main.NORMAL_KINGDOM_CARDS);
     }
 
     @Test

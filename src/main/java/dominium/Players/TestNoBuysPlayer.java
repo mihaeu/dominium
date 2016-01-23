@@ -4,9 +4,9 @@ import java.util.List;
 
 import dominium.Cards.Card;
 
-public class NoBuysPlayer extends AIPlayer {
+public class TestNoBuysPlayer extends AIPlayer {
 
-    public NoBuysPlayer(String name){
+    public TestNoBuysPlayer(String name){
         this.name = name;
     }
 

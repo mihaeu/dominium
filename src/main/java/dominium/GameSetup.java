@@ -13,18 +13,27 @@ public class GameSetup {
     public static final int NUMBER_OF_GOLD_CARDS = 30;
     public static final int NUMBER_OF_SILVER_CARDS = 40;
 
-    public GameState initiateGameState(List<Player> players) {
+    public GameState initiateGameState(List<Player> players, int kingdomCardsNumber) {
         int numberOfCoppers = TOTAL_NUMBER_OF_COPPER - players.size() * NUMBER_COPPER_START_HAND;
         int numberOfEstates = NUMBER_OF_VICTORY_CARDS - players.size() * NUMBER_ESTATES_START_HAND;
         int numberOfProvinces = NUMBER_OF_VICTORY_CARDS - ((4 - players.size()) * 2);
 
         Map<Class, Stack<Card>> kingdomCards = new HashMap<Class, Stack<Card>>();
-        kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
-        kingdomCards.put(Silver.class, createCardStack(new Silver(), NUMBER_OF_SILVER_CARDS));
-        kingdomCards.put(Gold.class, createCardStack(new Gold(), NUMBER_OF_GOLD_CARDS));
-        kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
-        kingdomCards.put(Duchy.class, createCardStack(new Duchy(), NUMBER_OF_VICTORY_CARDS));
-        kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
+        if(kingdomCardsNumber == Main.NORMAL_KINGDOM_CARDS) {
+            kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
+            kingdomCards.put(Silver.class, createCardStack(new Silver(), NUMBER_OF_SILVER_CARDS));
+            kingdomCards.put(Gold.class, createCardStack(new Gold(), NUMBER_OF_GOLD_CARDS));
+            kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
+            kingdomCards.put(Duchy.class, createCardStack(new Duchy(), NUMBER_OF_VICTORY_CARDS));
+            kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
+        }else if(kingdomCardsNumber == Main.TEST_KINGDOM_CARDS){
+            kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
+            kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
+            kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
+            // 12 is divisible by 2, 3 and 4 , usefull for tests
+            kingdomCards.put(NoEffectCard1.class, createCardStack(new NoEffectCard1(), 12));
+            kingdomCards.put(NoEffectCard2.class, createCardStack(new NoEffectCard2(), 12));
+        }
 
         GameState gameState = new GameState(kingdomCards);
         for (Player player : players) {
