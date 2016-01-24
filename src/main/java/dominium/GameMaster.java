@@ -141,12 +141,7 @@ public class GameMaster {
      */
     private void shuffleDiscardedCards(Player player) {
         System.out.println("Player " + player.getName() + ": Shuffling");
-        List list = new ArrayList<Card>(gameState.getDiscardCards().get(player));
-        Collections.shuffle(list);
-
-        Stack<Card> shuffledStack = new Stack<Card>();
-        shuffledStack.addAll(list);
-        gameState.getDiscardCards().put(player, shuffledStack);
+        Collections.shuffle(gameState.getDiscardCards().get(player));
     }
 
     private void drawCards(Player player) {
