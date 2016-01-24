@@ -1,19 +1,15 @@
 package dominium;
 
+import dominium.Players.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dominium.Players.FirstMoneyThenPointsPlayer;
-import dominium.Players.NormalThreePointsPlayer;
-import dominium.Players.TestNoBuysPlayer;
-import dominium.Players.Player;
-import dominium.Players.ThreePointsFirstRoundNoActionPlayer;
-import dominium.Players.TestThreePointsPlayer;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class GameMasterTest {
 
@@ -32,6 +28,17 @@ public class GameMasterTest {
 
     @Test
     public void winningByPointsTest() {
+        //mock creation
+        List mockedList = mock(List.class);
+
+        //using mock object
+        mockedList.add("one");
+        mockedList.clear();
+
+        //verification
+        verify(mockedList).add("one");
+        verify(mockedList).clear();
+
         Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
         players.add(playerThatWillWin);
         players.add(new TestNoBuysPlayer("2"));
