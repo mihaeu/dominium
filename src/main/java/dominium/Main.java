@@ -16,16 +16,13 @@ public class Main {
         List<Player> players = new ArrayList<Player>();
         players.add(new FirstMoneyThenPointsPlayer("1 Stef "));
         players.add(new TestTreasureOrProvincePlayer("2 Michi"));
-        //        players.add(new ConsolePlayer("Me"));
-        int KingdomCardSetNumber = NORMAL_KINGDOM_CARDS;
         launchAndResolveWholeGame(players,NORMAL_KINGDOM_CARDS);
     }
 
-    //Lets Test And Mock the shit out of this!
     public static void launchAndResolveWholeGame(List<Player> players,int kingdomCardSetNumber) {
         GameSetup gameSetup = new GameSetup();
         GameState state = gameSetup.initiateGameState(players, kingdomCardSetNumber);
         GameMaster gameMaster = new GameMaster(players, state);
-        List<Player> winners = gameMaster.startGame();
+        gameMaster.startGame();
     }
 }
