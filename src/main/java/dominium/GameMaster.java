@@ -178,18 +178,18 @@ public class GameMaster {
         List<Card> cardBuyingOptions = getCardBuyingOptions(player);
         Card selectedCard = player.selectCard(cardBuyingOptions);
 
-        if(selectedCard != null){
-        Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
-        List<Card> handCards = gameState.getHandCards().get(player);
+        if (selectedCard != null) {
+            Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
+            List<Card> handCards = gameState.getHandCards().get(player);
 
-        // remove the selected card from the kingdom card set
-        selectedKingdomCardStack.pop();
-        handCards.add(selectedCard);
-        out.println("Player " + player.getName()
-                        + ": Buying card " + selectedCard.getName()
-                        + " Cost: " + selectedCard.getCost()
-                        + " Money: " + getAvailableMoney(player));
-        }else{
+            // remove the selected card from the kingdom card set
+            selectedKingdomCardStack.pop();
+            handCards.add(selectedCard);
+            out.println("Player " + player.getName()
+                    + ": Buying card " + selectedCard.getName()
+                    + " Cost: " + selectedCard.getCost()
+                    + " Money: " + getAvailableMoney(player));
+        } else {
             out.println("Player " + player.getName()
                     + " Chose not to buy a card "
                     + " Money: " + getAvailableMoney(player));

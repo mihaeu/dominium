@@ -19,14 +19,14 @@ public class GameSetup {
         int numberOfProvinces = NUMBER_OF_VICTORY_CARDS - ((4 - players.size()) * 2);
 
         Map<Class, Stack<Card>> kingdomCards = new HashMap<Class, Stack<Card>>();
-        if(kingdomCardsNumber == Main.NORMAL_KINGDOM_CARDS) {
+        if (kingdomCardsNumber == Main.NORMAL_KINGDOM_CARDS) {
             kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
             kingdomCards.put(Silver.class, createCardStack(new Silver(), NUMBER_OF_SILVER_CARDS));
             kingdomCards.put(Gold.class, createCardStack(new Gold(), NUMBER_OF_GOLD_CARDS));
             kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
             kingdomCards.put(Duchy.class, createCardStack(new Duchy(), NUMBER_OF_VICTORY_CARDS));
             kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
-        }else if(kingdomCardsNumber == Main.TEST_KINGDOM_CARDS){
+        } else if (kingdomCardsNumber == Main.TEST_KINGDOM_CARDS) {
             kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
             kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
             kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
