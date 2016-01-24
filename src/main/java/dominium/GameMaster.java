@@ -3,15 +3,23 @@ package dominium;
 import dominium.Cards.*;
 import dominium.Players.Player;
 
+import java.io.PrintStream;
 import java.util.*;
 
 public class GameMaster {
     GameState gameState;
     List<Player> players;
+    PrintStream out = System.out;
+
 
     public GameMaster(List<Player> players, GameState gameState) {
         this.players = players;
         this.gameState = gameState;
+    }
+
+    public GameMaster(List<Player> players, GameState gameState, PrintStream out) {
+        this(players, gameState);
+        this.out = out;
     }
 
     public List<Player> startGame() {
@@ -23,9 +31,9 @@ public class GameMaster {
                 discardCards(player);
                 drawCards(player);
                 increaseTurnsPlayedByThisPlayer(player);
-                System.out.println("_____________________________");
+                out.println("_____________________________");
                 if (!gameIsRunning()) {
-                    return winner(numberOfRounds, player);
+                    return winner(numberOfRounds);
                 }
             }
         }
@@ -38,13 +46,13 @@ public class GameMaster {
         turnsPlayedPerPlayer.put(player, turnsPlayed);
     }
 
-    private List<Player> winner(int numberOfRounds, Player playerThatEndedTheGame) {
+    private List<Player> winner(int numberOfRounds) {
         int points = 0;
         int maxPoints = 0;
         List<Player> listOfWinners = new ArrayList<Player>();
 
         Map<Player, Integer> playerVictoryPointMap = new HashMap<Player, Integer>();
-        System.out.println("Game ends after " + numberOfRounds + " rounds");
+        out.println("Game ends after " + numberOfRounds + " rounds");
 
         for (Player player : players) {
             points = 0;
@@ -55,7 +63,7 @@ public class GameMaster {
                 }
             }
             int numberOfRoundsPlayedByThisPlayer = gameState.getTurnsPlayedPerPlayer().get(player);
-            System.out.println("Player " + player.getName() + " points: " + points + " cards: " + allCardsOfPlayer.size() + " turns: " + numberOfRoundsPlayedByThisPlayer);
+            out.println("Player " + player.getName() + " points: " + points + " cards: " + allCardsOfPlayer.size() + " turns: " + numberOfRoundsPlayedByThisPlayer);
             playerVictoryPointMap.put(player, points);
             if (points >= maxPoints) {
                 maxPoints = points;
@@ -140,12 +148,12 @@ public class GameMaster {
      * Collection to know how to shuffle itself.
      */
     private void shuffleDiscardedCards(Player player) {
-        System.out.println("Player " + player.getName() + ": Shuffling");
+        out.println("Player " + player.getName() + ": Shuffling");
         Collections.shuffle(gameState.getDiscardCards().get(player));
     }
 
     private void drawCards(Player player) {
-        System.out.println("Player " + player.getName() + ": Drawing cards");
+        out.println("Player " + player.getName() + ": Drawing cards");
         Stack<Card> deckCards = gameState.getDeckCards().get(player);
         List<Card> handCards = gameState.getHandCards().get(player);
 
@@ -173,19 +181,19 @@ public class GameMaster {
         // remove the selected card from the kingdom card set
         selectedKingdomCardStack.pop();
         handCards.add(selectedCard);
-        System.out.println("Player " + player.getName()
+        out.println("Player " + player.getName()
                         + ": Buying card " + selectedCard.getName()
                         + " Cost: " + selectedCard.getCost()
                         + " Money: " + getAvailableMoney(player));
         }else{
-            System.out.println("Player " + player.getName()
+            out.println("Player " + player.getName()
                     + " Chose not to buy a card "
                     + " Money: " + getAvailableMoney(player));
         }
     }
 
     private void discardCards(Player player) {
-        System.out.println("Player " + player.getName() + ": Discarding cards");
+        out.println("Player " + player.getName() + ": Discarding cards");
         Stack<Card> discardedCards = gameState.getDiscardCards().get(player);
         List<Card> handCards = gameState.getHandCards().get(player);
 
