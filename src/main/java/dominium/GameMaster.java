@@ -32,7 +32,7 @@ public class GameMaster {
                 drawCards(player);
                 increaseTurnsPlayedByThisPlayer(player);
                 out.println("_____________________________");
-                if (!gameIsRunning()) {
+                if (!gameState.gameIsRunning()) {
                     return winner(numberOfRounds);
                 }
             }
@@ -41,13 +41,12 @@ public class GameMaster {
 
     private void increaseTurnsPlayedByThisPlayer(Player player) {
         Map<Player, Integer> turnsPlayedPerPlayer = gameState.getTurnsPlayedPerPlayer();
-        int turnsPlayed = turnsPlayedPerPlayer.get(player);
-        ++turnsPlayed;
+        int turnsPlayed = turnsPlayedPerPlayer.get(player) + 1;
         turnsPlayedPerPlayer.put(player, turnsPlayed);
     }
 
     private List<Player> winner(int numberOfRounds) {
-        int points = 0;
+        int points;
         int maxPoints = 0;
         List<Player> listOfWinners = new ArrayList<Player>();
 
@@ -127,24 +126,6 @@ public class GameMaster {
         allCardsStack.addAll(deckCards);
         allCardsStack.addAll(discardedCards);
         return allCardsStack;
-    }
-
-    private boolean gameIsRunning() {
-        return !provinceCardsEmpty() && !threeStacksEmpty();
-    }
-
-    private boolean threeStacksEmpty() {
-        int count = 0;
-        for (Stack<Card> stack : gameState.getKingdomCards().values()) {
-            if (stack.size() == 0) {
-                count++;
-            }
-        }
-        return count >= 3;
-    }
-
-    private boolean provinceCardsEmpty() {
-        return gameState.getKingdomCards().get(Province.class).size() == 0;
     }
 
     /**

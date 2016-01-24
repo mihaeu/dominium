@@ -47,6 +47,7 @@ public class GameMasterTest {
         Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
         players.add(playerThatWillWin);
         players.add(new NormalThreePointsPlayer("2"));
+
         state = setup.initiateGameState(players, Main.NORMAL_KINGDOM_CARDS);
         gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.startGame();

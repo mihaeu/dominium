@@ -1,6 +1,7 @@
 package dominium;
 
 import dominium.Cards.Card;
+import dominium.Cards.Province;
 import dominium.Players.Player;
 
 import java.util.*;
@@ -19,6 +20,24 @@ public class GameState {
         handCards = new HashMap<Player, List<Card>>();
         discardCards = new HashMap<Player, Stack<Card>>();
         turnsPlayedPerPlayer = new HashMap<Player, Integer>();
+    }
+
+    public boolean gameIsRunning() {
+        return !provinceCardsEmpty() && !threeStacksEmpty();
+    }
+
+    private boolean threeStacksEmpty() {
+        int count = 0;
+        for (Stack<Card> stack : kingdomCards.values()) {
+            if (stack.size() == 0) {
+                count++;
+            }
+        }
+        return count >= 3;
+    }
+
+    private boolean provinceCardsEmpty() {
+        return kingdomCards.get(Province.class).size() == 0;
     }
 
     public Map<Player, Integer> getTurnsPlayedPerPlayer() {
