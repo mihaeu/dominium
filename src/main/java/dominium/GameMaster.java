@@ -11,7 +11,6 @@ public class GameMaster {
     List<Player> players;
     PrintStream out = System.out;
 
-
     public GameMaster(List<Player> players, GameState gameState) {
         this.players = players;
         this.gameState = gameState;

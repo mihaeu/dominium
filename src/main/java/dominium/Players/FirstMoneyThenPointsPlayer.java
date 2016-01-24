@@ -1,14 +1,8 @@
 package dominium.Players;
 
-import java.util.List;
+import dominium.Cards.*;
 
-import dominium.Cards.Card;
-import dominium.Cards.Copper;
-import dominium.Cards.Duchy;
-import dominium.Cards.Estate;
-import dominium.Cards.Gold;
-import dominium.Cards.Province;
-import dominium.Cards.Silver;
+import java.util.List;
 
 public class FirstMoneyThenPointsPlayer extends AIPlayer {
     private int goldOrSilverCards = 0;
@@ -40,7 +34,6 @@ public class FirstMoneyThenPointsPlayer extends AIPlayer {
             cardToPick = findCard(cards, Estate.class);
             ++victoryCards;
         }
-
 
         return cardToPick;
     }
