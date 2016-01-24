@@ -27,14 +27,5 @@ public class Main {
         GameState state = gameSetup.initiateGameState(players, kingdomCardSetNumber);
         GameMaster gameMaster = new GameMaster(players, state);
         List<Player> winners = gameMaster.startGame();
-
-        if (winners.size() == 1) {
-            System.out.println("Player " + winners.get(0).getName() + " won.");
-        } else {
-            System.out.println("The Game ends in a tie between the following players:");
-            for (Player player : winners) {
-                System.out.println("Player " + player.getName());
-            }
-        }
     }
 }

@@ -74,12 +74,16 @@ public class GameMaster {
         //One Player wins by points
         if (allPlayersWithMaxPoints.size() == 1) {
             listOfWinners.add(allPlayersWithMaxPoints.get(0));
+            out.println("Player " + listOfWinners.get(0).getName() + " won.");
             return listOfWinners;
         }
 
         listOfWinners = getPlayersWithMaxPointsAndMinTurns(allPlayersWithMaxPoints);
+        out.println("The Game ends in a tie between the following players:");
+        for (Player player : listOfWinners) {
+            out.println("Player " + player.getName());
+        }
 
-        //Tie
         return listOfWinners;
 
     }
