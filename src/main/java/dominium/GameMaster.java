@@ -49,73 +49,32 @@ public class GameMaster {
 //        return winner(numberOfRounds);
     }
 
+    /**
+     * The player with the most victory points wins. If the highest
+     * scores are tied at the end of the game, the tied player who has
+     * had the fewest turns wins the game. If the tied players have had
+     * the same number of turns, they rejoice in their shared victory.
+     *
+     * @return one or more winning players
+     */
     private List<Player> winner() {
-        int points;
-        int maxPoints = 0;
-        List<Player> listOfWinners = new ArrayList<Player>();
-
-        Map<Player, Integer> playerVictoryPointMap = new HashMap<Player, Integer>();
-
+        List<Player> winners = new ArrayList<Player>();
         for (Player player : players) {
-            points = player.victoryPoints();
-            int numberOfRoundsPlayedByThisPlayer = player.turns();
-            out.println("Player " + player.getName()
-                    + " points: " + points
-                    + " turns: " + numberOfRoundsPlayedByThisPlayer
-            );
-            playerVictoryPointMap.put(player, points);
-            if (points >= maxPoints) {
-                maxPoints = points;
+            if (winners.isEmpty()) {
+                winners.add(player);
+            } else if (player.victoryPoints() > winners.get(0).victoryPoints()) {
+                winners.clear();
+                winners.add(player);
+            } else if (player.victoryPoints() == winners.get(0).victoryPoints()
+                    && player.turns() < winners.get(0).turns()) {
+                winners.clear();
+                winners.add(player);
+            } else if (player.victoryPoints() == winners.get(0).victoryPoints()
+                    && player.turns() == winners.get(0).turns()) {
+                winners.add(player);
             }
         }
-
-        List<Player> allPlayersWithMaxPoints = getAllPlayersWithMaxPoints(maxPoints, playerVictoryPointMap);
-        //One Player wins by points
-        if (allPlayersWithMaxPoints.size() == 1) {
-            listOfWinners.add(allPlayersWithMaxPoints.get(0));
-            out.println("Player " + listOfWinners.get(0).getName() + " won.");
-            return listOfWinners;
-        }
-
-        listOfWinners = getPlayersWithMaxPointsAndMinTurns(allPlayersWithMaxPoints);
-        if(listOfWinners.size()== 1){
-            out.println("The Player " + listOfWinners.get(0).getName() + " won by turns.");
-        }else {
-            out.println("The Game ends in a tie between the following players:");
-            for (Player player : listOfWinners) {
-                out.println("Player " + player.getName());
-            }
-        }
-
-        return listOfWinners;
-    }
-
-    private List<Player> getPlayersWithMaxPointsAndMinTurns(List<Player> allPlayersWithMaxPoints) {
-        List<Player> playersWithMaxPointsAndMinTurns = new ArrayList<Player>();
-        int minNumberOfTurns = 100000;
-        for (Player player : allPlayersWithMaxPoints) {
-            if (player.turns() <= minNumberOfTurns) {
-                minNumberOfTurns = player.turns();
-            }
-        }
-
-        for (Player player : allPlayersWithMaxPoints) {
-            int turnsPlayedByThisPlayer = player.turns();
-            if (turnsPlayedByThisPlayer <= minNumberOfTurns) {
-                playersWithMaxPointsAndMinTurns.add(player);
-            }
-        }
-        return playersWithMaxPointsAndMinTurns;
-    }
-
-    private List<Player> getAllPlayersWithMaxPoints(int maxPoints, Map<Player, Integer> playerVictoryPointMap) {
-        List<Player> listOfPlayers = new ArrayList<Player>();
-        for (Player player : players) {
-            if (playerVictoryPointMap.get(player) == maxPoints) {
-                listOfPlayers.add(player);
-            }
-        }
-        return listOfPlayers;
+        return winners;
     }
 
     private void drawCards(Player player) {

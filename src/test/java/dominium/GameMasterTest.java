@@ -1,6 +1,8 @@
 package dominium;
 
-import dominium.Players.*;
+import dominium.Players.Player;
+import dominium.Players.TestNoBuysPlayer;
+import dominium.Players.ThreePointsFirstRoundNoActionPlayer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +14,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameMasterTest {
 
@@ -23,71 +26,48 @@ public class GameMasterTest {
     private GameMaster gameMaster;
     private PrintStream nullOutput;
 
+    private Player mockPlayer1;
+    private Player mockPlayer2;
+    private Player mockPlayer3;
+    private Player mockPlayer4;
+
+
     @Before
     public void setUp() {
         setup = new GameSetup();
         players = new ArrayList<Player>();
         nullOutput = new PrintStream(new NullStream());
+
+        mockPlayer1 = mock(Player.class);
+        mockPlayer2 = mock(Player.class);
+        mockPlayer3 = mock(Player.class);
+        mockPlayer4 = mock(Player.class);
+
+        state = mock(GameState.class);
+        when(state.gameIsRunning()).thenReturn(false);
     }
 
 
     @Test
-    public void winningByPointsTest() {
-        //mock creation
-        List mockedList = mock(List.class);
+    public void playerWithMostPointsWins() {
+        when(mockPlayer1.victoryPoints()).thenReturn(0);
+        when(mockPlayer2.victoryPoints()).thenReturn(100);
 
-        //using mock object
-        mockedList.add("one");
-        mockedList.clear();
+        players.add(mockPlayer1);
+        players.add(mockPlayer2);
+        state = mock(GameState.class);
+        when(state.gameIsRunning()).thenReturn(false);
 
-        //verification
-        verify(mockedList).add("one");
-        verify(mockedList).clear();
-
-        Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
-        players.add(playerThatWillWin);
-        players.add(new NormalThreePointsPlayer("2"));
-
-        state = setup.initiateGameState(players);
         gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 1);
-        assertTrue(winningPlayers.get(0) == playerThatWillWin);
+        assertEquals(1, winningPlayers.size());
+        assertEquals(mockPlayer2, winningPlayers.get(0));
     }
 
     @Test
-    public void winningByPointsTestThreePlayers() {
-        Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
-        players.add(playerThatWillWin);
-        players.add(new TestNoBuysPlayer("2"));
-        players.add(new TestNoBuysPlayer("3"));
-        state = setup.initiateGameState(players);
-        gameMaster = new GameMaster(players, state, nullOutput);
-        winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 1);
-        assertTrue(winningPlayers.get(0) == playerThatWillWin);
-    }
-
-    @Test
-    public void winningByPointsTestFourPlayers() {
-        Player playerThatWillWin = new FirstMoneyThenPointsPlayer("1");
-        players.add(playerThatWillWin);
-        players.add(new TestNoBuysPlayer("2"));
-        players.add(new TestNoBuysPlayer("3"));
-        players.add(new TestNoBuysPlayer("4"));
-        state = setup.initiateGameState(players);
-        gameMaster = new GameMaster(players, state, nullOutput);
-        winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 1);
-        assertTrue(winningPlayers.get(0) == playerThatWillWin);
-    }
-
-    @Test
-    public void IfTwoPlayersHaveSamePointsAndTurnsThereAreTwoWinners() {
-        Player mockPlayer1 = mock(Player.class);
-        Player mockPlayer2 = mock(Player.class);
-        when(mockPlayer1.coins()).thenReturn(10);
-        when(mockPlayer2.coins()).thenReturn(10);
+    public void ifTwoPlayersHaveSamePointsAndTurnsThereAreTwoWinners() {
+        when(mockPlayer1.victoryPoints()).thenReturn(10);
+        when(mockPlayer2.victoryPoints()).thenReturn(10);
         when(mockPlayer1.turns()).thenReturn(10);
         when(mockPlayer2.turns()).thenReturn(10);
 
@@ -102,16 +82,10 @@ public class GameMasterTest {
     }
 
     @Test
-    public void pointAndTurnTieTestThreePlayers() {
-        Player mockPlayer1 = mock(Player.class);
-        Player mockPlayer2 = mock(Player.class);
-        Player mockPlayer3 = mock(Player.class);
-        when(mockPlayer1.coins()).thenReturn(10);
-        when(mockPlayer2.coins()).thenReturn(10);
-        when(mockPlayer3.coins()).thenReturn(10);
-        when(mockPlayer1.turns()).thenReturn(10);
-        when(mockPlayer2.turns()).thenReturn(10);
-        when(mockPlayer3.turns()).thenReturn(10);
+    public void ifThreePlayersHaveSamePointsAndTurnsThereAreThreeWinners() {
+        when(mockPlayer1.victoryPoints()).thenReturn(10);
+        when(mockPlayer2.victoryPoints()).thenReturn(10);
+        when(mockPlayer3.victoryPoints()).thenReturn(10);
 
         players.add(mockPlayer1);
         players.add(mockPlayer2);
@@ -125,19 +99,11 @@ public class GameMasterTest {
     }
 
     @Test
-    public void pointAndTurnTieTestFourPlayers() {
-        Player mockPlayer1 = mock(Player.class);
-        Player mockPlayer2 = mock(Player.class);
-        Player mockPlayer3 = mock(Player.class);
-        Player mockPlayer4 = mock(Player.class);
-        when(mockPlayer1.coins()).thenReturn(10);
-        when(mockPlayer2.coins()).thenReturn(10);
-        when(mockPlayer3.coins()).thenReturn(10);
-        when(mockPlayer4.coins()).thenReturn(10);
-        when(mockPlayer1.turns()).thenReturn(10);
-        when(mockPlayer2.turns()).thenReturn(10);
-        when(mockPlayer3.turns()).thenReturn(10);
-        when(mockPlayer4.turns()).thenReturn(10);
+    public void ifFourPlayersHaveSamePointsAndTurnsThereAreFourWinners() {
+        when(mockPlayer1.victoryPoints()).thenReturn(10);
+        when(mockPlayer2.victoryPoints()).thenReturn(10);
+        when(mockPlayer3.victoryPoints()).thenReturn(10);
+        when(mockPlayer4.victoryPoints()).thenReturn(10);
 
         players.add(mockPlayer1);
         players.add(mockPlayer2);
@@ -151,50 +117,43 @@ public class GameMasterTest {
     }
 
     @Test
-    public void pointTieButWinningByTurnTestTwoPlayersOneWinner() {
-        players.add(new ThreePointsFirstRoundNoActionPlayer("1"));
-        Player playerThatWillWin = new TestNoBuysPlayer("2");
-        players.add(playerThatWillWin);
-        state = setup.initiateGameState(players);
+    public void ifTwoPlayersHaveEqualPointsThePlayerWithLessTurnsWins() {
+        when(mockPlayer1.victoryPoints()).thenReturn(10);
+        when(mockPlayer2.victoryPoints()).thenReturn(10);
+        when(mockPlayer1.turns()).thenReturn(100);
+        when(mockPlayer2.turns()).thenReturn(10);
+
+        players.add(mockPlayer1);
+        players.add(mockPlayer2);
+        state = mock(GameState.class);
+        when(state.gameIsRunning()).thenReturn(false);
         gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 1);
-        assertTrue(winningPlayers.get(0) == playerThatWillWin);
+
+        assertEquals(1, winningPlayers.size());
+        assertEquals(mockPlayer2, winningPlayers.get(0));
     }
 
     @Test
-    public void pointTieButWinningByTurnTestTwoPlayersTwoWinners() {
-        players.add(new TestNoBuysPlayer("1"));
-        players.add(new ThreePointsFirstRoundNoActionPlayer("2"));
-        state = setup.initiateGameState(players);
-        gameMaster = new GameMaster(players, state, nullOutput);
-        winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 2);
-    }
+    public void ifThreePlayersHaveEqualPointsAndTwoPlayersSameTurnsThenTwoWinners() {
+        when(mockPlayer1.victoryPoints()).thenReturn(10);
+        when(mockPlayer2.victoryPoints()).thenReturn(10);
+        when(mockPlayer3.victoryPoints()).thenReturn(10);
+        when(mockPlayer1.turns()).thenReturn(100);
+        when(mockPlayer2.turns()).thenReturn(10);
+        when(mockPlayer3.turns()).thenReturn(10);
 
-    @Test
-    public void pointTieButWinningByTurnTestThreePlayersOneWinner() {
-        players.add(new TestNoBuysPlayer("2"));
-        players.add(new ThreePointsFirstRoundNoActionPlayer("2"));
-        Player playerThatWillWin = new TestNoBuysPlayer("3");
-        players.add(playerThatWillWin);
-        state = setup.initiateGameState(players);
+        players.add(mockPlayer1);
+        players.add(mockPlayer2);
+        players.add(mockPlayer3);
+        state = mock(GameState.class);
+        when(state.gameIsRunning()).thenReturn(false);
         gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 1);
-        assertTrue(winningPlayers.get(0) == playerThatWillWin);
-    }
 
-    @Test
-    public void pointTieButWinningByTurnTestThreePlayersTwoWinners() {
-        players.add(new ThreePointsFirstRoundNoActionPlayer("1"));
-        Player playerThatWillWin = new TestNoBuysPlayer("2");
-        players.add(playerThatWillWin);
-        players.add(new TestNoBuysPlayer("3"));
-        state = setup.initiateGameState(players);
-        gameMaster = new GameMaster(players, state, nullOutput);
-        winningPlayers = gameMaster.startGame();
-        assertTrue(winningPlayers.size() == 2);
+        assertEquals(2, winningPlayers.size());
+        assertEquals(mockPlayer2, winningPlayers.get(0));
+        assertEquals(mockPlayer3, winningPlayers.get(1));
     }
 
     @Test
