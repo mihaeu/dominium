@@ -4,8 +4,6 @@ import dominium.Players.Player;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +14,9 @@ import static org.mockito.Mockito.when;
 
 public class GameMasterTest {
 
-    private GameState state;
     private List<Player> players;
     private List<Player> winningPlayers;
-    private GameSetup setup;
     private GameMaster gameMaster;
-    private PrintStream nullOutput;
 
     private Player mockPlayer1;
     private Player mockPlayer2;
@@ -31,16 +26,16 @@ public class GameMasterTest {
 
     @Before
     public void setUp() {
-        setup = new GameSetup();
         players = new ArrayList<Player>();
-        nullOutput = new PrintStream(new NullStream());
 
         mockPlayer1 = mock(Player.class);
         mockPlayer2 = mock(Player.class);
         mockPlayer3 = mock(Player.class);
         mockPlayer4 = mock(Player.class);
 
-        state = mock(GameState.class);
+        GameState state = mock(GameState.class);
+        PrintStream mockStream = mock(PrintStream.class);
+        gameMaster = new GameMaster(players, state, mockStream);
     }
 
 
@@ -51,9 +46,7 @@ public class GameMasterTest {
 
         players.add(mockPlayer1);
         players.add(mockPlayer2);
-        state = mock(GameState.class);
 
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
         assertEquals(1, winningPlayers.size());
         assertEquals(mockPlayer2, winningPlayers.get(0));
@@ -68,9 +61,7 @@ public class GameMasterTest {
 
         players.add(mockPlayer1);
         players.add(mockPlayer2);
-        state = mock(GameState.class);
 
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
         assertEquals(2, winningPlayers.size());
     }
@@ -84,9 +75,7 @@ public class GameMasterTest {
         players.add(mockPlayer1);
         players.add(mockPlayer2);
         players.add(mockPlayer3);
-        state = mock(GameState.class);
 
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
         assertEquals(3, winningPlayers.size());
     }
@@ -102,8 +91,6 @@ public class GameMasterTest {
         players.add(mockPlayer2);
         players.add(mockPlayer3);
         players.add(mockPlayer4);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
         assertEquals(4, winningPlayers.size());
     }
@@ -117,8 +104,6 @@ public class GameMasterTest {
 
         players.add(mockPlayer1);
         players.add(mockPlayer2);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
 
         assertEquals(1, winningPlayers.size());
@@ -137,8 +122,6 @@ public class GameMasterTest {
         players.add(mockPlayer1);
         players.add(mockPlayer2);
         players.add(mockPlayer3);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
 
         assertEquals(2, winningPlayers.size());
@@ -151,8 +134,6 @@ public class GameMasterTest {
         players.add(mockPlayer1);
         players.add(mockPlayer2);
         players.add(mockPlayer3);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
 
         assertEquals(3, winningPlayers.size());
@@ -167,8 +148,6 @@ public class GameMasterTest {
         players.add(mockPlayer2);
         players.add(mockPlayer3);
         players.add(mockPlayer4);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
 
         assertEquals(4, winningPlayers.size());
@@ -193,8 +172,6 @@ public class GameMasterTest {
         players.add(mockPlayer2);
         players.add(mockPlayer3);
         players.add(mockPlayer4);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
 
         assertEquals(3, winningPlayers.size());
@@ -218,19 +195,10 @@ public class GameMasterTest {
         players.add(mockPlayer2);
         players.add(mockPlayer3);
         players.add(mockPlayer4);
-        state = mock(GameState.class);
-        gameMaster = new GameMaster(players, state, nullOutput);
         winningPlayers = gameMaster.winner();
 
         assertEquals(2, winningPlayers.size());
         assertEquals(mockPlayer3, winningPlayers.get(0));
         assertEquals(mockPlayer4, winningPlayers.get(1));
-    }
-
-    private class NullStream extends OutputStream {
-        @Override
-        public void write(int i) throws IOException {
-
-        }
     }
 }
