@@ -20,7 +20,7 @@ public class GameSetupTest {
         GameSetup setup = new GameSetup();
         players = new ArrayList<Player>();
         players.add(new RandomPlayer("Test"));
-        state = setup.initiateGameState(players,Main.NORMAL_KINGDOM_CARDS);
+        state = setup.initiateGameState(players);
     }
 
     @Test
@@ -33,7 +33,6 @@ public class GameSetupTest {
         assertTrue(state.getHandCards().size()== players.size());
         assertTrue(state.getDeckCards().size()== players.size());
         assertTrue(state.getDiscardCards().size()== players.size());
-        assertTrue(state.getTurnsPlayedPerPlayer().size()== players.size());
     }
 
     @Test
@@ -47,7 +46,6 @@ public class GameSetupTest {
             assertTrue(state.getHandCards().get(player).size() == 5);
             assertTrue(state.getDeckCards().get(player).size()==5);
             assertTrue(state.getDiscardCards().get(player).size()== 0);
-            assertTrue(state.getTurnsPlayedPerPlayer().get(player)== 0);
         }
 
     }

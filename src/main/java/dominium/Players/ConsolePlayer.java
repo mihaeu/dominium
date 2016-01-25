@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ConsolePlayer extends Player {
 
     public ConsolePlayer(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override

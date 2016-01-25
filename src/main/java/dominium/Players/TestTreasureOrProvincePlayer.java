@@ -7,10 +7,10 @@ import java.util.List;
 public class TestTreasureOrProvincePlayer extends AIPlayer {
 
     public TestTreasureOrProvincePlayer(String name) {
-        this.name = name;
+        super(name);
     }
 
-    @Override
+            @Override
     public Card selectCard(List<Card> cards) {
         Card cardToPick = null;
         if (hasCard(cards, Province.class)) {

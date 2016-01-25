@@ -1,13 +1,13 @@
 package dominium.Players;
 
-import java.util.List;
-
 import dominium.Cards.Card;
+
+import java.util.List;
 
 public class TestNoBuysPlayer extends AIPlayer {
 
     public TestNoBuysPlayer(String name){
-        this.name = name;
+        super(name);
     }
 
     @Override

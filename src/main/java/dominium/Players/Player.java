@@ -1,30 +1,78 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.Card;
 import dominium.Cards.TreasureCard;
+import dominium.Cards.VictoryCard;
 
 import java.util.List;
-import java.util.Stack;
 
 public abstract class Player {
+    private static final int CARDS_TO_DRAW = 5;
+
     protected String name;
-    protected Stack<Card> handCards;
-    protected Stack<Card> discardedCards;
-    protected Stack<Card> deckCards;
+    protected CardStack handCards;
+    protected CardStack discardedCards;
+    protected CardStack deckCards;
+    protected int turns;
 
     public String getName() {
         return name;
     }
 
-    public abstract Card selectCard(List<Card> cards);
+    public Player(String name) {
+        this.name = name;
 
-    protected int victoryPoints() {
-        return countVictoryPoints(handCards)
-                + countVictoryPoints(discardedCards)
-                + countVictoryPoints(deckCards);
+        this.handCards = new CardStack();
+        this.discardedCards = new CardStack();
+        this.deckCards = new CardStack();
     }
 
-    protected int coins() {
+    public abstract Card selectCard(List<Card> cards);
+
+    public void discardCard(Card card) {
+        ensureCardIsInStack(card, handCards);
+
+        handCards.remove(card);
+        discardedCards.push(card);
+    }
+
+    public void discardAllCards() {
+        discardedCards.addAll(handCards);
+        handCards.removeAllElements();
+    }
+
+    public void drawCards() {
+        if (deckCards.size() < CARDS_TO_DRAW) {
+            discardedCards.shuffle();
+            deckCards.addAll(discardedCards);
+            discardedCards.removeAllElements();
+        }
+
+        for (int i = 0; i < CARDS_TO_DRAW; i++) {
+            handCards.push(deckCards.pop());
+        }
+    }
+
+    public CardStack handCards() {
+        return handCards;
+    }
+
+    public CardStack discardedCards() {
+        return discardedCards;
+    }
+
+    public CardStack deckCards() {
+        return deckCards;
+    }
+
+    public int victoryPoints() {
+        return victoryPointsInCardStack(handCards)
+                + victoryPointsInCardStack(discardedCards)
+                + victoryPointsInCardStack(deckCards);
+    }
+
+    public int coins() {
         int sum = 0;
         for (Card card : handCards) {
             if (card instanceof TreasureCard) {
@@ -34,11 +82,25 @@ public abstract class Player {
         return sum;
     }
 
-    private int countVictoryPoints(Stack<Card> cardStack) {
+    public int turns() {
+        return turns;
+    }
+
+    public void incrementTurns() {
+        turns++;
+    }
+
+    private void ensureCardIsInStack(Card card, CardStack stack) {
+        if (!stack.contains(card)) {
+            throw new IllegalArgumentException("Card cannot be used, because it is not in the stack.");
+        }
+    }
+
+    private int victoryPointsInCardStack(CardStack cardStack) {
         int sum = 0;
         for (Card card : cardStack) {
-            if (card instanceof TreasureCard) {
-                sum += ((TreasureCard) card).getValue();
+            if (card instanceof VictoryCard) {
+                sum += ((VictoryCard) card).getVictoryPoints();
             }
         }
         return sum;

@@ -1,21 +1,16 @@
 package dominium.Players;
 
-import java.util.List;
-
 import dominium.Cards.Card;
 import dominium.Cards.Copper;
-import dominium.Cards.Duchy;
-import dominium.Cards.Estate;
-import dominium.Cards.Gold;
 import dominium.Cards.NoEffectCard1;
 import dominium.Cards.NoEffectCard2;
-import dominium.Cards.Province;
-import dominium.Cards.Silver;
+
+import java.util.List;
 
 public class TestThreePointsPlayer extends AIPlayer {
 
     public TestThreePointsPlayer(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override
