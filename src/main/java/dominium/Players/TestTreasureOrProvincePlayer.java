@@ -10,7 +10,7 @@ public class TestTreasureOrProvincePlayer extends AIPlayer {
         super(name);
     }
 
-            @Override
+    @Override
     public Card selectCard(List<Card> cards) {
         Card cardToPick = null;
         if (hasCard(cards, Province.class)) {
