@@ -21,32 +21,20 @@ public class GameMaster {
         this.out = out;
     }
 
-    public List<Player> startGame() {
+    public void startGame() {
         while (true) {
             for (Player player : players) {
                 player.incrementTurns();
+
                 buyCard(player);
                 discardCards(player);
                 drawCards(player);
-                out.println("_____________________________");
+
                 if (!gameState.gameIsRunning()) {
-                    return winner();
+                    return;
                 }
             }
         }
-
-//        int numberOfRounds = 0;
-//        while (gameState.gameIsRunning()) {
-//            int playerNumber = numberOfRounds % players.size();
-//            Player player = players.get(playerNumber);
-//            buyCard(player);
-//            discardCards(player);
-//            drawCards(player);
-//            increaseTurnsPlayedByThisPlayer(player);
-//            ++numberOfRounds;
-//            out.println("_____________________________");
-//        }
-//        return winner(numberOfRounds);
     }
 
     /**
@@ -57,7 +45,7 @@ public class GameMaster {
      *
      * @return one or more winning players
      */
-    private List<Player> winner() {
+    public List<Player> winner() {
         List<Player> winners = new ArrayList<Player>();
         for (Player player : players) {
             if (winners.isEmpty()) {
@@ -78,7 +66,9 @@ public class GameMaster {
     }
 
     private void drawCards(Player player) {
-        out.println("Player " + player.getName() + ": Drawing cards");
+        out.println("Player " + player.getName() + ": Drawing cards"
+            + "_____________________________"
+        );
         player.drawCards();
     }
 
@@ -87,11 +77,9 @@ public class GameMaster {
         Card selectedCard = player.selectCard(cardBuyingOptions);
 
         if (selectedCard != null) {
-            Stack<Card> selectedKingdomCardStack = gameState.getKingdomCards().get(selectedCard.getClass());
-
-            // remove the selected card from the kingdom card set
-            selectedKingdomCardStack.pop();
+            gameState.getKingdomCards().get(selectedCard.getClass()).pop();
             player.handCards().add(selectedCard);
+
             out.println("Player " + player.getName()
                     + ": Buying card " + selectedCard.getName()
                     + " Cost: " + selectedCard.getCost()

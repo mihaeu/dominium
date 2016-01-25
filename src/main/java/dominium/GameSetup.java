@@ -49,10 +49,6 @@ public class GameSetup {
 
             player.deckCards().addAll(startCards);
             player.handCards().addAll(handCards);
-
-            gameState.getDeckCards().put(player, startCards);
-            gameState.getHandCards().put(player, handCards);
-            gameState.getDiscardCards().put(player, new Stack<Card>());
         }
 
         return gameState;
