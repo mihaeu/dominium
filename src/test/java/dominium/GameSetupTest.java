@@ -12,47 +12,34 @@ import static org.junit.Assert.*;
 
 public class GameSetupTest {
 
-    private GameState state;
+    private GameSetup setup;
     private List<Player> players;
 
     @Before
     public void setUp() {
-        GameSetup setup = new GameSetup();
+        setup = new GameSetup();
         players = new ArrayList<Player>();
         players.add(new RandomPlayer("Test"));
-        state = setup.initiateGameState(players,Main.NORMAL_KINGDOM_CARDS);
+
     }
 
     @Test
-    public void setUpGame() throws Exception {
+    public void setUpGame() {
+        GameState state = setup.initiateGameState(players);
         assertNotNull(state);
     }
 
     @Test
-    public void rightNumberOfStacksForPlayers() throws Exception {
-        assertTrue(state.getHandCards().size()== players.size());
-        assertTrue(state.getDeckCards().size()== players.size());
-        assertTrue(state.getDiscardCards().size()== players.size());
-        assertTrue(state.getTurnsPlayedPerPlayer().size()== players.size());
+    public void handsOutStartingCardsToPlayer() {
+        setup.initiateGameState(players);
+        assertEquals(5, players.get(0).handCards().size());
+        assertEquals(5, players.get(0).deckCards().size());
+        assertEquals(0, players.get(0).discardedCards().size());
     }
 
     @Test
-     public void rightNumberOfKingdomCardStacks() throws Exception {
-        assertTrue(state.getKingdomCards().size()== 6);
+     public void rightNumberOfKingdomCardStacks() {
+        GameState state = setup.initiateGameState(players);
+        assertTrue(state.getKingdomCards().size() == 6);
     }
-
-    @Test
-    public void rightNumberOfCardsOnTheStacksPerPlayer() throws Exception {
-        for(Player player:players) {
-            assertTrue(state.getHandCards().get(player).size() == 5);
-            assertTrue(state.getDeckCards().get(player).size()==5);
-            assertTrue(state.getDiscardCards().get(player).size()== 0);
-            assertTrue(state.getTurnsPlayedPerPlayer().get(player)== 0);
-        }
-
-    }
-
-
-
-
 }

@@ -1,10 +1,14 @@
 package dominium.Players;
 
-import java.util.List;
-
 import dominium.Cards.Card;
 
+import java.util.List;
+
 public abstract class AIPlayer extends Player {
+
+    public AIPlayer(String name) {
+        super(name);
+    }
 
     public boolean hasCard(List<Card> cards, Class search) {
         for (Card card : cards) {

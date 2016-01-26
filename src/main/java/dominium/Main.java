@@ -9,19 +9,16 @@ import java.util.List;
 
 public class Main {
 
-    public static final int NORMAL_KINGDOM_CARDS = 1;
-    public static final int TEST_KINGDOM_CARDS = 0;
-
     public static void main(String[] args) {
         List<Player> players = new ArrayList<Player>();
         players.add(new FirstMoneyThenPointsPlayer("1 Stef "));
         players.add(new TestTreasureOrProvincePlayer("2 Michi"));
-        launchAndResolveWholeGame(players, NORMAL_KINGDOM_CARDS);
+        launchAndResolveWholeGame(players);
     }
 
-    public static void launchAndResolveWholeGame(List<Player> players, int kingdomCardSetNumber) {
+    public static void launchAndResolveWholeGame(List<Player> players) {
         GameSetup gameSetup = new GameSetup();
-        GameState state = gameSetup.initiateGameState(players, kingdomCardSetNumber);
+        GameState state = gameSetup.initiateGameState(players);
         GameMaster gameMaster = new GameMaster(players, state);
         gameMaster.startGame();
     }

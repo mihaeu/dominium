@@ -11,7 +11,6 @@ public class GameState {
     private Map<Player, Stack<Card>> deckCards;
     private Map<Player, List<Card>> handCards;
     private Map<Player, Stack<Card>> discardCards;
-    private Map<Player, Integer> turnsPlayedPerPlayer;
 
     public GameState(Map<Class, Stack<Card>> kingdomCards) {
         this.kingdomCards = kingdomCards;
@@ -19,7 +18,6 @@ public class GameState {
         deckCards = new HashMap<Player, Stack<Card>>();
         handCards = new HashMap<Player, List<Card>>();
         discardCards = new HashMap<Player, Stack<Card>>();
-        turnsPlayedPerPlayer = new HashMap<Player, Integer>();
     }
 
     public boolean gameIsRunning() {
@@ -38,10 +36,6 @@ public class GameState {
 
     private boolean provinceCardsEmpty() {
         return kingdomCards.get(Province.class).size() == 0;
-    }
-
-    public Map<Player, Integer> getTurnsPlayedPerPlayer() {
-        return turnsPlayedPerPlayer;
     }
 
     public Map<Class, Stack<Card>> getKingdomCards() {

@@ -7,7 +7,7 @@ import java.util.List;
 public class TestTreasureOrProvincePlayer extends AIPlayer {
 
     public TestTreasureOrProvincePlayer(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override
