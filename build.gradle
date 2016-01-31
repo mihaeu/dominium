@@ -1,5 +1,10 @@
 apply plugin: 'java'
+
 apply plugin: 'jacoco'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
+apply plugin: 'jdepend'
 
 repositories {
     jcenter()
@@ -8,4 +13,29 @@ repositories {
 dependencies {
   testCompile 'junit:junit:4.11'
   testCompile 'org.mockito:mockito-core:1.+'
+}
+
+checkstyle {
+    configFile = new File(rootDir, "config/sun_checks.xml")
+    ignoreFailures = true
+    toolVersion = '6.7'
+    showViolations = true
+}
+
+task findbugs (type: FindBugs, dependsOn: check) {
+    ignoreFailures = true
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+task pmd (type: Pmd, dependsOn: check) {
+    ignoreFailures = true
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
