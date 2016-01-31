@@ -7,6 +7,8 @@ import java.io.PrintStream;
 import java.util.*;
 
 public class GameMaster {
+    private static final int CARDS_TO_DRAW = 5;
+
     GameState gameState;
     List<Player> players;
     PrintStream out = System.out;
@@ -28,7 +30,7 @@ public class GameMaster {
 
                 buyCard(player);
                 discardCards(player);
-                drawCards(player);
+                drawHandCards(player);
 
                 if (!gameState.gameIsRunning()) {
                     return;
@@ -65,11 +67,11 @@ public class GameMaster {
         return winners;
     }
 
-    private void drawCards(Player player) {
+    private void drawHandCards(Player player) {
         out.println("Player " + player.getName() + ": Drawing cards"
-            + "_____________________________"
+                + "\n_____________________________"
         );
-        player.drawCards();
+        player.drawCards(CARDS_TO_DRAW);
     }
 
     private void buyCard(Player player) {
@@ -99,11 +101,16 @@ public class GameMaster {
         int moneyAvailable = getAvailableMoney(player);
         CardStack cardOptions = new CardStack();
         for (Stack<Card> cardStack : gameState.getKingdomCards().values()) {
-            if (!cardStack.empty() && cardStack.peek().getCost() <= moneyAvailable) {
+            if (!cardStack.empty()
+                    && nextCardIsAffordable(moneyAvailable, cardStack)) {
                 cardOptions.add(cardStack.peek());
             }
         }
         return cardOptions;
+    }
+
+    private boolean nextCardIsAffordable(int moneyAvailable, Stack<Card> cardStack) {
+        return cardStack.peek().getCost() <= moneyAvailable;
     }
 
     private int getAvailableMoney(Player player) {

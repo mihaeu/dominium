@@ -64,7 +64,7 @@ public class FirstMoneyThenPointsPlayerTest {
         player.deckCards().add(card5);
         player.deckCards().add(card6);
 
-        player.drawCards();
+        player.drawCards(5);
         assertEquals(5, player.handCards().size());
         assertEquals(1, player.deckCards().size());
     }
@@ -85,7 +85,7 @@ public class FirstMoneyThenPointsPlayerTest {
         player.discardedCards().add(card5);
         player.discardedCards().add(card6);
 
-        player.drawCards();
+        player.drawCards(5);
         assertEquals(5, player.handCards().size());
         assertEquals(1, player.deckCards().size());
         assertEquals(0, player.discardedCards().size());

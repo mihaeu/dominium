@@ -1,8 +1,8 @@
 package dominium;
 
+import dominium.Players.ConsolePlayer;
 import dominium.Players.FirstMoneyThenPointsPlayer;
 import dominium.Players.Player;
-import dominium.Players.TestTreasureOrProvincePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         List<Player> players = new ArrayList<Player>();
-        players.add(new FirstMoneyThenPointsPlayer("1 Stef "));
-        players.add(new TestTreasureOrProvincePlayer("2 Michi"));
+        players.add(new ConsolePlayer("1 Real Michi"));
+        players.add(new FirstMoneyThenPointsPlayer("2 Stef-Bot"));
         launchAndResolveWholeGame(players);
     }
 
@@ -21,5 +21,9 @@ public class Main {
         GameState state = gameSetup.initiateGameState(players);
         GameMaster gameMaster = new GameMaster(players, state);
         gameMaster.startGame();
+
+        for (Player player : gameMaster.winner()) {
+            System.out.println(player);
+        }
     }
 }

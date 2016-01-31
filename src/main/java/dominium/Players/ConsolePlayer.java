@@ -13,6 +13,21 @@ public class ConsolePlayer extends Player {
 
     @Override
     public Card selectCard(List<Card> cards) {
+        for (Card card : handCards) {
+            System.out.printf(" _____________________________\n" +
+                    "|%-29s|\n" +
+                    "|-----------------------------|\n" +
+                    "|                             |\n" +
+                    "|                             |\n" +
+                    "|                             |\n" +
+                    "|-----------------------------|\n" +
+                    "| Cost: %d     Type: Action    |\n" +
+                    "|_____________________________|\n",
+                    card.getName(),
+                    card.getCost()
+            );
+        }
+
         Card card = null;
         while (card == null) {
             try {

@@ -8,8 +8,6 @@ import dominium.Cards.VictoryCard;
 import java.util.List;
 
 public abstract class Player {
-    private static final int CARDS_TO_DRAW = 5;
-
     protected String name;
     protected CardStack handCards;
     protected CardStack discardedCards;
@@ -42,16 +40,20 @@ public abstract class Player {
         handCards.removeAllElements();
     }
 
-    public void drawCards() {
-        if (deckCards.size() < CARDS_TO_DRAW) {
+    public void drawCards(int number) {
+        if (notEnoughCardsInDeck(number)) {
             discardedCards.shuffle();
             deckCards.addAll(discardedCards);
             discardedCards.removeAllElements();
         }
 
-        for (int i = 0; i < CARDS_TO_DRAW; i++) {
+        for (int i = 0; i < number; i++) {
             handCards.push(deckCards.pop());
         }
+    }
+
+    private boolean notEnoughCardsInDeck(int number) {
+        return deckCards.size() < number;
     }
 
     public CardStack handCards() {

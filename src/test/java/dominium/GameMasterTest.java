@@ -38,6 +38,12 @@ public class GameMasterTest {
         gameMaster = new GameMaster(players, state, mockStream);
     }
 
+    @Test
+    public void makePlayerDrawCards() {
+        players.add(mockPlayer1);
+        gameMaster.startGame();
+        assertEquals(mockPlayer1, gameMaster.winner().get(0));
+    }
 
     @Test
     public void playerWithMostPointsWins() {
