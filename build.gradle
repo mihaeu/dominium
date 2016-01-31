@@ -22,20 +22,10 @@ checkstyle {
     showViolations = true
 }
 
-task findbugs (type: FindBugs, dependsOn: check) {
+findbugs {
     ignoreFailures = true
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
 }
 
-task pmd (type: Pmd, dependsOn: check) {
+pmd {
     ignoreFailures = true
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
 }
