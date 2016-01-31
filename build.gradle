@@ -29,3 +29,11 @@ findbugs {
 pmd {
     ignoreFailures = true
 }
+
+test {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpFile = file("$buildDir/jacoco/classpathdumps")
+    }
+}
