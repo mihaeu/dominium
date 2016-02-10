@@ -15,9 +15,6 @@ public class GameStateTest {
     public void testNoStateWhenCreated() {
         GameState state = new GameState(new HashMap<Class, Stack<Card>>());
         assertEquals(0, state.getKingdomCards().size());
-        assertEquals(0, state.getHandCards().size());
-        assertEquals(0, state.getDiscardCards().size());
-        assertEquals(0, state.getDeckCards().size());
     }
 
     @Test

@@ -41,16 +41,4 @@ public class GameState {
     public Map<Class, Stack<Card>> getKingdomCards() {
         return kingdomCards;
     }
-
-    public Map<Player, Stack<Card>> getDeckCards() {
-        return deckCards;
-    }
-
-    public Map<Player, List<Card>> getHandCards() {
-        return handCards;
-    }
-
-    public Map<Player, Stack<Card>> getDiscardCards() {
-        return discardCards;
-    }
 }
