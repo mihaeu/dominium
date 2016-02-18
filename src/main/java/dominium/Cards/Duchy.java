@@ -2,7 +2,8 @@ package dominium.Cards;
 
 public class Duchy extends Card implements VictoryCard {
     public Duchy() {
-        this.cost = 5;
+        cost = 5;
+        text = "3 Victory Points";
     }
 
     @Override

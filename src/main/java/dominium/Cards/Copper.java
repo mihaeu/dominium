@@ -2,7 +2,8 @@ package dominium.Cards;
 
 public class Copper extends Card implements TreasureCard {
     public Copper() {
-        this.cost = 0;
+        cost = 0;
+        text = "1 Coin";
     }
 
     @Override

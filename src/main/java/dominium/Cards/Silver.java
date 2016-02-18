@@ -2,7 +2,8 @@ package dominium.Cards;
 
 public class Silver extends Card implements TreasureCard {
     public Silver() {
-        this.cost = 3;
+        cost = 3;
+        text = "2 Coin";
     }
 
     @Override
