@@ -15,6 +15,12 @@ dependencies {
   testCompile 'org.mockito:mockito-core:1.+'
 }
 
+jar {
+    manifest {
+        attributes("Main-Class": "dominium.Main")
+    }
+}
+
 checkstyle {
     configFile = new File(rootDir, "config/sun_checks.xml")
     ignoreFailures = true
