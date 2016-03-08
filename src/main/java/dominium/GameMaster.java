@@ -1,10 +1,12 @@
 package dominium;
 
-import dominium.Cards.*;
+import dominium.Cards.Card;
 import dominium.Players.Player;
 
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class GameMaster {
     private static final int CARDS_TO_DRAW = 5;
@@ -48,7 +50,7 @@ public class GameMaster {
      * @return one or more winning players
      */
     public List<Player> winner() {
-        List<Player> winners = new ArrayList<Player>();
+        List<Player> winners = new ArrayList<>();
         for (Player player : players) {
             if (winners.isEmpty()) {
                 winners.add(player);

@@ -5,6 +5,7 @@ import dominium.Cards.Province;
 
 import java.util.Map;
 import java.util.Stack;
+import java.util.function.Predicate;
 
 public class GameState {
     private Map<Class, Stack<Card>> kingdomCards;
@@ -18,13 +19,11 @@ public class GameState {
     }
 
     private boolean threeStacksEmpty() {
-        int count = 0;
-        for (Stack<Card> stack : kingdomCards.values()) {
-            if (stack.size() == 0) {
-                count++;
-            }
-        }
-        return count >= 3;
+        Predicate<Stack> isEmpty = stack -> stack.size() == 0;
+        return kingdomCards.values()
+                .stream()
+                .filter(isEmpty)
+                .count() >= 3;
     }
 
     private boolean provinceCardsEmpty() {
