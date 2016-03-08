@@ -2,22 +2,15 @@ package dominium;
 
 import dominium.Cards.Card;
 import dominium.Cards.Province;
-import dominium.Players.Player;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Stack;
 
 public class GameState {
     private Map<Class, Stack<Card>> kingdomCards;
-    private Map<Player, Stack<Card>> deckCards;
-    private Map<Player, List<Card>> handCards;
-    private Map<Player, Stack<Card>> discardCards;
 
     public GameState(Map<Class, Stack<Card>> kingdomCards) {
         this.kingdomCards = kingdomCards;
-
-        deckCards = new HashMap<Player, Stack<Card>>();
-        handCards = new HashMap<Player, List<Card>>();
-        discardCards = new HashMap<Player, Stack<Card>>();
     }
 
     public boolean gameIsRunning() {
