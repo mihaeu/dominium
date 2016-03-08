@@ -32,4 +32,16 @@ public class CardTest {
         assertEquals(8, province.getCost());
         assertEquals(6, province.getVictoryPoints());
     }
+
+    @Test
+    public void cardsHaveAText()
+    {
+        assertEquals("1 Coin", new Copper().getText());
+    }
+
+    @Test
+    public void cardsHaveAName()
+    {
+        assertEquals("Copper", new Copper().getName());
+    }
 }

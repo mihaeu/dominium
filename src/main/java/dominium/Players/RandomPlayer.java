@@ -12,6 +12,10 @@ public class RandomPlayer extends Player {
 
     @Override
     public Card selectCard(List<Card> cards) {
+        if (cards.isEmpty()) {
+            return null;
+        }
+
         int cardToPick = (int) (Math.random() * cards.size());
         return cards.get(cardToPick);
     }

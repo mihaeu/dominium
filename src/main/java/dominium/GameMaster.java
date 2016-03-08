@@ -26,7 +26,7 @@ public class GameMaster {
     }
 
     public void startGame() {
-        while (true) {
+        while (gameState.gameIsRunning()) {
             for (Player player : players) {
                 player.incrementTurns();
 

@@ -18,7 +18,7 @@ public class GameSetup {
         int numberOfEstates = NUMBER_OF_VICTORY_CARDS - players.size() * NUMBER_ESTATES_START_HAND;
         int numberOfProvinces = NUMBER_OF_VICTORY_CARDS - ((4 - players.size()) * 2);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<Class, Stack<Card>>();
+        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
         kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
         kingdomCards.put(Silver.class, createCardStack(new Silver(), NUMBER_OF_SILVER_CARDS));
         kingdomCards.put(Gold.class, createCardStack(new Gold(), NUMBER_OF_GOLD_CARDS));
@@ -55,7 +55,7 @@ public class GameSetup {
     }
 
     private Stack<Card> createCardStack(Card card, int numberOfCards) {
-        Stack<Card> cards = new Stack<Card>();
+        Stack<Card> cards = new Stack<>();
         for (int i = 0; i < numberOfCards; i++) {
             cards.add(card);
         }
