@@ -114,6 +114,7 @@ public class FirstMoneyThenPointsPlayerTest {
         player.handCards().add(new Copper());
         player.discardedCards().add(new Gold());
         player.deckCards().add(new Silver());
+        player.setCoins();
         assertEquals(6, player.coins());
     }
 

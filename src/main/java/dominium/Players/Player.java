@@ -12,7 +12,9 @@ public abstract class Player {
     protected CardStack handCards;
     protected CardStack discardedCards;
     protected CardStack deckCards;
-    protected int turns;
+    protected int buys = 0;
+    protected int coins = 0;
+    protected int turns = 0;
 
     public String getName() {
         return name;
@@ -75,13 +77,32 @@ public abstract class Player {
     }
 
     public int coins() {
-        int sum = 0;
-        for (Card card : handCards) {
-            if (card instanceof TreasureCard) {
-                sum += ((TreasureCard) card).getValue();
-            }
+        return coins;
+    }
+
+    public void spendCoins(int number) {
+        if (number > coins) {
+            throw new IllegalArgumentException("Cannot spend more than available.");
         }
-        return sum;
+
+        coins -= number;
+    }
+
+
+    public void setCoins() {
+        coins = handCards
+                .stream()
+                .filter(card -> card instanceof TreasureCard)
+                .mapToInt(card -> ((TreasureCard) card).getValue())
+                .sum();
+    }
+
+    public int getBuys() {
+        return buys;
+    }
+
+    public void setBuys(int buys) {
+        this.buys = buys;
     }
 
     public int turns() {
@@ -99,12 +120,10 @@ public abstract class Player {
     }
 
     private int victoryPointsInCardStack(CardStack cardStack) {
-        int sum = 0;
-        for (Card card : cardStack) {
-            if (card instanceof VictoryCard) {
-                sum += ((VictoryCard) card).getVictoryPoints();
-            }
-        }
-        return sum;
+        return cardStack
+                .stream()
+                .filter(card -> card instanceof VictoryCard)
+                .mapToInt(card -> ((VictoryCard) card).getVictoryPoints())
+                .sum();
     }
 }

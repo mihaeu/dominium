@@ -29,8 +29,10 @@ public class GameMaster {
         while (gameState.gameIsRunning()) {
             for (Player player : players) {
                 player.incrementTurns();
+                player.setCoins();
+                player.setBuys(1);
 
-                buyCard(player);
+                buyCards(player);
                 discardCards(player);
                 drawHandCards(player);
 
@@ -76,22 +78,31 @@ public class GameMaster {
         player.drawCards(CARDS_TO_DRAW);
     }
 
-    private void buyCard(Player player) {
-        CardStack cardBuyingOptions = getCardBuyingOptions(player);
-        Card selectedCard = player.selectCard(cardBuyingOptions);
+    private void buyCards(Player player) {
+        while (player.getBuys() > 0) {
+            CardStack cardBuyingOptions = getCardBuyingOptions(player);
+            if (cardBuyingOptions.empty()) {
+                return;
+            }
 
-        if (selectedCard != null) {
-            gameState.getKingdomCards().get(selectedCard.getClass()).pop();
-            player.handCards().add(selectedCard);
+            Card selectedCard = player.selectCard(cardBuyingOptions);
 
-            out.println("Player " + player.getName()
-                    + ": Buying card " + selectedCard.getName()
-                    + " Cost: " + selectedCard.getCost()
-                    + " Money: " + getAvailableMoney(player));
-        } else {
-            out.println("Player " + player.getName()
-                    + " Chose not to buy a card "
-                    + " Money: " + getAvailableMoney(player));
+            if (selectedCard != null) {
+                gameState.getKingdomCards().get(selectedCard.getClass()).pop();
+                player.handCards().add(selectedCard);
+                player.setBuys(player.getBuys() - 1);
+                player.spendCoins(selectedCard.getCost());
+
+                out.println("Player " + player.getName()
+                        + ": Buying card " + selectedCard.getName()
+                        + " Cost: " + selectedCard.getCost()
+                        + " Money: " + player.coins());
+            } else {
+                out.println("Player " + player.getName()
+                        + " Chose not to buy a card "
+                        + " Money: " + player.coins());
+                return;
+            }
         }
     }
 
@@ -100,11 +111,10 @@ public class GameMaster {
     }
 
     private CardStack getCardBuyingOptions(Player player) {
-        int moneyAvailable = getAvailableMoney(player);
         CardStack cardOptions = new CardStack();
         for (Stack<Card> cardStack : gameState.getKingdomCards().values()) {
             if (!cardStack.empty()
-                    && nextCardIsAffordable(moneyAvailable, cardStack)) {
+                    && nextCardIsAffordable(player.coins(), cardStack)) {
                 cardOptions.add(cardStack.peek());
             }
         }
@@ -113,9 +123,5 @@ public class GameMaster {
 
     private boolean nextCardIsAffordable(int moneyAvailable, Stack<Card> cardStack) {
         return cardStack.peek().getCost() <= moneyAvailable;
-    }
-
-    private int getAvailableMoney(Player player) {
-        return player.coins();
     }
 }
