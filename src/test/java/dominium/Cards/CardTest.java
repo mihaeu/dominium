@@ -1,6 +1,5 @@
-package dominium;
+package dominium.Cards;
 
-import dominium.Cards.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

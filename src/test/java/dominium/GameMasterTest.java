@@ -269,4 +269,42 @@ public class GameMasterTest {
         gameMaster.startGame();
         assertEquals(0, gameMaster.winner().size());
     }
+
+    @Test
+    public void findsCurrentPlayer()
+    {
+        players.add(mockPlayer1);
+        players.add(mockPlayer2);
+        when(mockGameState.gameIsRunning())
+                .thenReturn(true)
+                .thenReturn(false);
+        gameMaster.startGame();
+        assertEquals(mockPlayer1, gameMaster.currentPlayer());
+    }
+
+    @Test
+    public void findsOtherPlayers()
+    {
+        players.add(mockPlayer1);
+        players.add(mockPlayer2);
+        players.add(mockPlayer3);
+        when(mockGameState.gameIsRunning())
+                .thenReturn(true)
+                .thenReturn(false);
+        gameMaster.startGame();
+        assertEquals(2, gameMaster.otherPlayers().size());
+        assertEquals(mockPlayer2, gameMaster.otherPlayers().get(0));
+        assertEquals(mockPlayer3, gameMaster.otherPlayers().get(1));
+    }
+
+    @Test
+    public void beforeStartingTheGameThereIsNoCurrentPlayer()
+    {
+        players.add(mockPlayer1);
+        players.add(mockPlayer2);
+        players.add(mockPlayer3);
+        players.add(mockPlayer4);
+        assertEquals(4, gameMaster.otherPlayers().size());
+        assertEquals(null, gameMaster.currentPlayer());
+    }
 }

@@ -1,12 +1,11 @@
-package dominium;
+package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.*;
-import dominium.Players.FirstMoneyThenPointsPlayer;
-import dominium.Players.Player;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class FirstMoneyThenPointsPlayerTest {
 
@@ -114,7 +113,7 @@ public class FirstMoneyThenPointsPlayerTest {
         player.handCards().add(new Copper());
         player.discardedCards().add(new Gold());
         player.deckCards().add(new Silver());
-        player.setCoins();
+        player.setCoinsFromTreasureCardsOnHand();
         assertEquals(6, player.coins());
     }
 

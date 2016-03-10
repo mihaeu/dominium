@@ -1,5 +1,6 @@
 package dominium;
 
+import dominium.Cards.ActionCard;
 import dominium.Cards.Card;
 import dominium.Players.Player;
 import dominium.Util.Logger;
@@ -15,6 +16,7 @@ public class GameMaster {
     private GameState gameState;
     private List<Player> players;
     private Logger logger = null;
+    private Player currentPlayer;
 
     public GameMaster(List<Player> players, GameState gameState) {
         this.players = players;
@@ -31,9 +33,11 @@ public class GameMaster {
     public void startGame() {
         while (gameState.gameIsRunning()) {
             for (Player player : players) {
-                actionPhase(player);
-                buyPhase(player);
-                cleanUpPhase(player);
+                currentPlayer = player;
+
+                actionPhase(currentPlayer);
+                buyPhase(currentPlayer);
+                cleanUpPhase(currentPlayer);
 
                 if (!gameState.gameIsRunning()) {
                     return;
@@ -44,8 +48,30 @@ public class GameMaster {
 
     private void actionPhase(Player player) {
         player.incrementTurns();
-        player.setCoins();
+        player.setCoinsFromTreasureCardsOnHand();
         player.setBuys(1);
+        player.setActions(1);
+
+        while (player.getActions() > 0) {
+            Card selectedActionCard = player.selectCard(availableActionCards(player));
+            if (selectedActionCard == null) {
+                return;
+            }
+
+            ((ActionCard) selectedActionCard).resolve(this);
+            player.setActions(player.getActions() - 1);
+        }
+    }
+
+    private List<Card> availableActionCards(Player player) {
+        List<Card> actionCards = new ArrayList<>();
+        for (Card card : player.handCards()) {
+            if (card instanceof ActionCard
+                    && !card.isPlayed()) {
+                actionCards.add(card);
+            }
+        }
+        return actionCards;
     }
 
     private void buyPhase(Player player) {
@@ -135,5 +161,15 @@ public class GameMaster {
 
     private boolean nextCardIsAffordable(int moneyAvailable, Stack<Card> cardStack) {
         return cardStack.peek().getCost() <= moneyAvailable;
+    }
+
+    public Player currentPlayer() {
+        return currentPlayer;
+    }
+
+    public List<Player> otherPlayers() {
+        List<Player> otherPlayers = new ArrayList<>(players);
+        otherPlayers.remove(currentPlayer);
+        return otherPlayers;
     }
 }

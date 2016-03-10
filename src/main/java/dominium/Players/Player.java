@@ -15,6 +15,7 @@ public abstract class Player {
     protected int buys = 0;
     protected int coins = 0;
     protected int turns = 0;
+    protected int actions = 0;
 
     public String getName() {
         return name;
@@ -88,13 +89,20 @@ public abstract class Player {
         coins -= number;
     }
 
+    public int getCoins() {
+        return coins;
+    }
 
-    public void setCoins() {
+    public void setCoinsFromTreasureCardsOnHand() {
         coins = handCards
                 .stream()
                 .filter(card -> card instanceof TreasureCard)
                 .mapToInt(card -> ((TreasureCard) card).getValue())
                 .sum();
+    }
+
+    public void setCoins(int number) {
+        coins = number;
     }
 
     public int getBuys() {
@@ -103,6 +111,14 @@ public abstract class Player {
 
     public void setBuys(int buys) {
         this.buys = buys;
+    }
+
+    public int getActions() {
+        return actions;
+    }
+
+    public void setActions(int actions) {
+        this.actions = actions;
     }
 
     public int turns() {
