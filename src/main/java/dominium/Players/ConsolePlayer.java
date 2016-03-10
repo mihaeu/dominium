@@ -38,7 +38,14 @@ public class ConsolePlayer extends Player {
                     cards.get(i).getText()
             );
         }
-        System.out.println(getName() + " choose a card: ");
+        System.out.printf(
+                "Turn %d: You have %d coins, %d actions and %d buys left\n",
+                turns,
+                getCoins(),
+                getActions(),
+                getBuys()
+        );
+        System.out.print(getName() + " choose a card: ");
         Scanner s = new Scanner(System.in);
         String choice = s.nextLine();
         return Integer.parseInt(choice);

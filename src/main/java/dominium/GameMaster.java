@@ -9,6 +9,7 @@ import dominium.Util.NullLogger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class GameMaster {
     private static final int CARDS_TO_DRAW = 5;
@@ -52,33 +53,30 @@ public class GameMaster {
         player.setBuys(1);
         player.setActions(1);
 
+        playAction(player);
+    }
+
+    private void playAction(Player player) {
         while (player.getActions() > 0) {
+            player.setActions(player.getActions() - 1);
+
             Card selectedActionCard = player.selectCard(availableActionCards(player));
             if (selectedActionCard == null) {
+                player.setActions(0);
                 return;
             }
 
             ((ActionCard) selectedActionCard).resolve(this);
             selectedActionCard.setPlayed(true);
-            player.setActions(player.getActions() - 1);
             logger.info("Played action card: " + selectedActionCard.getName());
         }
     }
 
     private List<Card> availableActionCards(Player player) {
-//        List<Card> cards = player.handCards().stream()
-//                .filter(card -> card instanceof ActionCard)
-//                .filter(card -> !card.isPlayed())
-//                .collect(Collectors.toList());
-
-        List<Card> actionCards = new ArrayList<>();
-        for (Card card : player.handCards()) {
-            if (card instanceof ActionCard
-                    && !card.isPlayed()) {
-                actionCards.add(card);
-            }
-        }
-        return actionCards;
+        return player.handCards().stream()
+                .filter(card -> card instanceof ActionCard)
+                .filter(card -> !card.isPlayed())
+                .collect(Collectors.toList());
     }
 
     private void buyPhase(Player player) {
@@ -125,6 +123,8 @@ public class GameMaster {
 
     private void buyCards(Player player) {
         while (player.getBuys() > 0) {
+            player.setBuys(player.getBuys() - 1);
+
             CardStack cardBuyingOptions = getCardBuyingOptions(player);
             if (cardBuyingOptions.empty()) {
                 return;
@@ -135,7 +135,6 @@ public class GameMaster {
             if (selectedCard != null) {
                 gameState.getKingdomCards().get(selectedCard.getClass()).pop();
                 player.handCards().add(selectedCard);
-                player.setBuys(player.getBuys() - 1);
                 player.spendCoins(selectedCard.getCost());
 
                 logger.info("Player " + player.getName()
@@ -146,6 +145,7 @@ public class GameMaster {
                 logger.info("Player " + player.getName()
                         + " Chose not to buy a card "
                         + " Money: " + player.coins());
+                player.setBuys(0);
                 return;
             }
         }

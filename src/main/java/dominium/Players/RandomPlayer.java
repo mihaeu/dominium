@@ -7,7 +7,7 @@ import java.util.List;
 public class RandomPlayer extends Player {
 
     public RandomPlayer(String name) {
-        super("Random" + name);
+        super(name);
     }
 
     @Override
