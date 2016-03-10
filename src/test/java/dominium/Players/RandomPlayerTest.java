@@ -14,7 +14,7 @@ public class RandomPlayerTest {
     @Test
     public void hasAName() {
         Player player = new RandomPlayer("Test");
-        assertEquals("RandomTest", player.getName());
+        assertEquals("Test", player.getName());
     }
 
     @Test
