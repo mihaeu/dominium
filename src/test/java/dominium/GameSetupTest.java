@@ -40,6 +40,8 @@ public class GameSetupTest {
     @Test
      public void rightNumberOfKingdomCardStacks() {
         GameState state = setup.initiateGameState(players);
-        assertTrue(state.getKingdomCards().size() == 6);
+
+        // this is just temporary and should usually be 6 (supply) + 10 (actual kingdom cards)
+        assertTrue(state.getKingdomCards().size() == 13);
     }
 }
