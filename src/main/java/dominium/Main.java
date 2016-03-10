@@ -65,6 +65,7 @@ public class Main {
                     break;
                 case "c":
                     players.add(new ConsolePlayer("Console-Player " + generateRandomName()));
+                    break;
                 default:
                     throw new IllegalArgumentException("Player configuration invalid");
             }
