@@ -21,7 +21,7 @@ public class Main {
         for (int i = 0; i < numberOfGames; i++) {
             List<Player> winners = runGame(players, logger);
 
-            System.out.printf("\nGame %3d: ", i);
+            System.out.printf("\nGame %3d: ", i + 1);
             winners.forEach(player -> System.out.print(player + " "));
             games.put(i, winners);
         }
@@ -127,7 +127,7 @@ public class Main {
                 player.getName(),
                 winsPerPlayer.get(player),
                 games.size(),
-                (float) winsPerPlayer.get(player) / games.size()
+                (float) winsPerPlayer.get(player) / games.size() * 100
             );
         }
     }
