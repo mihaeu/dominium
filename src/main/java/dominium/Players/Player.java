@@ -31,6 +31,16 @@ public abstract class Player {
 
     public abstract Card selectCard(List<Card> cards);
 
+    public void reset() {
+        handCards = new CardStack();
+        discardedCards = new CardStack();
+        deckCards = new CardStack();
+        buys = 0;
+        coins = 0;
+        turns = 0;
+        actions = 0;
+    }
+
     public void discardCard(Card card) {
         ensureCardIsInStack(card, handCards);
 
