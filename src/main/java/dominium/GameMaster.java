@@ -66,6 +66,11 @@ public class GameMaster {
     }
 
     private List<Card> availableActionCards(Player player) {
+//        List<Card> cards = player.handCards().stream()
+//                .filter(card -> card instanceof ActionCard)
+//                .filter(card -> !card.isPlayed())
+//                .collect(Collectors.toList());
+
         List<Card> actionCards = new ArrayList<>();
         for (Card card : player.handCards()) {
             if (card instanceof ActionCard

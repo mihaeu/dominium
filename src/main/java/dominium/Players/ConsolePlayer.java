@@ -13,21 +13,8 @@ public class ConsolePlayer extends Player {
 
     @Override
     public Card selectCard(List<Card> cards) {
-        for (Card card : handCards) {
-            System.out.printf(
-                    " _____________________________\n" +
-                    "|%-29s|\n" +
-                    "|-----------------------------|\n" +
-                    "|                             |\n" +
-                    "|%-29s|\n" +
-                    "|                             |\n" +
-                    "|-----------------------------|\n" +
-                    "| Cost: %d     Type: Action    |\n" +
-                    "|_____________________________|\n",
-                    card.getName(),
-                    card.getText(),
-                    card.getCost()
-            );
+        if (cards.isEmpty()) {
+            return null;
         }
 
         Card card = null;
@@ -42,10 +29,16 @@ public class ConsolePlayer extends Player {
     }
 
     private int getChoice(List<Card> cards) {
-        System.out.println("Choose a card:");
         for (int i = 0; i < cards.size(); i++) {
-            System.out.println("[" + i + "] " + cards.get(i).getName());
+            System.out.printf(
+                    "[%d] %-15s (Cost: %d): %s\n",
+                    i,
+                    cards.get(i).getName(),
+                    cards.get(i).getCost(),
+                    cards.get(i).getText()
+            );
         }
+        System.out.println(getName() + " choose a card: ");
         Scanner s = new Scanner(System.in);
         String choice = s.nextLine();
         return Integer.parseInt(choice);
