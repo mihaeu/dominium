@@ -18,6 +18,7 @@ public class Cellar extends Card implements ActionCard {
         Card selectedCard = player.selectCard(player.handCards());
         while (selectedCard != null) {
             cardsDiscarded++;
+            player.discardCard(selectedCard);
             selectedCard = player.selectCard(player.handCards());
         }
         player.drawCards(cardsDiscarded);
