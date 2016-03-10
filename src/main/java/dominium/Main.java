@@ -2,7 +2,7 @@ package dominium;
 
 import dominium.Players.FirstMoneyThenPointsPlayer;
 import dominium.Players.Player;
-import dominium.Players.RandomPlayer;
+import dominium.Players.TreasureOrProvincePlayer;
 import dominium.Util.ConsoleLogger;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         List<Player> players = new ArrayList<>();
-        players.add(new RandomPlayer("1 Real Michi"));
+        players.add(new TreasureOrProvincePlayer("1 Michi-Bot"));
         players.add(new FirstMoneyThenPointsPlayer("2 Stef-Bot"));
         launchAndResolveWholeGame(players);
     }

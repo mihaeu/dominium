@@ -59,7 +59,9 @@ public class GameMaster {
             }
 
             ((ActionCard) selectedActionCard).resolve(this);
+            selectedActionCard.setPlayed(true);
             player.setActions(player.getActions() - 1);
+            logger.info("Played action card: " + selectedActionCard.getName());
         }
     }
 

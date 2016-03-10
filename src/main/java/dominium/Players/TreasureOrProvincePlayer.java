@@ -12,6 +12,10 @@ public class TreasureOrProvincePlayer extends AIPlayer {
 
     @Override
     public Card selectCard(List<Card> cards) {
+        if (cards.isEmpty()) {
+            return null;
+        }
+
         Card cardToPick = null;
         if (hasCard(cards, Province.class)) {
             cardToPick = findCard(cards, Province.class);
@@ -25,6 +29,8 @@ public class TreasureOrProvincePlayer extends AIPlayer {
             cardToPick = findCard(cards, Copper.class);
         } else if (hasCard(cards, Estate.class)) {
             cardToPick = findCard(cards, Estate.class);
+        } else {
+            cardToPick = cards.get((int) (Math.random() * cards.size()));
         }
         return cardToPick;
     }

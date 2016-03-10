@@ -51,7 +51,8 @@ public abstract class Player {
         }
 
         for (int i = 0; i < number; i++) {
-            handCards.push(deckCards.pop());
+            Card card = deckCards.pop();
+            handCards.push(card);
         }
     }
 
@@ -141,5 +142,12 @@ public abstract class Player {
                 .filter(card -> card instanceof VictoryCard)
                 .mapToInt(card -> ((VictoryCard) card).getVictoryPoints())
                 .sum();
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

@@ -16,6 +16,10 @@ public class FirstMoneyThenPointsPlayer extends AIPlayer {
     public Card selectCard(List<Card> cards) {
         ++numberOfRounds;
 
+        if (cards.isEmpty()) {
+            return null;
+        }
+
         Card cardToPick = null;
         if (hasCard(cards, Province.class)) {
             cardToPick = findCard(cards, Province.class);
@@ -29,9 +33,10 @@ public class FirstMoneyThenPointsPlayer extends AIPlayer {
             ++goldOrSilverCards;
         } else if (hasCard(cards, Estate.class) && numberOfRounds >= 15) {
             cardToPick = findCard(cards, Estate.class);
+        } else {
+            cardToPick = cards.get((int) (Math.random() * cards.size()));
         }
 
         return cardToPick;
     }
-
 }
