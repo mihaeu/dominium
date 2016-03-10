@@ -48,6 +48,7 @@ public class GameMaster {
     }
 
     private void actionPhase(Player player) {
+        logger.info(player + " begins action phase");
         player.incrementTurns();
         player.setCoinsFromTreasureCardsOnHand();
         player.setBuys(1);
@@ -59,16 +60,15 @@ public class GameMaster {
     private void playAction(Player player) {
         while (player.getActions() > 0) {
             player.setActions(player.getActions() - 1);
-
             Card selectedActionCard = player.selectCard(availableActionCards(player));
             if (selectedActionCard == null) {
                 player.setActions(0);
                 return;
             }
 
+            logger.info("Played action card: " + selectedActionCard.getName());
             ((ActionCard) selectedActionCard).resolve(this);
             selectedActionCard.setPlayed(true);
-            logger.info("Played action card: " + selectedActionCard.getName());
         }
     }
 
@@ -80,10 +80,12 @@ public class GameMaster {
     }
 
     private void buyPhase(Player player) {
+        logger.info(player + " begins buy phase");
         buyCards(player);
     }
 
     private void cleanUpPhase(Player player) {
+        logger.info(player + " begins clean up phase");
         discardCards(player);
         drawHandCards(player);
     }
@@ -117,7 +119,7 @@ public class GameMaster {
     }
 
     private void drawHandCards(Player player) {
-        logger.info("Player " + player.getName() + ": Drawing cards");
+        logger.info("Player " + player.getName() + ": Drawing cards", player);
         player.drawCards(CARDS_TO_DRAW);
     }
 

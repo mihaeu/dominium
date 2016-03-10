@@ -36,6 +36,8 @@ public class GameSetup {
         kingdomCards.put(Smithy.class, createCardStack(new Smithy(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Village.class, createCardStack(new Village(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Woodcutter.class, createCardStack(new Woodcutter(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Cellar.class, createCardStack(new Cellar(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Militia.class, createCardStack(new Militia(), NUMBER_OF_NORMAL_KINGDOM_CARD));
 
         GameState gameState = new GameState(kingdomCards);
         for (Player player : players) {
