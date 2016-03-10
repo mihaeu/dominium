@@ -142,7 +142,7 @@ public abstract class Player {
 
     private void ensureCardIsInStack(Card card, CardStack stack) {
         if (!stack.contains(card)) {
-            throw new IllegalArgumentException("Card cannot be used, because it is not in the stack.");
+            throw new IllegalArgumentException(card.getName() + " is not in the stack.");
         }
     }
 
