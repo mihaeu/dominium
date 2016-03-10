@@ -6,9 +6,9 @@ import dominium.Cards.Estate;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.PrintStream;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -39,8 +39,7 @@ public class GameMasterTest {
         mockPlayer4 = mock(Player.class);
 
         mockGameState = mock(GameState.class);
-        PrintStream mockStream = mock(PrintStream.class);
-        gameMaster = new GameMaster(players, mockGameState, mockStream);
+        gameMaster = new GameMaster(players, mockGameState);
     }
 
     @Test
@@ -241,6 +240,24 @@ public class GameMasterTest {
                 .thenReturn(false);
         gameMaster.startGame();
         assertEquals(1, player1.victoryPoints());
+    }
+
+    @Test
+    @Ignore
+    public void playerCannotBuyMoreAfterRefusingToBuyOnce()
+    {
+        when(mockPlayer1.selectCard(new ArrayList<>()))
+                .thenReturn(new Estate())
+                .thenReturn(null)
+        ;
+        when(mockPlayer1.getBuys()).thenReturn(2);
+        players.add(mockPlayer1);
+
+        when(mockGameState.gameIsRunning())
+                .thenReturn(true)
+                .thenReturn(false);
+        gameMaster.startGame();
+        assertEquals(1, mockPlayer1.victoryPoints());
     }
 
     @Test

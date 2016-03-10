@@ -2,8 +2,9 @@ package dominium;
 
 import dominium.Cards.Card;
 import dominium.Players.Player;
+import dominium.Util.Logger;
+import dominium.Util.NullLogger;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -11,36 +12,49 @@ import java.util.Stack;
 public class GameMaster {
     private static final int CARDS_TO_DRAW = 5;
 
-    GameState gameState;
-    List<Player> players;
-    PrintStream out = System.out;
+    private GameState gameState;
+    private List<Player> players;
+    private Logger logger = null;
 
     public GameMaster(List<Player> players, GameState gameState) {
         this.players = players;
         this.gameState = gameState;
+
+        this.logger = new NullLogger();
     }
 
-    public GameMaster(List<Player> players, GameState gameState, PrintStream out) {
+    public GameMaster(List<Player> players, GameState gameState, Logger logger) {
         this(players, gameState);
-        this.out = out;
+        this.logger = logger;
     }
 
     public void startGame() {
         while (gameState.gameIsRunning()) {
             for (Player player : players) {
-                player.incrementTurns();
-                player.setCoins();
-                player.setBuys(1);
-
-                buyCards(player);
-                discardCards(player);
-                drawHandCards(player);
+                actionPhase(player);
+                buyPhase(player);
+                cleanUpPhase(player);
 
                 if (!gameState.gameIsRunning()) {
                     return;
                 }
             }
         }
+    }
+
+    private void actionPhase(Player player) {
+        player.incrementTurns();
+        player.setCoins();
+        player.setBuys(1);
+    }
+
+    private void buyPhase(Player player) {
+        buyCards(player);
+    }
+
+    private void cleanUpPhase(Player player) {
+        discardCards(player);
+        drawHandCards(player);
     }
 
     /**
@@ -72,9 +86,7 @@ public class GameMaster {
     }
 
     private void drawHandCards(Player player) {
-        out.println("Player " + player.getName() + ": Drawing cards"
-                + "\n_____________________________"
-        );
+        logger.info("Player " + player.getName() + ": Drawing cards");
         player.drawCards(CARDS_TO_DRAW);
     }
 
@@ -93,12 +105,12 @@ public class GameMaster {
                 player.setBuys(player.getBuys() - 1);
                 player.spendCoins(selectedCard.getCost());
 
-                out.println("Player " + player.getName()
+                logger.info("Player " + player.getName()
                         + ": Buying card " + selectedCard.getName()
                         + " Cost: " + selectedCard.getCost()
                         + " Money: " + player.coins());
             } else {
-                out.println("Player " + player.getName()
+                logger.info("Player " + player.getName()
                         + " Chose not to buy a card "
                         + " Money: " + player.coins());
                 return;
