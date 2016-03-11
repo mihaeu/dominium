@@ -15,7 +15,7 @@ public class CardStackTest {
 
         // this is less than ideal, but necessary to check for the randomness
         // the chance for this test to be a false negative is
-        // 7.888609052210118054117285652827862296732064351090230047... × 10^-31
+        // 7.88860905221011805411728565282786229673206435109023004... × 10^-31
         for (int i = 0; i < 100; i++) {
             stack.shuffle();
             if (stack.get(0).getClass() == Silver.class) {
