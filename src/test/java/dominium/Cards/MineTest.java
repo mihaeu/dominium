@@ -30,7 +30,7 @@ public class MineTest {
         Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
         CardStack marketStack = new CardStack();
         marketStack.add(market);
-        
+
         kingdomCards.put(Market.class, marketStack);
         when(mockMaster.kingdomCards()).thenReturn(kingdomCards);
 

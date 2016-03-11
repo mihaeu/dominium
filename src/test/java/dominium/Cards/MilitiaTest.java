@@ -14,14 +14,22 @@ public class MilitiaTest {
     @Test
     public void currentPlayerGetsTwoCoinsAndForcesOtherPlayersToDiscardCards() {
         Player mockOtherPlayer1 = mock(Player.class);
-        CardStack handCards1 = mock(CardStack.class);
-        when(handCards1.size()).thenReturn(5);
+        CardStack handCards1 = new CardStack();
+        handCards1.add(new Copper());
+        handCards1.add(new Copper());
+        handCards1.add(new Copper());
+        handCards1.add(new Copper());
+        handCards1.add(new Copper());
         when(mockOtherPlayer1.handCards()).thenReturn(handCards1);
 
         Player mockOtherPlayer2 = mock(Player.class);
-        CardStack handCards2 = mock(CardStack.class);
+        CardStack handCards2 = new CardStack();
+        handCards2.add(new Copper());
+        handCards2.add(new Copper());
+        handCards2.add(new Copper());
+        handCards2.add(new Copper());
+        handCards2.add(new Moat());         // <-- Reaction card stops Militia
         when(mockOtherPlayer2.handCards()).thenReturn(handCards2);
-        when(handCards2.size()).thenReturn(3);
 
         GameMaster mockMaster = mock(GameMaster.class);
         Player mockPlayer = mock(Player.class);

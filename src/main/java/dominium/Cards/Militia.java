@@ -16,6 +16,14 @@ public class Militia extends Card implements ActionCard {
 
         for (Player otherPlayer : master.otherPlayers()) {
             int cardsToDiscard = otherPlayer.handCards().size() - 3;
+
+            // check for Moat
+            for (Card card : otherPlayer.handCards()) {
+                if (card instanceof Moat) {
+                    cardsToDiscard = 0;
+                }
+            }
+
             while (cardsToDiscard > 0) {
                 Card selectedCard = otherPlayer.selectCard(otherPlayer.handCards());
                 otherPlayer.discardCard(selectedCard);
