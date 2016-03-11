@@ -3,15 +3,12 @@ package dominium.Util;
 import dominium.Players.Player;
 
 import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 public class ConsoleLogger implements Logger {
     private java.util.logging.Logger logger;
 
     public ConsoleLogger() {
         logger = java.util.logging.Logger.getLogger("Default");
-        logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
     }
 
     @Override

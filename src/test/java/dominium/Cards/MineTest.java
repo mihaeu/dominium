@@ -45,4 +45,17 @@ public class MineTest {
         assertTrue(randomPlayer.handCards().contains(moat));
         assertTrue(randomPlayer.handCards().contains(gold));
     }
+
+    @Test
+    public void abortsIfNoCardIsTrashed() {
+        GameMaster mockMaster = mock(GameMaster.class);
+        Player player = mock(Player.class);
+        when(mockMaster.currentPlayer()).thenReturn(player);
+        when(player.handCards()).thenReturn(new CardStack());
+
+        Mine mine = new Mine();
+        mine.resolve(mockMaster);
+
+        verify(player, never()).trashCardFromHand(any());
+    }
 }

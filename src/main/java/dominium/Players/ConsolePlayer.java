@@ -2,12 +2,27 @@ package dominium.Players;
 
 import dominium.Cards.Card;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
 public class ConsolePlayer extends Player {
+    private PrintStream out;
+    private Scanner scanner;
+
     public ConsolePlayer(String name) {
         super(name);
+
+        scanner = new Scanner(System.in);
+        out = System.out;
+    }
+
+    public ConsolePlayer(String name, PrintStream out, InputStream in) {
+        super(name);
+
+        scanner = new Scanner(in);
+        this.out = out;
     }
 
     @Override
@@ -21,7 +36,7 @@ public class ConsolePlayer extends Player {
             try {
                 card = cards.get(getChoice(cards));
             } catch (Exception e) {
-                System.out.println("Invalid option, please try again: ");
+                out.println("Invalid option, please try again: ");
             }
         }
         return card;
@@ -29,7 +44,7 @@ public class ConsolePlayer extends Player {
 
     private int getChoice(List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
-            System.out.printf(
+            out.printf(
                     "[%2d] %-15s (Cost: %d): %s\n",
                     i,
                     cards.get(i).getName(),
@@ -37,16 +52,15 @@ public class ConsolePlayer extends Player {
                     cards.get(i).getText()
             );
         }
-        System.out.printf(
+        out.printf(
                 "Turn %d: You have %d coins, %d actions and %d buys left\n",
                 turns,
                 getCoins(),
                 getActions(),
                 getBuys()
         );
-        System.out.print(getName() + " choose a card: ");
-        Scanner s = new Scanner(System.in);
-        String choice = s.nextLine();
+        out.print(getName() + " choose a card: ");
+        String choice = scanner.nextLine();
         return Integer.parseInt(choice);
     }
 }

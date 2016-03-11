@@ -73,13 +73,6 @@ public class GameMaster {
         }
     }
 
-    private List<Card> availableActionCards(Player player) {
-        return player.handCards().stream()
-                .filter(card -> card instanceof ActionCard)
-                .filter(card -> !card.isPlayed())
-                .collect(Collectors.toList());
-    }
-
     private void buyPhase(Player player) {
         logger.info(player + " begins buy phase");
         buyCards(player);
@@ -87,8 +80,8 @@ public class GameMaster {
 
     private void cleanUpPhase(Player player) {
         logger.info(player + " begins clean up phase");
-        discardCards(player);
-        drawHandCards(player);
+        player.discardAllCards();
+        player.drawCards(CARDS_TO_DRAW);
     }
 
     /**
@@ -119,11 +112,6 @@ public class GameMaster {
         return winners;
     }
 
-    private void drawHandCards(Player player) {
-        logger.info("Player " + player.getName() + ": Drawing cards", player);
-        player.drawCards(CARDS_TO_DRAW);
-    }
-
     private void buyCards(Player player) {
         while (player.getBuys() > 0) {
             player.setBuys(player.getBuys() - 1);
@@ -134,9 +122,10 @@ public class GameMaster {
             }
 
             Card selectedCard = player.selectCard(cardBuyingOptions);
-
             if (selectedCard != null) {
-                gameState.getKingdomCards().get(selectedCard.getClass()).pop();
+                gameState.getKingdomCards().get(
+                        selectedCard.getClass())
+                        .pop();
                 player.handCards().add(selectedCard);
                 player.spendCoins(selectedCard.getCost());
 
@@ -154,10 +143,6 @@ public class GameMaster {
         }
     }
 
-    private void discardCards(Player player) {
-        player.discardAllCards();
-    }
-
     private CardStack getCardBuyingOptions(Player player) {
         CardStack cardOptions = new CardStack();
         for (Stack<Card> cardStack : gameState.getKingdomCards().values()) {
@@ -167,6 +152,13 @@ public class GameMaster {
             }
         }
         return cardOptions;
+    }
+
+    private List<Card> availableActionCards(Player player) {
+        return player.handCards().stream()
+                .filter(card -> card instanceof ActionCard)
+                .filter(card -> !card.isPlayed())
+                .collect(Collectors.toList());
     }
 
     private boolean nextCardIsAffordable(int moneyAvailable, Stack<Card> cardStack) {

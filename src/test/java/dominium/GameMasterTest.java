@@ -3,17 +3,22 @@ package dominium;
 import dominium.Cards.Card;
 import dominium.Cards.Copper;
 import dominium.Cards.Estate;
+import dominium.Cards.Village;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
+import dominium.Util.NullLogger;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import java.util.*;
 
+import static junit.framework.TestCase.assertSame;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class GameMasterTest {
 
@@ -39,7 +44,7 @@ public class GameMasterTest {
         mockPlayer4 = mock(Player.class);
 
         mockGameState = mock(GameState.class);
-        gameMaster = new GameMaster(players, mockGameState);
+        gameMaster = new GameMaster(players, mockGameState, new NullLogger());
     }
 
     @Test
@@ -306,5 +311,60 @@ public class GameMasterTest {
         players.add(mockPlayer4);
         assertEquals(4, gameMaster.otherPlayers().size());
         assertEquals(null, gameMaster.currentPlayer());
+    }
+
+    @Test
+    public void forwardsKingdomCards() {
+        Map<Class, Stack<Card>> cards = new HashMap<>();
+        when(mockGameState.getKingdomCards()).thenReturn(cards);
+        assertSame(cards, gameMaster.kingdomCards());
+    }
+
+    @Test
+    public void ifPlayerDoesNotSelectCardForBuyingHeCannotChooseAgain()
+    {
+        when(mockPlayer1.selectCard(any())).thenReturn(null);
+        when(mockPlayer1.getBuys()).thenReturn(1);
+        players.add(mockPlayer1);
+
+        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
+        CardStack copperStack = new CardStack();
+        copperStack.add(new Copper());
+        kingdomCards.put(Copper.class, copperStack);
+        when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
+
+        when(mockGameState.gameIsRunning())
+                .thenReturn(true)
+                .thenReturn(false);
+        gameMaster.startGame();
+
+        InOrder inOrder = inOrder(mockPlayer1);
+        inOrder.verify(mockPlayer1).setBuys(1);     // beginning action phase
+        inOrder.verify(mockPlayer1).setBuys(0);     // reduced from buying
+        inOrder.verify(mockPlayer1).setBuys(0);     // set again because no card selection
+    }
+
+    @Test
+    public void resolvesSelectedActionCard()
+    {
+        Village village = new Village();
+        when(mockPlayer1.selectCard(any())).thenReturn(village);
+        when(mockPlayer1.getActions())
+            .thenReturn(1)
+            .thenReturn(0);
+        players.add(mockPlayer1);
+
+        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
+        CardStack villageStack = new CardStack();
+        villageStack.add(village);
+        kingdomCards.put(Village.class, villageStack);
+        when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
+        when(mockPlayer1.handCards()).thenReturn(villageStack);
+
+        when(mockGameState.gameIsRunning())
+                .thenReturn(true)
+                .thenReturn(false);
+        gameMaster.startGame();
+        assertTrue(village.isPlayed());
     }
 }
