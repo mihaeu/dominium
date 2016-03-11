@@ -1,6 +1,7 @@
 package dominium.Cards;
 
 import dominium.CardStack;
+import dominium.Convenience;
 import dominium.GameMaster;
 import dominium.Players.Player;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class MilitiaTest {
     @Test
     public void currentPlayerGetsTwoCoinsAndForcesOtherPlayersToDiscardCards() {
         Player mockOtherPlayer1 = mock(Player.class);
-        CardStack handCards1 = new CardStack(
+        CardStack handCards1 = Convenience.stack(
                 Copper.class,
                 Copper.class,
                 Copper.class,
@@ -24,7 +25,7 @@ public class MilitiaTest {
         when(mockOtherPlayer1.handCards()).thenReturn(handCards1);
 
         Player mockOtherPlayer2 = mock(Player.class);
-        CardStack handCards2 = new CardStack(
+        CardStack handCards2 = Convenience.stack(
             Copper.class,
             Copper.class,
             Copper.class,

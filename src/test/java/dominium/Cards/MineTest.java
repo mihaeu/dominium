@@ -1,14 +1,11 @@
 package dominium.Cards;
 
 import dominium.CardStack;
+import dominium.Convenience;
 import dominium.GameMaster;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,24 +23,16 @@ public class MineTest {
         randomPlayer.handCards().add(moat);
         randomPlayer.handCards().add(silver);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        CardStack marketStack = new CardStack();
-        Market market = new Market();
-        marketStack.add(market);
-        CardStack goldStack = new CardStack();
-        Gold gold = new Gold();
-        goldStack.add(gold);
-
-        kingdomCards.put(Market.class, marketStack);
-        kingdomCards.put(Gold.class, goldStack);
-        when(mockMaster.kingdomCards()).thenReturn(kingdomCards);
+        when(mockMaster.kingdomCards()).thenReturn(
+                Convenience.kingdomCards(Market.class, Gold.class)
+        );
 
         Mine mine = new Mine();
         mine.resolve(mockMaster);
 
         assertEquals(2, randomPlayer.handCards().size());
         assertTrue(randomPlayer.handCards().contains(moat));
-        assertTrue(randomPlayer.handCards().contains(gold));
+        assertTrue(randomPlayer.handCards().hasCard(Gold.class));
     }
 
     @Test
