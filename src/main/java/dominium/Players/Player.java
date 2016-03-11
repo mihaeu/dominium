@@ -2,6 +2,7 @@ package dominium.Players;
 
 import dominium.CardStack;
 import dominium.Cards.Card;
+import dominium.Cards.Curse;
 import dominium.Cards.TreasureCard;
 import dominium.Cards.VictoryCard;
 
@@ -95,7 +96,11 @@ public abstract class Player {
     public int victoryPoints() {
         return victoryPointsInCardStack(handCards)
                 + victoryPointsInCardStack(discardedCards)
-                + victoryPointsInCardStack(deckCards);
+                + victoryPointsInCardStack(deckCards)
+                - curseCardsInCardStack(handCards)
+                - curseCardsInCardStack(discardedCards)
+                - curseCardsInCardStack(deckCards)
+        ;
     }
 
     public int coins() {
@@ -158,10 +163,18 @@ public abstract class Player {
 
     private int victoryPointsInCardStack(CardStack cardStack) {
         return cardStack
-                .stream()
-                .filter(card -> card instanceof VictoryCard)
-                .mapToInt(card -> ((VictoryCard) card).getVictoryPoints())
-                .sum();
+            .stream()
+            .filter(card -> card instanceof VictoryCard)
+            .mapToInt(card -> ((VictoryCard) card).getVictoryPoints())
+            .sum();
+    }
+
+    private int curseCardsInCardStack(CardStack cardStack) {
+        return cardStack
+            .stream()
+            .filter(card -> card instanceof Curse)
+            .mapToInt(card -> 1)
+            .sum();
     }
 
     @Override

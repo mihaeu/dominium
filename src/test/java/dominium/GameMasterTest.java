@@ -1,9 +1,6 @@
 package dominium;
 
-import dominium.Cards.Card;
-import dominium.Cards.Copper;
-import dominium.Cards.Estate;
-import dominium.Cards.Village;
+import dominium.Cards.*;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import dominium.Util.NullLogger;
@@ -366,5 +363,29 @@ public class GameMasterTest {
                 .thenReturn(false);
         gameMaster.startGame();
         assertTrue(village.isPlayed());
+    }
+
+    @Test
+    public void countsCurseCards() {
+        Player player1 = new RandomPlayer("Test 1");
+        player1.handCards().add(new Estate());
+        player1.handCards().add(new Duchy());
+        player1.handCards().add(new Province());
+        player1.handCards().add(new Moat());
+        player1.handCards().add(new Gold());
+
+        Player player2 = new RandomPlayer("Test 2");
+        player2.handCards().add(new Estate());
+        player2.handCards().add(new Duchy());
+        player2.handCards().add(new Province());
+        player2.handCards().add(new Moat());
+        player2.handCards().add(new Gold());
+        player2.handCards().add(new Curse());
+
+        players.add(player1);
+        players.add(player2);
+        winningPlayers = gameMaster.winner();
+        assertEquals(1, winningPlayers.size());
+        assertEquals(player1, winningPlayers.get(0));
     }
 }
