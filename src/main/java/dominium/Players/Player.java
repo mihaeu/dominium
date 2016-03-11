@@ -12,6 +12,7 @@ public abstract class Player {
     protected CardStack handCards;
     protected CardStack discardedCards;
     protected CardStack deckCards;
+    protected CardStack trashedCards;
     protected int buys = 0;
     protected int coins = 0;
     protected int turns = 0;
@@ -27,6 +28,7 @@ public abstract class Player {
         this.handCards = new CardStack();
         this.discardedCards = new CardStack();
         this.deckCards = new CardStack();
+        this.trashedCards = new CardStack();
     }
 
     public abstract Card selectCard(List<Card> cards);
@@ -35,10 +37,18 @@ public abstract class Player {
         handCards = new CardStack();
         discardedCards = new CardStack();
         deckCards = new CardStack();
+        trashedCards = new CardStack();
         buys = 0;
         coins = 0;
         turns = 0;
         actions = 0;
+    }
+
+    public void trashCardFromHand(Card card) {
+        ensureCardIsInStack(card, handCards);
+
+        handCards.remove(card);
+        trashedCards.push(card);
     }
 
     public void discardCard(Card card) {

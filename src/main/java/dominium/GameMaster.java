@@ -8,6 +8,7 @@ import dominium.Util.NullLogger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -180,5 +181,9 @@ public class GameMaster {
         List<Player> otherPlayers = new ArrayList<>(players);
         otherPlayers.remove(currentPlayer);
         return otherPlayers;
+    }
+
+    public Map<Class, Stack<Card>> kingdomCards() {
+        return gameState.getKingdomCards();
     }
 }
