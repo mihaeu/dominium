@@ -29,16 +29,16 @@ public class GameSetup {
         kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
         kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
 
-        kingdomCards.put(CouncilRoom.class, createCardStack(new CouncilRoom(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Laboratory.class, createCardStack(new Laboratory(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Cellar.class, createCardStack(new Cellar(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Market.class, createCardStack(new Market(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Militia.class, createCardStack(new Militia(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Mine.class, createCardStack(new Mine(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Moat.class, createCardStack(new Moat(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Remodel.class, createCardStack(new Remodel(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Smithy.class, createCardStack(new Smithy(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Village.class, createCardStack(new Village(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Woodcutter.class, createCardStack(new Woodcutter(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Cellar.class, createCardStack(new Cellar(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Militia.class, createCardStack(new Militia(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Mine.class, createCardStack(new Mine(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(Workshop.class, createCardStack(new Workshop(), NUMBER_OF_NORMAL_KINGDOM_CARD));
 
         GameState gameState = new GameState(kingdomCards);
         for (Player player : players) {
