@@ -21,6 +21,9 @@ public class Mine extends Card implements ActionCard {
                 .filter(card -> card instanceof TreasureCard)
                 .collect(Collectors.toList());
         Card selectedCardForTrashing = player.selectCard(treasureCardsOnHand);
+        if (selectedCardForTrashing == null) {
+            return;
+        }
         player.trashCardFromHand(selectedCardForTrashing);
 
         int maxCost = selectedCardForTrashing.getCost() + 3;
