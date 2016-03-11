@@ -17,23 +17,25 @@ public class Mine extends Card implements ActionCard {
     @Override
     public void resolve(GameMaster master) {
         Player player = master.currentPlayer();
-        Card selectedCardForTrashing = player.selectCard(player.handCards());
+        List<Card> treasureCardsOnHand = player.handCards().stream()
+                .filter(card -> card instanceof TreasureCard)
+                .collect(Collectors.toList());
+        Card selectedCardForTrashing = player.selectCard(treasureCardsOnHand);
         player.trashCardFromHand(selectedCardForTrashing);
 
         int maxCost = selectedCardForTrashing.getCost() + 3;
         List<Card> cardsToChooseFrom = master.kingdomCards().values().stream()
                 .filter(stack -> stack.size() > 0)
                 .filter(stack -> stack.peek().cost <= maxCost)
+                .filter(stack -> stack.peek() instanceof TreasureCard)
                 .map(Stack::peek)
                 .collect(Collectors.toList());
-//        List<Card> cardsToChooseFrom = new ArrayList<>();
-//        for (Stack<Card> stack : master.kingdomCards().values()) {
-//            if (!stack.empty() && stack.peek().cost <= maxCost) {
-//                cardsToChooseFrom.add(stack.peek());
-//            }
-//        }
 
         Card selectedCard = player.selectCard(cardsToChooseFrom);
+        if (selectedCard == null) {
+            return;
+        }
+
         player.handCards().add(
             master.kingdomCards().get(selectedCard.getClass()).pop()
         );
