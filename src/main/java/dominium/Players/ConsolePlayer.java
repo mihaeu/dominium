@@ -30,7 +30,7 @@ public class ConsolePlayer extends Player {
     private int getChoice(List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
             System.out.printf(
-                    "[%d] %-15s (Cost: %d): %s\n",
+                    "[%2d] %-15s (Cost: %d): %s\n",
                     i,
                     cards.get(i).getName(),
                     cards.get(i).getCost(),
