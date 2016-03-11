@@ -21,7 +21,7 @@ public class RandomPlayerTest {
     @Test
     public void playerPicksOneCardFromOne() {
         Player player = new RandomPlayer("Test");
-        List<Card> cardList = new ArrayList<Card>();
+        List<Card> cardList = new ArrayList<>();
         Card cardInList = new Copper();
         cardList.add(cardInList);
         Card selectedCard = player.selectCard(cardList);
