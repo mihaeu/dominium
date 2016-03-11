@@ -71,7 +71,7 @@ public class ConsolePlayer extends Player {
         } else if (card instanceof VictoryCard) {
             // green
             return (char)27 + "[30m" + card.getName();
-        } else if (card instanceof Moat) {
+        } else if (card instanceof ReactionCard) {
             // blue
             return (char)27 + "[34m" + card.getName();
         } else {
