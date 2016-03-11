@@ -1,6 +1,6 @@
 package dominium.Players;
 
-import dominium.Cards.Card;
+import dominium.Cards.*;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -45,22 +45,37 @@ public class ConsolePlayer extends Player {
     private int getChoice(List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
             out.printf(
-                    "[%2d] %-15s (Cost: %d): %s\n",
-                    i,
-                    cards.get(i).getName(),
-                    cards.get(i).getCost(),
-                    cards.get(i).getText()
+                "[%2d] %-15s (Cost: %d): %s" + (char)27 + "[39m\n",
+                i,
+                getColoredCardName(cards.get(i)),
+                cards.get(i).getCost(),
+                cards.get(i).getText()
             );
         }
         out.printf(
-                "Turn %d: You have %d coins, %d actions and %d buys left\n",
-                turns,
-                getCoins(),
-                getActions(),
-                getBuys()
+            "Turn %d: You have %d coins, %d actions and %d buys left\n",
+            turns,
+            getCoins(),
+            getActions(),
+            getBuys()
         );
         out.print(getName() + " choose a card: ");
         String choice = scanner.nextLine();
         return Integer.parseInt(choice);
+    }
+
+    private String getColoredCardName(Card card) {
+        if (card instanceof TreasureCard) {
+            // yellow
+            return (char)27 + "[33m" + card.getName();
+        } else if (card instanceof VictoryCard) {
+            // green
+            return (char)27 + "[30m" + card.getName();
+        } else if (card instanceof Moat) {
+            // blue
+            return (char)27 + "[34m" + card.getName();
+        } else {
+            return (char)27 + "[39m" + card.getName();
+        }
     }
 }
