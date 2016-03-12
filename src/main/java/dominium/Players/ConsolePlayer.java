@@ -1,5 +1,6 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.*;
 
 import java.io.InputStream;
@@ -30,6 +31,7 @@ public class ConsolePlayer extends Player {
         if (cards.isEmpty()) {
             return null;
         }
+        System.out.println("\n\n\n\n\n\n\n\n\n\n");
 
         Card card = null;
         while (card == null) {
@@ -39,43 +41,62 @@ public class ConsolePlayer extends Player {
                 out.println("Invalid option, please try again: ");
             }
         }
+        System.out.println();
         return card;
     }
 
     private int getChoice(List<Card> cards) {
+        sortCardsByTypeAndCost(cards);
         for (int i = 0; i < cards.size(); i++) {
             out.printf(
-                "[%2d] %-15s (Cost: %d): %s" + (char)27 + "[39m\n",
-                i,
-                getColoredCardName(cards.get(i)),
-                cards.get(i).getCost(),
-                cards.get(i).getText()
+                    "[%2d] %-15s (Cost: %d): %s" + (char) 27 + "[39m\n",
+                    i,
+                    getColoredCardName(cards.get(i)),
+                    cards.get(i).getCost(),
+                    cards.get(i).getText()
             );
         }
+        System.out.println();
         out.printf(
-            "Turn %d: You have %d coins, %d actions and %d buys left\n",
-            turns,
-            getCoins(),
-            getActions(),
-            getBuys()
+                "Turn %d: You have %d coins, %d actions and %d buys left\n",
+                turns,
+                getCoins(),
+                getActions(),
+                getBuys()
         );
         out.print(getName() + " choose a card: ");
         String choice = scanner.nextLine();
         return Integer.parseInt(choice);
     }
 
+    private void sortCardsByTypeAndCost(List<Card> cards) {
+        List<Card> treasureCards = CardStack.filterCards(cards, TreasureCard.class);
+        treasureCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
+
+        List<Card> victoryCards = CardStack.filterCards(cards, VictoryCard.class);
+        victoryCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
+
+        List<Card> actionCards = CardStack.filterCards(cards, ActionCard.class);
+        actionCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
+
+        cards.clear();
+        cards.addAll(treasureCards);
+        cards.addAll(victoryCards);
+        cards.addAll(actionCards);
+    }
+
     private String getColoredCardName(Card card) {
         if (card instanceof TreasureCard) {
             // yellow
-            return (char)27 + "[33m" + card.getName();
+            return (char) 27 + "[33m" + card.getName();
         } else if (card instanceof VictoryCard) {
             // green
-            return (char)27 + "[30m" + card.getName();
+            return (char) 27 + "[30m" + card.getName();
         } else if (card instanceof ReactionCard) {
             // blue
-            return (char)27 + "[34m" + card.getName();
+            return (char) 27 + "[34m" + card.getName();
         } else {
-            return (char)27 + "[39m" + card.getName();
+            return (char) 27 + "[39m" + card.getName();
         }
     }
 }

@@ -3,7 +3,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%-4relative [%thread] %cyan(%-5level) - %yellow(%msg) %n</pattern>
+            <pattern>%-4relative %highlight(%-5level)- %green(%msg) %n</pattern>
             <!--<pattern>%-4relative [%thread] %cyan(%-5level) %logger{35} - %yellow(%msg) %n</pattern>-->
         </encoder>
     </appender>
@@ -13,7 +13,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%-4r %-5level %logger{35}: %msg%n</pattern>
+            <pattern>%date %-5level %logger{35}: %msg%n</pattern>
         </encoder>
     </appender>
     <root level="INFO">

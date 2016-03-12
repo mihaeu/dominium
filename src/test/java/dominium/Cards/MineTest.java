@@ -24,7 +24,7 @@ public class MineTest {
         randomPlayer.handCards().add(silver);
 
         when(mockMaster.kingdomCards()).thenReturn(
-                Convenience.kingdomCards(Market.class, Gold.class)
+            Convenience.kingdomCards(Market.class, Gold.class)
         );
 
         Mine mine = new Mine();

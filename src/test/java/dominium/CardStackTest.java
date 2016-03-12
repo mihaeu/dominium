@@ -1,10 +1,9 @@
 package dominium;
 
-import dominium.Cards.Copper;
-import dominium.Cards.Silver;
+import dominium.Cards.*;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CardStackTest {
     @Test
@@ -23,5 +22,13 @@ public class CardStackTest {
             }
         }
         assertEquals(stack.get(0).getClass(), Silver.class);
+    }
+
+    @Test
+    public void test() {
+        CardStack stack = Convenience.stack(Copper.class, Moat.class, Duchy.class);
+        assertEquals(1, stack.filterCards(Moat.class).size());
+        CardStack stack2 = Convenience.stack(Copper.class, Moat.class, Duchy.class);
+        assertEquals(1, stack2.filterCards(ActionCard.class).size());
     }
 }
