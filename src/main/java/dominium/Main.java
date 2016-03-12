@@ -1,9 +1,8 @@
 package dominium;
 
 import dominium.Players.*;
-import dominium.Util.ConsoleLogger;
-import dominium.Util.Logger;
-import dominium.Util.NullLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,10 +89,10 @@ public class Main {
     private static Logger getLoggerFromCliArguments(String[] args) {
         for (String arg : args) {
             if (arg.matches("--debug")) {
-                return new ConsoleLogger();
+                return LoggerFactory.getLogger("STDOUT");
             }
         }
-        return new NullLogger();
+        return LoggerFactory.getLogger("quiet");
     }
 
     private static boolean getStatisticsFromCliArguments(String[] args) {

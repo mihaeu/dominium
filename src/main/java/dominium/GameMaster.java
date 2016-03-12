@@ -3,8 +3,7 @@ package dominium;
 import dominium.Cards.ActionCard;
 import dominium.Cards.Card;
 import dominium.Players.Player;
-import dominium.Util.Logger;
-import dominium.Util.NullLogger;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +22,6 @@ public class GameMaster {
     public GameMaster(List<Player> players, GameState gameState) {
         this.players = players;
         this.gameState = gameState;
-
-        this.logger = new NullLogger();
     }
 
     public GameMaster(List<Player> players, GameState gameState, Logger logger) {
@@ -67,7 +64,7 @@ public class GameMaster {
                 return;
             }
 
-            logger.info("Played action card: " + selectedActionCard.getName());
+            logger.info(player + " plays action card: " + selectedActionCard);
             ((ActionCard) selectedActionCard).resolve(this);
             selectedActionCard.setPlayed(true);
         }
@@ -129,14 +126,9 @@ public class GameMaster {
                 player.handCards().add(selectedCard);
                 player.spendCoins(selectedCard.getCost());
 
-                logger.info("Player " + player.getName()
-                        + ": Buying card " + selectedCard.getName()
-                        + " Cost: " + selectedCard.getCost()
-                        + " Money: " + player.coins());
+                logger.info(player + " buys card " + selectedCard);
             } else {
-                logger.info("Player " + player.getName()
-                        + " Chose not to buy a card "
-                        + " Money: " + player.coins());
+                logger.info(player + " chose not to buy a card ");
                 player.setBuys(0);
                 return;
             }

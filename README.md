@@ -7,10 +7,10 @@
 ## Getting started
 
 ```bash
-gradle jar
+gradle fatJar # this packs all the code and dependencies in a single jar file
 
 # --debug flag if you want to see what's going on
-java -jar build/libs/j.dominium.jar --players=r,r --runs=10 --statistics
+java -jar build/libs/j.dominium-all.jar --players=r,r --runs=10 --statistics
 ```
 
 ## Available players

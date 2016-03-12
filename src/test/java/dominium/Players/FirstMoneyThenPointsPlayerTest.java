@@ -12,8 +12,7 @@ public class FirstMoneyThenPointsPlayerTest {
     private Player player;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         player = new FirstMoneyThenPointsPlayer("Test");
     }
 
@@ -33,8 +32,7 @@ public class FirstMoneyThenPointsPlayerTest {
     }
 
     @Test
-    public void discardsOnlyOneCard()
-    {
+    public void discardsOnlyOneCard() {
         Card copper = new Copper();
         Card province = new Province();
         player.handCards().push(copper);
@@ -48,8 +46,7 @@ public class FirstMoneyThenPointsPlayerTest {
     }
 
     @Test
-    public void drawsCardsFromDeckIfItHasMoreThanFiveCards()
-    {
+    public void drawsCardsFromDeckIfItHasMoreThanFiveCards() {
         Card card1 = new Copper();
         Card card2 = new Silver();
         Card card3 = new Gold();
@@ -69,8 +66,7 @@ public class FirstMoneyThenPointsPlayerTest {
     }
 
     @Test
-    public void rebuildsDeckIfItDoesNotHaveEnoughCardsForDrawing()
-    {
+    public void rebuildsDeckIfItDoesNotHaveEnoughCardsForDrawing() {
         Card card1 = new Copper();
         Card card2 = new Silver();
         Card card3 = new Gold();
@@ -91,8 +87,7 @@ public class FirstMoneyThenPointsPlayerTest {
     }
 
     @Test
-    public void computesVictoryPoints()
-    {
+    public void computesVictoryPoints() {
         player.deckCards().add(new Province());
         player.handCards().add(new Duchy());
         player.discardedCards().add(new Estate());
@@ -100,14 +95,12 @@ public class FirstMoneyThenPointsPlayerTest {
     }
 
     @Test
-    public void noVictoryPointsWithoutVictoryCards()
-    {
+    public void noVictoryPointsWithoutVictoryCards() {
         assertEquals(0, player.victoryPoints());
     }
 
     @Test
-    public void computesCoins()
-    {
+    public void computesCoins() {
         player.handCards().add(new Gold());
         player.handCards().add(new Silver());
         player.handCards().add(new Copper());
@@ -118,8 +111,7 @@ public class FirstMoneyThenPointsPlayerTest {
     }
 
     @Test
-    public void noTreasureCardsNoCoins()
-    {
+    public void noTreasureCardsNoCoins() {
         assertEquals(0, player.coins());
     }
 }

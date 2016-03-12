@@ -32,3 +32,6 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Log files
+*.log

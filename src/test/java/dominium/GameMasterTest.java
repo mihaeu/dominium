@@ -3,11 +3,11 @@ package dominium;
 import dominium.Cards.*;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
-import dominium.Util.NullLogger;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -41,7 +41,7 @@ public class GameMasterTest {
         mockPlayer4 = mock(Player.class);
 
         mockGameState = mock(GameState.class);
-        gameMaster = new GameMaster(players, mockGameState, new NullLogger());
+        gameMaster = new GameMaster(players, mockGameState, LoggerFactory.getLogger("quiet"));
     }
 
     @Test

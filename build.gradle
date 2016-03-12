@@ -11,6 +11,10 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.0.13'
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.0.13'
+
   testCompile 'junit:junit:4.11'
   testCompile 'org.mockito:mockito-core:1.+'
 }
@@ -19,6 +23,17 @@ jar {
     manifest {
         attributes("Main-Class": "dominium.Main")
     }
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Dominium',
+                'Implementation-Version': 0.1,
+                'Main-Class': 'dominium.Main'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 checkstyle {
