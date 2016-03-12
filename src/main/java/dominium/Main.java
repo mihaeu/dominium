@@ -115,7 +115,9 @@ public class Main {
         // count wins
         for (Integer gameNumber : games.keySet()) {
             for (Player player : games.get(gameNumber)) {
-                winsPerPlayer.put(player, winsPerPlayer.get(player) + 1);
+                if (games.get(gameNumber).size() == 1) {
+                    winsPerPlayer.put(player, winsPerPlayer.get(player) + 1);
+                }
             }
         }
 
