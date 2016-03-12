@@ -20,8 +20,9 @@ public class Main {
         for (int i = 0; i < numberOfGames; i++) {
             List<Player> winners = runGame(players, logger);
 
-            System.out.printf("\nGame %3d: ", i + 1);
+            System.out.printf("Game %3d: ", i + 1);
             winners.forEach(player -> System.out.print(player + " "));
+            System.out.println();
             games.put(i, winners);
         }
 
