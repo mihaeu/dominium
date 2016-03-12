@@ -11,6 +11,7 @@ public class Remodel extends Card implements ActionCard {
     public Remodel() {
         cost = 4;
         text = "Trash a card from your hand. Gain a card costing up to 2 Coins more than the trashed card.";
+        types.add(CardType.Action);
     }
 
     @Override

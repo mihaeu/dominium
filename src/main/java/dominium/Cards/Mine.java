@@ -12,6 +12,7 @@ public class Mine extends Card implements ActionCard {
         cost = 5;
         text = "Trash a Treasure card from your hand. "
                 + "Gain a Treasure card costing up to 3 Coins more; put it into your hand.";
+        types.add(CardType.Action);
     }
 
     @Override

@@ -7,6 +7,7 @@ public class Chapel extends Card implements ActionCard {
     public Chapel() {
         cost = 2;
         text = "Trash up to 4 cards from your hand.";
+        types.add(CardType.Action);
     }
 
     @Override

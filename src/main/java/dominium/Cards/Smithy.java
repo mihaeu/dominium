@@ -6,6 +6,7 @@ public class Smithy extends Card implements ActionCard {
     public Smithy() {
         cost = 4;
         text = "+3 Cards";
+        types.add(CardType.Action);
     }
 
     @Override

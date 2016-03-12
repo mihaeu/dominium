@@ -10,6 +10,7 @@ public class Workshop extends Card implements ActionCard {
     public Workshop() {
         cost = 3;
         text = "Gain a card costing up to 4 Coins.";
+        types.add(CardType.Action);
     }
 
     @Override

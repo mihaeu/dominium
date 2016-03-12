@@ -6,6 +6,7 @@ public class CouncilRoom extends Card implements ActionCard {
     public CouncilRoom() {
         cost = 5;
         text = "+4 Cards +1 Buy Each other player draws a card";
+        types.add(CardType.Action);
     }
 
     @Override

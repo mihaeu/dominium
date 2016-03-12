@@ -7,6 +7,7 @@ public class Market extends Card implements ActionCard {
     public Market() {
         cost = 5;
         text = "+1 Card +1 Buy +1 Action +1 Coin";
+        types.add(CardType.Action);
     }
 
     @Override

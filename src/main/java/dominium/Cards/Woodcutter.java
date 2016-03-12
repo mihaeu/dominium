@@ -7,6 +7,7 @@ public class Woodcutter extends Card implements ActionCard {
     public Woodcutter() {
         cost = 3;
         text = "+1 Buy +2 Coins";
+        types.add(CardType.Action);
     }
 
     @Override

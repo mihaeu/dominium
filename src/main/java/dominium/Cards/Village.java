@@ -7,6 +7,7 @@ public class Village extends Card implements ActionCard {
     public Village() {
         cost = 3;
         text = "+1 Card +2 Actions";
+        types.add(CardType.Action);
     }
 
     @Override

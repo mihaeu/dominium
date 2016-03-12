@@ -7,6 +7,7 @@ public class Militia extends Card implements ActionCard, AttackCard {
     public Militia() {
         cost = 4;
         text = "+2 Coins, Each other player discards down to 3 cards in his hand.";
+        types.add(CardType.Action);
     }
 
     @Override

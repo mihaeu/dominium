@@ -7,6 +7,7 @@ public class Laboratory extends Card implements ActionCard {
     public Laboratory() {
         cost = 5;
         text = "+2 Cards +1 Action";
+        types.add(CardType.Action);
     }
 
     @Override

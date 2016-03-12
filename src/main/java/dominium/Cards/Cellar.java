@@ -7,6 +7,7 @@ public class Cellar extends Card implements ActionCard {
     public Cellar() {
         cost = 2;
         text = "+1 Action, Discard any number of cards. +1 Card per card discarded.";
+        types.add(CardType.Action);
     }
 
     @Override
