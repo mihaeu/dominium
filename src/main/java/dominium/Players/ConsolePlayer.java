@@ -27,7 +27,7 @@ public class ConsolePlayer extends Player {
     }
 
     @Override
-    public Card selectCard(List<Card> cards) {
+    public Card selectCard(CardStack cards) {
         if (cards.isEmpty()) {
             return null;
         }
@@ -50,7 +50,7 @@ public class ConsolePlayer extends Player {
         return card;
     }
 
-    private int getChoice(List<Card> cards) {
+    private int getChoice(CardStack cards) {
         sortCardsByTypeAndCost(cards);
         for (int i = 0; i < cards.size(); i++) {
             out.printf(
@@ -75,14 +75,14 @@ public class ConsolePlayer extends Player {
         return Integer.parseInt(choice);
     }
 
-    private void sortCardsByTypeAndCost(List<Card> cards) {
-        List<Card> treasureCards = CardStack.filterCards(cards, CardType.Treasure);
+    private void sortCardsByTypeAndCost(CardStack cards) {
+        CardStack treasureCards = CardStack.filterCards(cards, CardType.Treasure);
         treasureCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
-        List<Card> victoryCards = CardStack.filterCards(cards, CardType.Victory);
+        CardStack victoryCards = CardStack.filterCards(cards, CardType.Victory);
         victoryCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
-        List<Card> actionCards = CardStack.filterCards(cards, CardType.Action);
+        CardStack actionCards = CardStack.filterCards(cards, CardType.Action);
         actionCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
         cards.addAll(treasureCards);

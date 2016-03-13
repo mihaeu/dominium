@@ -4,7 +4,6 @@ import dominium.Cards.Card;
 import dominium.Cards.CardType;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -39,20 +38,20 @@ public class CardStack extends Stack<Card> {
         return filterCards(card -> card.getCost() <= maxCost);
     }
 
-    public static List<Card> filterCards(List<Card> cards, Card card) {
+    public static CardStack filterCards(CardStack cards, Card card) {
         return filterCards(cards, c -> c.equals(card));
     }
 
-    public static List<Card> filterCards(List<Card> cards, CardType type) {
+    public static CardStack filterCards(CardStack cards, CardType type) {
         return filterCards(cards, c -> c.getTypes().contains(type));
     }
 
-    public static List<Card> filterCards(List<Card> cards, Predicate<Card> predicate) {
+    public static CardStack filterCards(CardStack cards, Predicate<Card> predicate) {
         if (cards.isEmpty()) {
             return new CardStack();
         }
         return cards.stream()
                 .filter(predicate)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(CardStack::new));
     }
 }

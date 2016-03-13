@@ -46,7 +46,7 @@ public class GameSetup {
             IntStream.range(0, 3).forEach(i -> startCards.push(new Estate()));
             startCards.shuffle();
 
-            List<Card> handCards = new ArrayList<>();
+            CardStack handCards = new CardStack();
             for (int i = 0; i < 5; i++) {
                 Card card = startCards.pop();
                 handCards.add(card);

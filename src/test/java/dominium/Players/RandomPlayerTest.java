@@ -1,12 +1,10 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.Card;
 import dominium.Cards.Copper;
 import dominium.Cards.Curse;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +19,7 @@ public class RandomPlayerTest {
     @Test
     public void playerPicksOneCardFromOne() {
         Player player = new RandomPlayer("Test");
-        List<Card> cardList = new ArrayList<>();
+        CardStack cardList = new CardStack();
         Card cardInList = new Copper();
         cardList.add(cardInList);
         Card selectedCard = player.selectCard(cardList);

@@ -1,8 +1,8 @@
 package dominium.Cards;
 
+import dominium.CardStack;
 import dominium.GameMaster;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class Workshop extends Card implements ActionCard {
@@ -14,10 +14,10 @@ public class Workshop extends Card implements ActionCard {
 
     @Override
     public void resolve(GameMaster master) {
-        List<Card> cardsToChooseFrom = master.kingdomCards().keySet().stream()
+        CardStack cardsToChooseFrom = master.kingdomCards().keySet().stream()
             .filter(card -> master.kingdomCards().get(card).size() > 0)
             .filter(card -> card.getCost() <= 4)
-            .collect(Collectors.toList());
+            .collect(Collectors.toCollection(CardStack::new));
         Card selectedCard = master.currentPlayer().selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;

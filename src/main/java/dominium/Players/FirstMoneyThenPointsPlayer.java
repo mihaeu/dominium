@@ -1,8 +1,7 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.*;
-
-import java.util.List;
 
 public class FirstMoneyThenPointsPlayer extends AIPlayer {
     private int goldOrSilverCards = 0;
@@ -13,7 +12,7 @@ public class FirstMoneyThenPointsPlayer extends AIPlayer {
     }
 
     @Override
-    public Card selectCard(List<Card> cards) {
+    public Card selectCard(CardStack cards) {
         ++numberOfRounds;
 
         if (cards.isEmpty()) {

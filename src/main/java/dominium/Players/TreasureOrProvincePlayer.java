@@ -1,8 +1,7 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.*;
-
-import java.util.List;
 
 public class TreasureOrProvincePlayer extends AIPlayer {
 
@@ -11,12 +10,12 @@ public class TreasureOrProvincePlayer extends AIPlayer {
     }
 
     @Override
-    public Card selectCard(List<Card> cards) {
+    public Card selectCard(CardStack cards) {
         if (cards.isEmpty()) {
             return null;
         }
 
-        Card cardToPick = null;
+        Card cardToPick;
         if (hasCard(cards, Province.class)) {
             cardToPick = findCard(cards, Province.class);
         } else if (hasCard(cards, Gold.class)) {

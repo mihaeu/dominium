@@ -1,8 +1,8 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.Card;
 
-import java.util.List;
 import java.util.Random;
 
 public class RandomPlayer extends Player {
@@ -15,7 +15,7 @@ public class RandomPlayer extends Player {
     }
 
     @Override
-    public Card selectCard(List<Card> cards) {
+    public Card selectCard(CardStack cards) {
         if (cards.isEmpty()) {
             return null;
         }

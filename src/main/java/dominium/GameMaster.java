@@ -144,11 +144,11 @@ public class GameMaster {
         return cardOptions;
     }
 
-    private List<Card> availableActionCards(Player player) {
+    private CardStack availableActionCards(Player player) {
         return player.handCards().stream()
                 .filter(card -> card instanceof ActionCard)
                 .filter(card -> !card.isPlayed())
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(CardStack::new));
     }
 
     private boolean nextCardIsAffordable(int moneyAvailable, Stack<Card> cardStack) {

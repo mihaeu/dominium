@@ -244,7 +244,7 @@ public class GameMasterTest {
     @Test
     public void playerCannotBuyMoreAfterRefusingToBuyOnce()
     {
-        when(mockPlayer1.selectCard(new ArrayList<>()))
+        when(mockPlayer1.selectCard(new CardStack()))
                 .thenReturn(new Estate())
                 .thenReturn(null)
         ;
