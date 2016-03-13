@@ -1,8 +1,10 @@
 package dominium.Cards;
 
 import dominium.CardStack;
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
+
+import java.util.List;
 
 public class Mine extends Card implements ActionCard {
     public Mine() {
@@ -13,10 +15,9 @@ public class Mine extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        Player player = master.currentPlayer();
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
         Card selectedCardForTrashing = player.selectCard(
-                master.currentPlayer().handCards().filterCards(CardType.Treasure)
+                player.handCards().filterCards(CardType.Treasure)
         );
         if (selectedCardForTrashing == null) {
             return;
@@ -24,7 +25,7 @@ public class Mine extends Card implements ActionCard {
         player.trashCardFromHand(selectedCardForTrashing);
 
         int maxCost = selectedCardForTrashing.getCost() + 3;
-        CardStack cardsToChooseFrom = master.kingdomCards().keysOfNonEmptyStacks()
+        CardStack cardsToChooseFrom = kingdomCards.keysOfNonEmptyStacks()
                 .filterCards(maxCost)
                 .filterCards(CardType.Treasure);
 
@@ -34,7 +35,7 @@ public class Mine extends Card implements ActionCard {
         }
 
         player.handCards().add(
-            master.kingdomCards().get(selectedCard).pop()
+            kingdomCards.get(selectedCard).pop()
         );
     }
 }

@@ -2,12 +2,12 @@ package dominium;
 
 import dominium.Cards.ActionCard;
 import dominium.Cards.Card;
+import dominium.Cards.CardType;
 import dominium.Players.Player;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameMaster {
     private static final int CARDS_TO_DRAW = 5;
@@ -56,14 +56,17 @@ public class GameMaster {
     private void playAction(Player player) {
         while (player.getActions() > 0) {
             player.setActions(player.getActions() - 1);
-            Card selectedActionCard = player.selectCard(availableActionCards(player));
+            CardStack cardsToChooseFrom = player.handCards()
+                .filterCards(CardType.Action)
+                .filterCards(card -> !card.isPlayed());
+            Card selectedActionCard = player.selectCard(cardsToChooseFrom);
             if (selectedActionCard == null) {
                 player.setActions(0);
                 return;
             }
 
             logger.info(player + " plays action card: " + selectedActionCard);
-            ((ActionCard) selectedActionCard).resolve(this);
+            ((ActionCard) selectedActionCard).resolve(currentPlayer, otherPlayers(), gameState.getKingdomCards());
             selectedActionCard.setPlayed(true);
         }
     }
@@ -111,7 +114,8 @@ public class GameMaster {
         while (player.getBuys() > 0) {
             player.setBuys(player.getBuys() - 1);
 
-            CardStack cardBuyingOptions = getCardBuyingOptions(player);
+            CardStack cardBuyingOptions = kingdomCards().keysOfNonEmptyStacks()
+                    .filterCards(player.getCoins());
             if (cardBuyingOptions.empty()) {
                 return;
             }
@@ -129,20 +133,6 @@ public class GameMaster {
                 return;
             }
         }
-    }
-
-    private CardStack getCardBuyingOptions(Player player) {
-        return gameState.getKingdomCards().keySet().stream()
-                .filter(card -> gameState.getKingdomCards().get(card).size() > 0)
-                .filter(card -> card.getCost() <= player.getCoins())
-                .collect(Collectors.toCollection(CardStack::new));
-    }
-
-    private CardStack availableActionCards(Player player) {
-        return player.handCards().stream()
-                .filter(card -> card instanceof ActionCard)
-                .filter(card -> !card.isPlayed())
-                .collect(Collectors.toCollection(CardStack::new));
     }
 
     public Player currentPlayer() {

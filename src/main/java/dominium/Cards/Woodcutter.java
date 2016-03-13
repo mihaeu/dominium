@@ -1,7 +1,9 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
+
+import java.util.List;
 
 public class Woodcutter extends Card implements ActionCard {
     public Woodcutter() {
@@ -11,8 +13,7 @@ public class Woodcutter extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        Player player = master.currentPlayer();
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
         player.setBuys(player.getBuys() + 1);
         player.setCoins(player.getCoins() + 2);
     }

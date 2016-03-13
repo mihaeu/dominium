@@ -1,6 +1,9 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
+import dominium.Players.Player;
+
+import java.util.List;
 
 public class CouncilRoom extends Card implements ActionCard {
     public CouncilRoom() {
@@ -10,10 +13,10 @@ public class CouncilRoom extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        master.currentPlayer().drawCards(4);
-        master.currentPlayer().setBuys(master.currentPlayer().getBuys() + 1);
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
+        player.drawCards(4);
+        player.setBuys(player.getBuys() + 1);
 
-        master.otherPlayers().forEach(player -> player.drawCards(1));
+        otherPlayers.forEach(otherPlayer -> otherPlayer.drawCards(1));
     }
 }

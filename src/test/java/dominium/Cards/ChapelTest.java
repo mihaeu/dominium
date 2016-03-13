@@ -19,23 +19,21 @@ public class ChapelTest {
         when(mockMaster.currentPlayer()).thenReturn(player);
 
         Chapel chapel = new Chapel();
-        chapel.resolve(mockMaster);
+        chapel.resolve(player, null, null);
         assertEquals(0, player.handCards().size());
     }
 
     @Test
     public void currentPlayerCanTrashUpToFourCards() {
-        GameMaster mockMaster = mock(GameMaster.class);
         Player player = new RandomPlayer("Test");
         player.handCards().add(new Copper());
         player.handCards().add(new Silver());
         player.handCards().add(new Silver());
         player.handCards().add(new Silver());
         player.handCards().add(new Silver());
-        when(mockMaster.currentPlayer()).thenReturn(player);
 
         Chapel chapel = new Chapel();
-        chapel.resolve(mockMaster);
+        chapel.resolve(player, null, null);
         assertEquals(1, player.handCards().size());
     }
 }

@@ -1,7 +1,9 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
+
+import java.util.List;
 
 public class Cellar extends Card implements ActionCard {
     public Cellar() {
@@ -11,8 +13,7 @@ public class Cellar extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        Player player = master.currentPlayer();
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
         player.setActions(player.getActions() + 1);
 
         int cardsDiscarded = 0;

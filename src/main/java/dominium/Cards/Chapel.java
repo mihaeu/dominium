@@ -1,7 +1,9 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
+
+import java.util.List;
 
 public class Chapel extends Card implements ActionCard {
     public Chapel() {
@@ -11,9 +13,8 @@ public class Chapel extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
         int maxCards = 4;
-        Player player = master.currentPlayer();
         Card selectedCard = player.selectCard(player.handCards());
         while (maxCards > 0
                 && selectedCard != null) {

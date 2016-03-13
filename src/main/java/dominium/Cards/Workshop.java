@@ -1,7 +1,10 @@
 package dominium.Cards;
 
 import dominium.CardStack;
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
+import dominium.Players.Player;
+
+import java.util.List;
 
 public class Workshop extends Card implements ActionCard {
     public Workshop() {
@@ -11,15 +14,15 @@ public class Workshop extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        CardStack cardsToChooseFrom = master.kingdomCards().keysOfNonEmptyStacks()
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
+        CardStack cardsToChooseFrom = kingdomCards.keysOfNonEmptyStacks()
                 .filterCards(4);
-        Card selectedCard = master.currentPlayer().selectCard(cardsToChooseFrom);
+        Card selectedCard = player.selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;
         }
-        master.currentPlayer().discardedCards().add(
-                master.kingdomCards().get(selectedCard).pop()
+        player.discardedCards().add(
+            kingdomCards.get(selectedCard).pop()
         );
     }
 }

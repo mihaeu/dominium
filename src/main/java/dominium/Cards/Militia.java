@@ -1,7 +1,9 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
+
+import java.util.List;
 
 public class Militia extends Card implements ActionCard, AttackCard {
     public Militia() {
@@ -11,11 +13,10 @@ public class Militia extends Card implements ActionCard, AttackCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        Player player = master.currentPlayer();
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
         player.setCoins(player.getCoins() + 2);
 
-        for (Player otherPlayer : master.otherPlayers()) {
+        for (Player otherPlayer : otherPlayers) {
             int cardsToDiscard = otherPlayer.handCards().size() - 3;
 
             if (otherPlayer.handCards().hasCard(new Moat())) {

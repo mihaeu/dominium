@@ -23,12 +23,8 @@ public class MineTest {
         randomPlayer.handCards().add(moat);
         randomPlayer.handCards().add(silver);
 
-        when(mockMaster.kingdomCards()).thenReturn(
-            Convenience.kingdomCards(new Market(), new Gold())
-        );
-
         Mine mine = new Mine();
-        mine.resolve(mockMaster);
+        mine.resolve(randomPlayer, null, Convenience.kingdomCards(new Market(), new Gold()));
 
         assertEquals(2, randomPlayer.handCards().size());
         assertTrue(randomPlayer.handCards().contains(moat));
@@ -37,13 +33,11 @@ public class MineTest {
 
     @Test
     public void abortsIfNoCardIsTrashed() {
-        GameMaster mockMaster = mock(GameMaster.class);
         Player player = mock(Player.class);
-        when(mockMaster.currentPlayer()).thenReturn(player);
         when(player.handCards()).thenReturn(new CardStack());
 
         Mine mine = new Mine();
-        mine.resolve(mockMaster);
+        mine.resolve(player, null, null);
 
         verify(player, never()).trashCardFromHand(any());
     }

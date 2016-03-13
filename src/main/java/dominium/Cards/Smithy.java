@@ -1,6 +1,9 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
+import dominium.Players.Player;
+
+import java.util.List;
 
 public class Smithy extends Card implements ActionCard {
     public Smithy() {
@@ -10,7 +13,7 @@ public class Smithy extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        master.currentPlayer().drawCards(3);
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
+        player.drawCards(3);
     }
 }

@@ -1,7 +1,10 @@
 package dominium.Cards;
 
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
+import dominium.Players.Player;
+
+import java.util.List;
 
 public interface ActionCard {
-    void resolve(GameMaster master);
+    void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards);
 }

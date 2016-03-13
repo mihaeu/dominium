@@ -1,8 +1,10 @@
 package dominium.Cards;
 
 import dominium.CardStack;
-import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
+
+import java.util.List;
 
 public class Remodel extends Card implements ActionCard {
     public Remodel() {
@@ -12,22 +14,21 @@ public class Remodel extends Card implements ActionCard {
     }
 
     @Override
-    public void resolve(GameMaster master) {
-        Player player = master.currentPlayer();
+    public void resolve(Player player, List<Player> otherPlayers, KingdomCardMap kingdomCards) {
         Card selectedCardForTrashing = player.selectCard(player.handCards());
         if (selectedCardForTrashing == null) {
             return;
         }
         player.trashCardFromHand(selectedCardForTrashing);
 
-        CardStack cardsToChooseFrom = master.kingdomCards().keysOfNonEmptyStacks()
+        CardStack cardsToChooseFrom = kingdomCards.keysOfNonEmptyStacks()
                 .filterCards(selectedCardForTrashing.getCost() + 2);
         Card selectedCard = player.selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;
         }
         player.discardedCards().add(
-            master.kingdomCards().get(selectedCard).pop()
+            kingdomCards.get(selectedCard).pop()
         );
     }
 }

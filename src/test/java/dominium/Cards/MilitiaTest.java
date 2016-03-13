@@ -6,8 +6,7 @@ import dominium.GameMaster;
 import dominium.Players.Player;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
 
@@ -38,13 +37,8 @@ public class MilitiaTest {
         Player mockPlayer = mock(Player.class);
         when(mockMaster.currentPlayer()).thenReturn(mockPlayer);
 
-        List<Player> players = new ArrayList<>();
-        players.add(mockOtherPlayer1);
-        players.add(mockOtherPlayer2);
-        when(mockMaster.otherPlayers()).thenReturn(players);
-
         Militia militia = new Militia();
-        militia.resolve(mockMaster);
+        militia.resolve(mockPlayer, Arrays.asList(mockOtherPlayer1, mockOtherPlayer2), null);
         verify(mockPlayer).setCoins(2);
         verify(mockOtherPlayer1, times(2)).selectCard(handCards1);
         verify(mockOtherPlayer2, never()).selectCard(handCards2);
