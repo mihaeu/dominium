@@ -76,16 +76,15 @@ public class ConsolePlayer extends Player {
     }
 
     private void sortCardsByTypeAndCost(List<Card> cards) {
-        List<Card> treasureCards = CardStack.filterCards(cards, TreasureCard.class);
+        List<Card> treasureCards = CardStack.filterCards(cards, CardType.Treasure);
         treasureCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
-        List<Card> victoryCards = CardStack.filterCards(cards, VictoryCard.class);
+        List<Card> victoryCards = CardStack.filterCards(cards, CardType.Victory);
         victoryCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
-        List<Card> actionCards = CardStack.filterCards(cards, ActionCard.class);
+        List<Card> actionCards = CardStack.filterCards(cards, CardType.Action);
         actionCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
-        cards.clear();
         cards.addAll(treasureCards);
         cards.addAll(victoryCards);
         cards.addAll(actionCards);

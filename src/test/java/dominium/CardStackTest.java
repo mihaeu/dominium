@@ -4,6 +4,7 @@ import dominium.Cards.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CardStackTest {
     @Test
@@ -25,10 +26,21 @@ public class CardStackTest {
     }
 
     @Test
-    public void test() {
+    public void filtersByCard() {
         CardStack stack = Convenience.stack(new Copper(), new Moat(), new Duchy());
         assertEquals(1, stack.filterCards(new Moat()).size());
-        CardStack stack2 = Convenience.stack(new Copper(), new Moat(), new Duchy());
-        assertEquals(1, stack2.filterCards(CardType.Action).size());
+    }
+
+    @Test
+    public void filtersByType() {
+        CardStack stack = Convenience.stack(new Copper(), new Moat(), new Duchy());
+        assertEquals(1, stack.filterCards(CardType.Action).size());
+    }
+
+    @Test
+    public void filtersByCost() {
+        CardStack stack = Convenience.stack(new Copper(), new Moat(), new Militia(), new Market());
+        assertEquals(3, stack.filterCards(4).size());
+        assertFalse(stack.filterCards(4).hasCard(new Market()));
     }
 }

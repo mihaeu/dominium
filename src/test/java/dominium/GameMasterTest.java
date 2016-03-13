@@ -4,12 +4,12 @@ import dominium.Cards.*;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.assertSame;
 import static org.junit.Assert.assertEquals;
@@ -242,21 +242,24 @@ public class GameMasterTest {
     }
 
     @Test
-    @Ignore
     public void playerCannotBuyMoreAfterRefusingToBuyOnce()
     {
         when(mockPlayer1.selectCard(new ArrayList<>()))
                 .thenReturn(new Estate())
                 .thenReturn(null)
         ;
-        when(mockPlayer1.getBuys()).thenReturn(2);
+        when(mockPlayer1.getBuys()).thenReturn(9);
+        CardStack handCards = new CardStack();
+        when(mockPlayer1.handCards()).thenReturn(handCards);
         players.add(mockPlayer1);
+
+        when(mockGameState.getKingdomCards()).thenReturn(Convenience.kingdomCards(new Copper()));
 
         when(mockGameState.gameIsRunning())
                 .thenReturn(true)
                 .thenReturn(false);
         gameMaster.startGame();
-        assertEquals(1, mockPlayer1.victoryPoints());
+        verify(mockPlayer1, times(1)).setBuys(0);
     }
 
     @Test
