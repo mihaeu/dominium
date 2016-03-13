@@ -3,8 +3,6 @@ package dominium.Cards;
 import dominium.CardStack;
 import dominium.GameMaster;
 
-import java.util.stream.Collectors;
-
 public class Workshop extends Card implements ActionCard {
     public Workshop() {
         cost = 3;
@@ -14,10 +12,8 @@ public class Workshop extends Card implements ActionCard {
 
     @Override
     public void resolve(GameMaster master) {
-        CardStack cardsToChooseFrom = master.kingdomCards().keySet().stream()
-            .filter(card -> master.kingdomCards().get(card).size() > 0)
-            .filter(card -> card.getCost() <= 4)
-            .collect(Collectors.toCollection(CardStack::new));
+        CardStack cardsToChooseFrom = master.kingdomCards().keysOfNonEmptyStacks()
+                .filterCards(4);
         Card selectedCard = master.currentPlayer().selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;

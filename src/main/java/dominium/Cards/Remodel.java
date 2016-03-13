@@ -4,9 +4,6 @@ import dominium.CardStack;
 import dominium.GameMaster;
 import dominium.Players.Player;
 
-import java.util.Stack;
-import java.util.stream.Collectors;
-
 public class Remodel extends Card implements ActionCard {
     public Remodel() {
         cost = 4;
@@ -23,11 +20,8 @@ public class Remodel extends Card implements ActionCard {
         }
         player.trashCardFromHand(selectedCardForTrashing);
 
-        CardStack cardsToChooseFrom = master.kingdomCards().values().stream()
-            .filter(stack -> stack.size() > 0)
-            .filter(stack -> stack.peek().getCost() <= selectedCardForTrashing.getCost() + 2)
-            .map(Stack::peek)
-            .collect(Collectors.toCollection(CardStack::new));
+        CardStack cardsToChooseFrom = master.kingdomCards().keysOfNonEmptyStacks()
+                .filterCards(selectedCardForTrashing.getCost() + 2);
         Card selectedCard = player.selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;
