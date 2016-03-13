@@ -4,6 +4,7 @@ import dominium.Cards.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CardStackTest {
     @Test
@@ -17,18 +18,29 @@ public class CardStackTest {
         // 7.88860905221011805411728565282786229673206435109023004... × 10^-31
         for (int i = 0; i < 100; i++) {
             stack.shuffle();
-            if (stack.get(0).getClass() == Silver.class) {
+            if (stack.get(0).equals(new Silver())) {
                 break;
             }
         }
-        assertEquals(stack.get(0).getClass(), Silver.class);
+        assertEquals(stack.get(0), new Silver());
     }
 
     @Test
-    public void test() {
-        CardStack stack = Convenience.stack(Copper.class, Moat.class, Duchy.class);
-        assertEquals(1, stack.filterCards(Moat.class).size());
-        CardStack stack2 = Convenience.stack(Copper.class, Moat.class, Duchy.class);
-        assertEquals(1, stack2.filterCards(ActionCard.class).size());
+    public void filtersByCard() {
+        CardStack stack = Convenience.stack(new Copper(), new Moat(), new Duchy());
+        assertEquals(1, stack.filterCards(new Moat()).size());
+    }
+
+    @Test
+    public void filtersByType() {
+        CardStack stack = Convenience.stack(new Copper(), new Moat(), new Duchy());
+        assertEquals(1, stack.filterCards(CardType.Action).size());
+    }
+
+    @Test
+    public void filtersByCost() {
+        CardStack stack = Convenience.stack(new Copper(), new Moat(), new Militia(), new Market());
+        assertEquals(3, stack.filterCards(4).size());
+        assertFalse(stack.filterCards(4).hasCard(new Market()));
     }
 }

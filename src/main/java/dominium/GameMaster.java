@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -120,9 +119,12 @@ public class GameMaster {
 
             Card selectedCard = player.selectCard(cardBuyingOptions);
             if (selectedCard != null) {
-                gameState.getKingdomCards().get(
-                        selectedCard.getClass())
-                        .pop();
+                CardStack stack = gameState.getKingdomCards()
+                        .get(selectedCard);
+                if (stack == null) {
+                    System.out.print("why?");
+                }
+                stack.pop();
                 player.handCards().add(selectedCard);
                 player.spendCoins(selectedCard.getCost());
 
@@ -146,11 +148,11 @@ public class GameMaster {
         return cardOptions;
     }
 
-    private List<Card> availableActionCards(Player player) {
+    private CardStack availableActionCards(Player player) {
         return player.handCards().stream()
                 .filter(card -> card instanceof ActionCard)
                 .filter(card -> !card.isPlayed())
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(CardStack::new));
     }
 
     private boolean nextCardIsAffordable(int moneyAvailable, Stack<Card> cardStack) {
@@ -167,7 +169,7 @@ public class GameMaster {
         return otherPlayers;
     }
 
-    public Map<Class, Stack<Card>> kingdomCards() {
+    public KingdomCardMap kingdomCards() {
         return gameState.getKingdomCards();
     }
 }

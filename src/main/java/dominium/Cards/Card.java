@@ -32,4 +32,18 @@ public abstract class Card {
     public List<CardType> getTypes() {
         return types;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.getClass() == o.getClass();
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cost;
+        result = 31 * result + (text != null ? text.hashCode() : 0);
+        result = 31 * result + (types != null ? types.hashCode() : 0);
+        return result;
+    }
 }

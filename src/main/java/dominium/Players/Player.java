@@ -32,7 +32,7 @@ public abstract class Player {
         this.trashedCards = new CardStack();
     }
 
-    public abstract Card selectCard(List<Card> cards);
+    public abstract Card selectCard(CardStack cards);
 
     public void reset() {
         handCards = new CardStack();

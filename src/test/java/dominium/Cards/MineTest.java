@@ -24,7 +24,7 @@ public class MineTest {
         randomPlayer.handCards().add(silver);
 
         when(mockMaster.kingdomCards()).thenReturn(
-            Convenience.kingdomCards(Market.class, Gold.class)
+            Convenience.kingdomCards(new Market(), new Gold())
         );
 
         Mine mine = new Mine();
@@ -32,7 +32,7 @@ public class MineTest {
 
         assertEquals(2, randomPlayer.handCards().size());
         assertTrue(randomPlayer.handCards().contains(moat));
-        assertTrue(randomPlayer.handCards().hasCard(Gold.class));
+        assertTrue(randomPlayer.handCards().hasCard(new Gold()));
     }
 
     @Test

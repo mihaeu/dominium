@@ -1,8 +1,7 @@
 package dominium.Players;
 
+import dominium.CardStack;
 import dominium.Cards.Card;
-
-import java.util.List;
 
 public abstract class AIPlayer extends Player {
 
@@ -10,16 +9,7 @@ public abstract class AIPlayer extends Player {
         super(name);
     }
 
-    public boolean hasCard(List<Card> cards, Class search) {
-        for (Card card : cards) {
-            if (card.getClass() == search) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Card findCard(List<Card> cards, Class search) {
+    public Card findCard(CardStack cards, Class search) {
         for (Card card : cards) {
             if (card.getClass() == search) {
                 return card;

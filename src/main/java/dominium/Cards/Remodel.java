@@ -1,9 +1,9 @@
 package dominium.Cards;
 
+import dominium.CardStack;
 import dominium.GameMaster;
 import dominium.Players.Player;
 
-import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -23,17 +23,17 @@ public class Remodel extends Card implements ActionCard {
         }
         player.trashCardFromHand(selectedCardForTrashing);
 
-        List<Card> cardsToChooseFrom = master.kingdomCards().values().stream()
+        CardStack cardsToChooseFrom = master.kingdomCards().values().stream()
             .filter(stack -> stack.size() > 0)
             .filter(stack -> stack.peek().getCost() <= selectedCardForTrashing.getCost() + 2)
             .map(Stack::peek)
-            .collect(Collectors.toList());
+            .collect(Collectors.toCollection(CardStack::new));
         Card selectedCard = player.selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;
         }
         player.discardedCards().add(
-            master.kingdomCards().get(selectedCard.getClass()).pop()
+            master.kingdomCards().get(selectedCard).pop()
         );
     }
 }

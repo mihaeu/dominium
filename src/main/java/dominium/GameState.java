@@ -1,16 +1,14 @@
 package dominium;
 
-import dominium.Cards.Card;
 import dominium.Cards.Province;
 
-import java.util.Map;
 import java.util.Stack;
 import java.util.function.Predicate;
 
 public class GameState {
-    private Map<Class, Stack<Card>> kingdomCards;
+    private KingdomCardMap kingdomCards;
 
-    public GameState(Map<Class, Stack<Card>> kingdomCards) {
+    public GameState(KingdomCardMap kingdomCards) {
         this.kingdomCards = kingdomCards;
     }
 
@@ -27,10 +25,10 @@ public class GameState {
     }
 
     private boolean provinceCardsEmpty() {
-        return kingdomCards.get(Province.class).size() == 0;
+        return kingdomCards.get(new Province()).size() == 0;
     }
 
-    public Map<Class, Stack<Card>> getKingdomCards() {
+    public KingdomCardMap getKingdomCards() {
         return kingdomCards;
     }
 }

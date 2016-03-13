@@ -4,12 +4,12 @@ import dominium.Cards.*;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.assertSame;
 import static org.junit.Assert.assertEquals;
@@ -228,13 +228,10 @@ public class GameMasterTest {
         players.add(player1);
 
         // give him the chance to only draw an Estate card
-        Map<Class, Stack<Card>> testCards = new HashMap<>();
-        CardStack provinceStack = new CardStack();
-        provinceStack.add(new Estate());
-        testCards.put(Estate.class, provinceStack);
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Estate());
 
         // play two rounds, the second round he can't pick a card
-        when(mockGameState.getKingdomCards()).thenReturn(testCards);
+        when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
         when(mockGameState.gameIsRunning())
                 .thenReturn(true)
                 .thenReturn(true)
@@ -245,21 +242,24 @@ public class GameMasterTest {
     }
 
     @Test
-    @Ignore
     public void playerCannotBuyMoreAfterRefusingToBuyOnce()
     {
-        when(mockPlayer1.selectCard(new ArrayList<>()))
+        when(mockPlayer1.selectCard(new CardStack()))
                 .thenReturn(new Estate())
                 .thenReturn(null)
         ;
-        when(mockPlayer1.getBuys()).thenReturn(2);
+        when(mockPlayer1.getBuys()).thenReturn(9);
+        CardStack handCards = new CardStack();
+        when(mockPlayer1.handCards()).thenReturn(handCards);
         players.add(mockPlayer1);
+
+        when(mockGameState.getKingdomCards()).thenReturn(Convenience.kingdomCards(new Copper()));
 
         when(mockGameState.gameIsRunning())
                 .thenReturn(true)
                 .thenReturn(false);
         gameMaster.startGame();
-        assertEquals(1, mockPlayer1.victoryPoints());
+        verify(mockPlayer1, times(1)).setBuys(0);
     }
 
     @Test
@@ -312,9 +312,9 @@ public class GameMasterTest {
 
     @Test
     public void forwardsKingdomCards() {
-        Map<Class, Stack<Card>> cards = new HashMap<>();
-        when(mockGameState.getKingdomCards()).thenReturn(cards);
-        assertSame(cards, gameMaster.kingdomCards());
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Copper());
+        when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
+        assertSame(kingdomCards, gameMaster.kingdomCards());
     }
 
     @Test
@@ -324,10 +324,7 @@ public class GameMasterTest {
         when(mockPlayer1.getBuys()).thenReturn(1);
         players.add(mockPlayer1);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        CardStack copperStack = new CardStack();
-        copperStack.add(new Copper());
-        kingdomCards.put(Copper.class, copperStack);
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Copper());
         when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
 
         when(mockGameState.gameIsRunning())
@@ -351,10 +348,8 @@ public class GameMasterTest {
             .thenReturn(0);
         players.add(mockPlayer1);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        CardStack villageStack = new CardStack();
-        villageStack.add(village);
-        kingdomCards.put(Village.class, villageStack);
+        CardStack villageStack = Convenience.stack(new Village());
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Village());
         when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
         when(mockPlayer1.handCards()).thenReturn(villageStack);
 

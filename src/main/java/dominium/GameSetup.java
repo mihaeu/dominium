@@ -20,24 +20,24 @@ public class GameSetup {
         int numberOfEstates = NUMBER_OF_VICTORY_CARDS - players.size() * NUMBER_ESTATES_START_HAND;
         int numberOfProvinces = NUMBER_OF_VICTORY_CARDS - ((4 - players.size()) * 2);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        kingdomCards.put(Copper.class, createCardStack(new Copper(), numberOfCoppers));
-        kingdomCards.put(Silver.class, createCardStack(new Silver(), NUMBER_OF_SILVER_CARDS));
-        kingdomCards.put(Gold.class, createCardStack(new Gold(), NUMBER_OF_GOLD_CARDS));
-        kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
-        kingdomCards.put(Duchy.class, createCardStack(new Duchy(), NUMBER_OF_VICTORY_CARDS));
-        kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
+        KingdomCardMap kingdomCards = new KingdomCardMap();
+        kingdomCards.put(new Copper(), createCardStack(new Copper(), numberOfCoppers));
+        kingdomCards.put(new Silver(), createCardStack(new Silver(), NUMBER_OF_SILVER_CARDS));
+        kingdomCards.put(new Gold(), createCardStack(new Gold(), NUMBER_OF_GOLD_CARDS));
+        kingdomCards.put(new Estate(), createCardStack(new Estate(), numberOfEstates));
+        kingdomCards.put(new Duchy(), createCardStack(new Duchy(), NUMBER_OF_VICTORY_CARDS));
+        kingdomCards.put(new Province(), createCardStack(new Province(), numberOfProvinces));
 
-        kingdomCards.put(Cellar.class, createCardStack(new Cellar(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Market.class, createCardStack(new Market(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Militia.class, createCardStack(new Militia(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Mine.class, createCardStack(new Mine(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Moat.class, createCardStack(new Moat(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Remodel.class, createCardStack(new Remodel(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Smithy.class, createCardStack(new Smithy(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Village.class, createCardStack(new Village(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Woodcutter.class, createCardStack(new Woodcutter(), NUMBER_OF_NORMAL_KINGDOM_CARD));
-        kingdomCards.put(Workshop.class, createCardStack(new Workshop(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Cellar(), createCardStack(new Cellar(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Market(), createCardStack(new Market(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Militia(), createCardStack(new Militia(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Mine(), createCardStack(new Mine(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Moat(), createCardStack(new Moat(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Remodel(), createCardStack(new Remodel(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Smithy(), createCardStack(new Smithy(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Village(), createCardStack(new Village(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Woodcutter(), createCardStack(new Woodcutter(), NUMBER_OF_NORMAL_KINGDOM_CARD));
+        kingdomCards.put(new Workshop(), createCardStack(new Workshop(), NUMBER_OF_NORMAL_KINGDOM_CARD));
 
         GameState gameState = new GameState(kingdomCards);
         for (Player player : players) {
@@ -46,7 +46,7 @@ public class GameSetup {
             IntStream.range(0, 3).forEach(i -> startCards.push(new Estate()));
             startCards.shuffle();
 
-            List<Card> handCards = new ArrayList<>();
+            CardStack handCards = new CardStack();
             for (int i = 0; i < 5; i++) {
                 Card card = startCards.pop();
                 handCards.add(card);
@@ -59,8 +59,8 @@ public class GameSetup {
         return gameState;
     }
 
-    private Stack<Card> createCardStack(Card card, int numberOfCards) {
-        Stack<Card> cards = new Stack<>();
+    private CardStack createCardStack(Card card, int numberOfCards) {
+        CardStack cards = new CardStack();
         for (int i = 0; i < numberOfCards; i++) {
             cards.add(card);
         }
