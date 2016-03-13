@@ -41,7 +41,7 @@ public class Mine extends Card implements ActionCard {
         }
 
         player.handCards().add(
-            master.kingdomCards().get(selectedCard.getClass()).pop()
+            master.kingdomCards().get(selectedCard).pop()
         );
     }
 }

@@ -33,7 +33,7 @@ public class Remodel extends Card implements ActionCard {
             return;
         }
         player.discardedCards().add(
-            master.kingdomCards().get(selectedCard.getClass()).pop()
+            master.kingdomCards().get(selectedCard).pop()
         );
     }
 }

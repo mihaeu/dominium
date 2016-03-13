@@ -2,12 +2,12 @@ package dominium;
 
 import dominium.Cards.ActionCard;
 import dominium.Cards.Card;
+import dominium.Cards.KingdomCardMap;
 import dominium.Players.Player;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -120,9 +120,7 @@ public class GameMaster {
 
             Card selectedCard = player.selectCard(cardBuyingOptions);
             if (selectedCard != null) {
-                gameState.getKingdomCards().get(
-                        selectedCard.getClass())
-                        .pop();
+                gameState.getKingdomCards().get(selectedCard).pop();
                 player.handCards().add(selectedCard);
                 player.spendCoins(selectedCard.getCost());
 
@@ -167,7 +165,7 @@ public class GameMaster {
         return otherPlayers;
     }
 
-    public Map<Class, Stack<Card>> kingdomCards() {
+    public KingdomCardMap kingdomCards() {
         return gameState.getKingdomCards();
     }
 }

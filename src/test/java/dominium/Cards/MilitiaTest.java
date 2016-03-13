@@ -16,21 +16,21 @@ public class MilitiaTest {
     public void currentPlayerGetsTwoCoinsAndForcesOtherPlayersToDiscardCards() {
         Player mockOtherPlayer1 = mock(Player.class);
         CardStack handCards1 = Convenience.stack(
-                Copper.class,
-                Copper.class,
-                Copper.class,
-                Copper.class,
-                Copper.class
+                new Copper(),
+                new Copper(),
+                new Copper(),
+                new Copper(),
+                new Copper()
         );
         when(mockOtherPlayer1.handCards()).thenReturn(handCards1);
 
         Player mockOtherPlayer2 = mock(Player.class);
         CardStack handCards2 = Convenience.stack(
-            Copper.class,
-            Copper.class,
-            Copper.class,
-            Copper.class,
-            Moat.class         // <-- Reaction card stops Militia
+            new Copper(),
+            new Copper(),
+            new Copper(),
+            new Copper(),
+            new Moat()         // <-- Reaction card stops Militia
         );
         when(mockOtherPlayer2.handCards()).thenReturn(handCards2);
 

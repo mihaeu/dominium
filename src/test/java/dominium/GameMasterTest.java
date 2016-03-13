@@ -228,13 +228,10 @@ public class GameMasterTest {
         players.add(player1);
 
         // give him the chance to only draw an Estate card
-        Map<Class, Stack<Card>> testCards = new HashMap<>();
-        CardStack provinceStack = new CardStack();
-        provinceStack.add(new Estate());
-        testCards.put(Estate.class, provinceStack);
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Estate());
 
         // play two rounds, the second round he can't pick a card
-        when(mockGameState.getKingdomCards()).thenReturn(testCards);
+        when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
         when(mockGameState.gameIsRunning())
                 .thenReturn(true)
                 .thenReturn(true)
@@ -312,9 +309,9 @@ public class GameMasterTest {
 
     @Test
     public void forwardsKingdomCards() {
-        Map<Class, Stack<Card>> cards = new HashMap<>();
-        when(mockGameState.getKingdomCards()).thenReturn(cards);
-        assertSame(cards, gameMaster.kingdomCards());
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Copper());
+        when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
+        assertSame(kingdomCards, gameMaster.kingdomCards());
     }
 
     @Test
@@ -324,10 +321,7 @@ public class GameMasterTest {
         when(mockPlayer1.getBuys()).thenReturn(1);
         players.add(mockPlayer1);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        CardStack copperStack = new CardStack();
-        copperStack.add(new Copper());
-        kingdomCards.put(Copper.class, copperStack);
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Copper());
         when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
 
         when(mockGameState.gameIsRunning())
@@ -351,10 +345,8 @@ public class GameMasterTest {
             .thenReturn(0);
         players.add(mockPlayer1);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        CardStack villageStack = new CardStack();
-        villageStack.add(village);
-        kingdomCards.put(Village.class, villageStack);
+        CardStack villageStack = Convenience.stack(new Village());
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Village());
         when(mockGameState.getKingdomCards()).thenReturn(kingdomCards);
         when(mockPlayer1.handCards()).thenReturn(villageStack);
 

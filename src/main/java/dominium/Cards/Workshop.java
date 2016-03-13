@@ -3,7 +3,6 @@ package dominium.Cards;
 import dominium.GameMaster;
 
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Workshop extends Card implements ActionCard {
@@ -15,17 +14,16 @@ public class Workshop extends Card implements ActionCard {
 
     @Override
     public void resolve(GameMaster master) {
-        List<Card> cardsToChooseFrom = master.kingdomCards().values().stream()
-            .filter(stack -> stack.size() > 0)
-            .filter(stack -> stack.peek().getCost() <= 4)
-            .map(Stack::peek)
+        List<Card> cardsToChooseFrom = master.kingdomCards().keySet().stream()
+            .filter(card -> master.kingdomCards().get(card).size() > 0)
+            .filter(card -> card.getCost() <= 4)
             .collect(Collectors.toList());
         Card selectedCard = master.currentPlayer().selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
             return;
         }
         master.currentPlayer().discardedCards().add(
-                master.kingdomCards().get(selectedCard.getClass()).pop()
+                master.kingdomCards().get(selectedCard).pop()
         );
     }
 }

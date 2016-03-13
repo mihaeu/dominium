@@ -1,14 +1,10 @@
 package dominium.Cards;
 
-import dominium.CardStack;
+import dominium.Convenience;
 import dominium.GameMaster;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,16 +22,7 @@ public class RemodelTest {
         Silver silver = new Silver();
         randomPlayer.handCards().add(silver);
 
-        Map<Class, Stack<Card>> kingdomCards = new HashMap<>();
-        CardStack militiaStack = new CardStack();
-        Militia militia = new Militia();
-        militiaStack.add(militia);
-        CardStack goldStack = new CardStack();
-        Gold gold = new Gold();
-        goldStack.add(gold);
-
-        kingdomCards.put(Militia.class, militiaStack);
-        kingdomCards.put(Gold.class, goldStack);
+        KingdomCardMap kingdomCards = Convenience.kingdomCards(new Militia(), new Gold());
         when(mockMaster.kingdomCards()).thenReturn(kingdomCards);
 
         Remodel remodel = new Remodel();
@@ -43,6 +30,6 @@ public class RemodelTest {
 
         assertEquals(1, randomPlayer.discardedCards().size());
         assertEquals(0, randomPlayer.handCards().size());
-        assertTrue(randomPlayer.discardedCards().contains(militia));
+        assertTrue(randomPlayer.discardedCards().hasCard(new Militia()));
     }
 }
