@@ -16,17 +16,17 @@ public class TreasureOrProvincePlayer extends AIPlayer {
         }
 
         Card cardToPick;
-        if (hasCard(cards, Province.class)) {
+        if (cards.hasCard(new Province())) {
             cardToPick = findCard(cards, Province.class);
-        } else if (hasCard(cards, Gold.class)) {
+        } else if (cards.hasCard(new Gold())) {
             cardToPick = findCard(cards, Gold.class);
-        } else if (hasCard(cards, Silver.class)) {
+        } else if (cards.hasCard(new Silver())) {
             cardToPick = findCard(cards, Silver.class);
-        } else if (hasCard(cards, Duchy.class)) {
+        } else if (cards.hasCard(new Duchy())) {
             cardToPick = findCard(cards, Duchy.class);
-        } else if (hasCard(cards, Copper.class)) {
+        } else if (cards.hasCard(new Copper())) {
             cardToPick = findCard(cards, Copper.class);
-        } else if (hasCard(cards, Estate.class)) {
+        } else if (cards.hasCard(new Estate())) {
             cardToPick = findCard(cards, Estate.class);
         } else {
             cardToPick = cards.get((int) (Math.random() * cards.size()));

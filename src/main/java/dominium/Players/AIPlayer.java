@@ -9,15 +9,6 @@ public abstract class AIPlayer extends Player {
         super(name);
     }
 
-    public boolean hasCard(CardStack cards, Class search) {
-        for (Card card : cards) {
-            if (card.getClass() == search) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Card findCard(CardStack cards, Class search) {
         for (Card card : cards) {
             if (card.getClass() == search) {
