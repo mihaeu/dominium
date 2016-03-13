@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
+    public static final String PLAYERS_FLAG = "--players=(.+)";
+    public static final String PLAYER_NAME_REGEX = "\\w+=(.+)";
+    public static final String ARG_SEPARATOR = ",";
     private static Map<Integer, List<Player>> games = new HashMap<>();
 
     public static void main(String... args) {
@@ -55,8 +58,8 @@ public class Main {
     private static List<Player> getPlayersFromCliArguments(String[] args) {
         String playerConfiguration = "";
         for (String arg : args) {
-            if (arg.matches("--players=.+")) {
-                playerConfiguration = arg.replaceFirst("--players=(.+)", "$1");
+            if (arg.matches(PLAYERS_FLAG)) {
+                playerConfiguration = arg.replaceFirst(PLAYERS_FLAG, "$1");
             }
         }
 
@@ -65,19 +68,26 @@ public class Main {
         }
 
         List<Player> players = new ArrayList<>();
-        for (String playerShorthand : playerConfiguration.split(",")) {
+        for (String playerShorthand : playerConfiguration.split(ARG_SEPARATOR)) {
+            String name = generateRandomName();
+            if (playerShorthand.matches(PLAYER_NAME_REGEX)) {
+                String[] parts = playerShorthand.split("=");
+                playerShorthand = parts[0];
+                name = (char) 27 + "[33;01m" + parts[1] + (char) 27 + "[0m";
+            }
+
             switch (playerShorthand.toLowerCase()) {
                 case "m":
-                    players.add(new TreasureOrProvincePlayer("Michi-Bot " + generateRandomName()));
+                    players.add(new TreasureOrProvincePlayer("Michi-Bot " + name));
                     break;
                 case "s":
-                    players.add(new FirstMoneyThenPointsPlayer("Stef-Bot " + generateRandomName()));
+                    players.add(new FirstMoneyThenPointsPlayer("Stef-Bot " + name));
                     break;
                 case "r":
-                    players.add(new RandomPlayer("Random-Bot " + generateRandomName()));
+                    players.add(new RandomPlayer("Random-Bot " + name));
                     break;
                 case "c":
-                    players.add(new ConsolePlayer("Console-Player " + generateRandomName()));
+                    players.add(new ConsolePlayer("Console-Player " + name));
                     break;
                 default:
                     throw new IllegalArgumentException("Player configuration invalid");
