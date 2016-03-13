@@ -2,6 +2,7 @@ package dominium.Cards;
 
 import dominium.Convenience;
 import dominium.GameMaster;
+import dominium.KingdomCardMap;
 import dominium.Players.Player;
 import dominium.Players.RandomPlayer;
 import org.junit.Test;

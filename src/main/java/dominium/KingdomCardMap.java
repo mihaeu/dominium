@@ -1,6 +1,6 @@
-package dominium.Cards;
+package dominium;
 
-import dominium.CardStack;
+import dominium.Cards.Card;
 
 import java.util.HashMap;
 

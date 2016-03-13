@@ -1,7 +1,6 @@
 package dominium;
 
 import dominium.Cards.Card;
-import dominium.Cards.KingdomCardMap;
 
 public class Convenience {
     public static CardStack stack(Card... cards) {
