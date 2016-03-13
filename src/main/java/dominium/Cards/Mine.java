@@ -24,10 +24,9 @@ public class Mine extends Card implements ActionCard {
         player.trashCardFromHand(selectedCardForTrashing);
 
         int maxCost = selectedCardForTrashing.getCost() + 3;
-        CardStack cardsToChooseFrom = master.kingdomCards()
-                .mapToCards(card -> master.kingdomCards().get(card).size() > 0)
-                .filterCards(card -> card.cost <= maxCost)
-                .filterCards(card -> card.getTypes().contains(CardType.Treasure));
+        CardStack cardsToChooseFrom = master.kingdomCards().keysOfNonEmptyStacks()
+                .filterCards(maxCost)
+                .filterCards(CardType.Treasure);
 
         Card selectedCard = player.selectCard(cardsToChooseFrom);
         if (selectedCard == null) {
