@@ -5,7 +5,6 @@ import dominium.Cards.*;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsolePlayer extends Player {
@@ -27,7 +26,7 @@ public class ConsolePlayer extends Player {
     }
 
     @Override
-    public Card selectCard(CardStack cards) {
+    public Card selectCard(final CardStack cards) {
         if (cards.isEmpty()) {
             return null;
         }
@@ -50,15 +49,15 @@ public class ConsolePlayer extends Player {
         return card;
     }
 
-    private int getChoice(CardStack cards) {
-        sortCardsByTypeAndCost(cards);
-        for (int i = 0; i < cards.size(); i++) {
+    private int getChoice(final CardStack cards) {
+        CardStack sortedCards = sortCardsByTypeAndCost(cards);
+        for (int i = 0; i < sortedCards.size(); i++) {
             out.printf(
                     "[%2d] %-15s (Cost: %d): %s" + (char) 27 + "[39m\n",
                     i,
-                    getColoredCardName(cards.get(i)),
-                    cards.get(i).getCost(),
-                    cards.get(i).getText()
+                    getColoredCardName(sortedCards.get(i)),
+                    sortedCards.get(i).getCost(),
+                    sortedCards.get(i).getText()
             );
         }
         out.print("\nYour hand cards are: ");
@@ -75,7 +74,7 @@ public class ConsolePlayer extends Player {
         return Integer.parseInt(choice);
     }
 
-    private void sortCardsByTypeAndCost(CardStack cards) {
+    private CardStack sortCardsByTypeAndCost(final CardStack cards) {
         CardStack treasureCards = CardStack.filterCards(cards, CardType.Treasure);
         treasureCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
@@ -85,9 +84,11 @@ public class ConsolePlayer extends Player {
         CardStack actionCards = CardStack.filterCards(cards, CardType.Action);
         actionCards.sort((card1, card2) -> card1.getCost() - card2.getCost());
 
-        cards.addAll(treasureCards);
-        cards.addAll(victoryCards);
-        cards.addAll(actionCards);
+        CardStack sortedCards = new CardStack();
+        sortedCards.addAll(actionCards);
+        sortedCards.addAll(treasureCards);
+        sortedCards.addAll(victoryCards);
+        return sortedCards;
     }
 
     private String getColoredCardName(Card card) {
