@@ -31,17 +31,22 @@ public class ConsolePlayer extends Player {
         if (cards.isEmpty()) {
             return null;
         }
-        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+        out.println("\n-------------------------------------------------\n");
 
         Card card = null;
         while (card == null) {
             try {
-                card = cards.get(getChoice(cards));
+                int choice = getChoice(cards);
+                if (choice == -1) {
+                    out.println();
+                    return null;
+                }
+                card = cards.get(choice);
             } catch (Exception e) {
                 out.println("Invalid option, please try again: ");
             }
         }
-        System.out.println();
+        out.println();
         return card;
     }
 
@@ -56,15 +61,16 @@ public class ConsolePlayer extends Player {
                     cards.get(i).getText()
             );
         }
-        System.out.println();
+        out.print("\nYour hand cards are: ");
+        handCards.forEach(card -> out.print(card.getName() + ", "));
         out.printf(
-                "Turn %d: You have %d coins, %d actions and %d buys left\n",
+                "\nTurn %d: You have %d coins, %d actions and %d buys left\n",
                 turns,
                 getCoins(),
                 getActions(),
                 getBuys()
         );
-        out.print(getName() + " choose a card: ");
+        out.print(getName() + " choose a card (or -1 to pass): ");
         String choice = scanner.nextLine();
         return Integer.parseInt(choice);
     }

@@ -18,7 +18,7 @@ public class GameSetupTest {
     @Before
     public void setUp() {
         setup = new GameSetup();
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         players.add(new RandomPlayer("Test"));
 
     }

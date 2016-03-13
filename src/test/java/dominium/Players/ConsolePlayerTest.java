@@ -30,6 +30,6 @@ public class ConsolePlayerTest {
         stack.add(new Village());
         consolePlayer.selectCard(stack);
 
-        verify(out).print("Test choose a card: ");
+        verify(out).print("Test choose a card (or -1 to pass): ");
     }
 }

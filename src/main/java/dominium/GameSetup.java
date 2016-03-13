@@ -27,7 +27,6 @@ public class GameSetup {
         kingdomCards.put(Estate.class, createCardStack(new Estate(), numberOfEstates));
         kingdomCards.put(Duchy.class, createCardStack(new Duchy(), NUMBER_OF_VICTORY_CARDS));
         kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
-        kingdomCards.put(Province.class, createCardStack(new Province(), numberOfProvinces));
 
         kingdomCards.put(Cellar.class, createCardStack(new Cellar(), NUMBER_OF_NORMAL_KINGDOM_CARD));
         kingdomCards.put(Market.class, createCardStack(new Market(), NUMBER_OF_NORMAL_KINGDOM_CARD));

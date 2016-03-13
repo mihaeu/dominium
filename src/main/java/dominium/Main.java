@@ -12,7 +12,7 @@ import java.util.Map;
 public class Main {
     private static Map<Integer, List<Player>> games = new HashMap<>();
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         List<Player> players = getPlayersFromCliArguments(args);
         Logger logger = getLoggerFromCliArguments(args);
         int numberOfGames = getNumberOfGamesFromCliArguments(args);
