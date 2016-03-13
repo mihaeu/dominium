@@ -119,12 +119,7 @@ public class GameMaster {
 
             Card selectedCard = player.selectCard(cardBuyingOptions);
             if (selectedCard != null) {
-                CardStack stack = gameState.getKingdomCards()
-                        .get(selectedCard);
-                if (stack == null) {
-                    System.out.print("why?");
-                }
-                stack.pop();
+                selectedCard = gameState.getKingdomCards().get(selectedCard).pop();
                 player.handCards().add(selectedCard);
                 player.spendCoins(selectedCard.getCost());
 
